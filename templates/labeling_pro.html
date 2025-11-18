@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>곤충 데이터 라벨링 Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='labeling_pro.css') }}">
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">🔬 곤충 데이터 라벨링 Pro</h1>
+            <p class="header-subtitle">배치 처리 및 고급 기능을 갖춘 전문 라벨링 시스템</p>
+            <div class="header-actions">
+                <a href="/" class="header-link">탐지/분류</a>
+                <a href="/labeling_improved" class="header-link">단일 라벨링</a>
+                <a href="/labeling_pro" class="header-link active">배치 라벨링</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 레이아웃 -->
+    <div class="main-layout">
+        <!-- 왼쪽: 이미지 갤러리 -->
+        <aside class="gallery-panel" id="galleryPanel">
+            <div class="panel-header">
+                <h3>이미지 목록</h3>
+                <button class="collapse-btn" id="collapseGallery" title="접기/펼치기">◀</button>
+            </div>
+            
+            <div class="upload-zone" id="uploadZone">
+                <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+                <div class="upload-content">
+                    <div class="upload-icon">📁</div>
+                    <p class="upload-text">이미지 추가</p>
+                    <p class="upload-hint">클릭 또는 드래그</p>
+                </div>
+            </div>
+
+            <div class="gallery-stats">
+                <div class="stat-item">
+                    <span class="stat-label">전체</span>
+                    <span class="stat-value" id="totalCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">완료</span>
+                    <span class="stat-value" id="completedCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">박스</span>
+                    <span class="stat-value" id="totalBboxCount">0</span>
+                </div>
+            </div>
+
+            <div class="gallery-list" id="galleryList">
+                <div class="empty-gallery">
+                    <p>이미지를 업로드하세요</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 중앙: 캔버스 작업 영역 -->
+        <main class="canvas-panel">
+            <div class="canvas-toolbar">
+                <div class="tool-group">
+                    <button class="tool-btn active" data-tool="select" title="선택 (1)">
+                        <span class="tool-icon">↖</span>
+                        <span class="tool-label">선택</span>
+                    </button>
+                    <button class="tool-btn" data-tool="draw" title="그리기 (2)">
+                        <span class="tool-icon">⬚</span>
+                        <span class="tool-label">그리기</span>
+                    </button>
+                    <button class="tool-btn" data-tool="pan" title="이동 (3)">
+                        <span class="tool-icon">✋</span>
+                        <span class="tool-label">이동</span>
+                    </button>
+                </div>
+
+                <div class="tool-divider"></div>
+
+                <div class="tool-group">
+                    <button class="icon-btn" id="zoomIn" title="확대 (+)">🔍+</button>
+                    <button class="icon-btn" id="zoomOut" title="축소 (-)">🔍-</button>
+                    <button class="icon-btn" id="zoomFit" title="맞춤 (0)">⊡</button>
+                    <span class="zoom-display" id="zoomDisplay">100%</span>
+                </div>
+
+                <div class="tool-divider"></div>
+
+                <div class="tool-group">
+                    <button class="icon-btn" id="undoBtn" title="실행 취소 (Ctrl+Z)">↶</button>
+                    <button class="icon-btn" id="redoBtn" title="재실행 (Ctrl+Y)">↷</button>
+                </div>
+
+                <div class="tool-group" style="margin-left: auto;">
+                    <button class="icon-btn" id="prevImage" title="이전 (←)">◀</button>
+                    <span class="image-counter" id="imageCounter">0 / 0</span>
+                    <button class="icon-btn" id="nextImage" title="다음 (→)">▶</button>
+                </div>
+            </div>
+
+            <div class="canvas-container" id="canvasContainer">
+                <canvas id="mainCanvas"></canvas>
+                <div class="canvas-overlay" id="canvasOverlay">
+                    <p>이미지를 선택하세요</p>
+                </div>
+            </div>
+
+            <div class="canvas-info">
+                <span id="imageInfo">-</span>
+                <span id="mouseInfo">-</span>
+            </div>
+        </main>
+
+        <!-- 오른쪽: 컨트롤 패널 -->
+        <aside class="control-panel" id="controlPanel">
+            <div class="panel-header">
+                <h3>라벨링 정보</h3>
+                <button class="collapse-btn" id="collapseControl" title="접기/펼치기">▶</button>
+            </div>
+
+            <!-- 검수자 정보 -->
+            <div class="panel-section">
+                <label class="section-label">검수자 *</label>
+                <input type="text" id="reviewerName" class="input-field" placeholder="이름 입력" value="Admin">
+            </div>
+
+            <!-- 데이터 타입 -->
+            <div class="panel-section">
+                <label class="section-label">데이터 타입 *</label>
+                <select id="dataType" class="input-field">
+                    <option value="detection">탐지용 (Detection)</option>
+                    <option value="classification">분류용 (Classification)</option>
+                </select>
+            </div>
+
+            <!-- 빠른 라벨 선택 -->
+            <div class="panel-section">
+                <label class="section-label">빠른 라벨 선택</label>
+                <div class="quick-labels">
+                    <button class="quick-label-btn" data-order="Coleoptera" data-common="딱정벌레목">
+                        <span class="label-name">딱정벌레목</span>
+                        <span class="label-scientific">Coleoptera</span>
+                    </button>
+                    <button class="quick-label-btn" data-order="Lepidoptera" data-common="나비목">
+                        <span class="label-name">나비목</span>
+                        <span class="label-scientific">Lepidoptera</span>
+                    </button>
+                    <button class="quick-label-btn" data-order="Hymenoptera" data-common="벌목">
+                        <span class="label-name">벌목</span>
+                        <span class="label-scientific">Hymenoptera</span>
+                    </button>
+                    <button class="quick-label-btn" data-order="Odonata" data-common="잠자리목">
+                        <span class="label-name">잠자리목</span>
+                        <span class="label-scientific">Odonata</span>
+                    </button>
+                    <button class="quick-label-btn" data-order="Orthoptera" data-common="메뚜기목">
+                        <span class="label-name">메뚜기목</span>
+                        <span class="label-scientific">Orthoptera</span>
+                    </button>
+                    <button class="quick-label-btn" data-order="Mantodea" data-common="사마귀목">
+                        <span class="label-name">사마귀목</span>
+                        <span class="label-scientific">Mantodea</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 분류 정보 입력 -->
+            <div class="panel-section">
+                <label class="section-label">분류 정보</label>
+                <div class="taxonomy-inputs">
+                    <input type="text" id="orderName" class="input-field input-sm" placeholder="목 (Order) *" required>
+                    <input type="text" id="familyName" class="input-field input-sm" placeholder="과 (Family)">
+                    <input type="text" id="genusName" class="input-field input-sm" placeholder="속 (Genus)">
+                    <input type="text" id="speciesName" class="input-field input-sm" placeholder="종 (Species)">
+                    <input type="text" id="commonName" class="input-field input-sm" placeholder="일반명">
+                </div>
+            </div>
+
+            <!-- 바운딩 박스 목록 -->
+            <div class="panel-section" id="bboxSection">
+                <div class="section-header">
+                    <label class="section-label">바운딩 박스</label>
+                    <button class="text-btn" id="clearAllBboxes">전체 삭제</button>
+                </div>
+                <div class="bbox-list" id="bboxList">
+                    <div class="empty-state">박스를 그려주세요</div>
+                </div>
+            </div>
+
+            <!-- 액션 버튼 -->
+            <div class="panel-section">
+                <button class="btn btn-primary" id="saveCurrentBtn">현재 이미지 저장</button>
+                <button class="btn btn-success" id="saveAllBtn">전체 저장</button>
+                <button class="btn btn-secondary" id="exportYoloBtn">YOLO 내보내기</button>
+            </div>
+
+            <!-- 키보드 단축키 -->
+            <div class="panel-section collapsible">
+                <button class="section-toggle" id="toggleShortcuts">
+                    <span>키보드 단축키</span>
+                    <span class="toggle-icon">▼</span>
+                </button>
+                <div class="shortcuts-content hidden" id="shortcutsContent">
+                    <div class="shortcut-item">
+                        <kbd>1/2/3</kbd>
+                        <span>도구 전환</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>+/-</kbd>
+                        <span>확대/축소</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>0</kbd>
+                        <span>맞춤</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>←/→</kbd>
+                        <span>이미지 이동</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Delete</kbd>
+                        <span>박스 삭제</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Ctrl+Z</kbd>
+                        <span>실행 취소</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Ctrl+Y</kbd>
+                        <span>재실행</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Ctrl+S</kbd>
+                        <span>저장</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- 로딩 오버레이 -->
+    <div class="modal-overlay hidden" id="loadingOverlay">
+        <div class="loading-modal">
+            <div class="spinner"></div>
+            <p id="loadingText">처리 중...</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="progress-text" id="progressText">0 / 0</p>
+        </div>
+    </div>
+
+    <!-- 성공 모달 -->
+    <div class="modal-overlay hidden" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon success">✓</div>
+            <h3>저장 완료!</h3>
+            <p id="successMessage">데이터가 성공적으로 저장되었습니다.</p>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="closeSuccessModal">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 에러 모달 -->
+    <div class="modal-overlay hidden" id="errorModal">
+        <div class="modal-content">
+            <div class="modal-icon error">✕</div>
+            <h3>오류 발생</h3>
+            <p id="errorMessage">오류가 발생했습니다.</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="closeErrorModal">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='labeling_pro.js') }}"></script>
+</body>
+</html>
+

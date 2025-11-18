@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>곤충 데이터 라벨링 도구</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='labeling_improved.css') }}">
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">🏷️ 곤충 데이터 라벨링 도구</h1>
+            <p class="header-subtitle">전문적인 학습 데이터 구축을 위한 라벨링 시스템</p>
+        </div>
+    </header>
+
+    <!-- 진행 단계 -->
+    <div class="progress-steps">
+        <div class="step active" data-step="1">
+            <div class="step-number">1</div>
+            <div class="step-label">이미지 업로드</div>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step" data-step="2">
+            <div class="step-number">2</div>
+            <div class="step-label">분류 정보 입력</div>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step" data-step="3">
+            <div class="step-number">3</div>
+            <div class="step-label">라벨링 작업</div>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-label">검토 및 저장</div>
+        </div>
+    </div>
+
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+        <!-- Step 1: 이미지 업로드 -->
+        <section class="section" id="step1-section">
+            <div class="card">
+                <h2 class="card-title">1단계: 이미지 업로드</h2>
+                <p class="card-description">라벨링할 곤충 이미지를 업로드하세요</p>
+                
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                    <div class="upload-icon">📷</div>
+                    <p class="upload-text">클릭하거나 이미지를 드래그하세요</p>
+                    <p class="upload-hint">JPG, PNG, GIF (최대 16MB)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 2: 분류 정보 입력 -->
+        <section class="section hidden" id="step2-section">
+            <div class="card">
+                <h2 class="card-title">2단계: 분류 정보 입력</h2>
+                <p class="card-description">곤충의 분류학적 정보를 입력하세요</p>
+                
+                <form id="taxonomyForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="reviewer">검수자 *</label>
+                            <input type="text" id="reviewer" placeholder="이름을 입력하세요" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dataType">데이터 타입 *</label>
+                            <select id="dataType" required>
+                                <option value="">선택하세요</option>
+                                <option value="detection">탐지용 (Detection)</option>
+                                <option value="classification">분류용 (Classification)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="orderName">목 (Order) *</label>
+                            <input type="text" id="orderName" placeholder="예: Coleoptera" required>
+                            <small>예시: Coleoptera (딱정벌레목), Lepidoptera (나비목)</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="familyName">과 (Family)</label>
+                            <input type="text" id="familyName" placeholder="예: Coccinellidae">
+                            <small>선택사항</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="genusName">속 (Genus)</label>
+                            <input type="text" id="genusName" placeholder="예: Harmonia">
+                            <small>선택사항</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="speciesName">종 (Species)</label>
+                            <input type="text" id="speciesName" placeholder="예: axyridis">
+                            <small>선택사항</small>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="scientificName">학명 (전체)</label>
+                            <input type="text" id="scientificName" placeholder="자동 생성됨" readonly>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="commonName">일반명</label>
+                            <input type="text" id="commonName" placeholder="예: 무당벌레">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="notes">메모</label>
+                            <textarea id="notes" rows="3" placeholder="추가 정보를 입력하세요"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn btn-secondary" id="backToStep1">이전</button>
+                        <button type="submit" class="btn btn-primary">다음 단계</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Step 3: 라벨링 작업 -->
+        <section class="section hidden" id="step3-section">
+            <div class="labeling-layout">
+                <!-- 왼쪽: 이미지 캔버스 -->
+                <div class="canvas-area">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>이미지 작업 영역</h3>
+                            <div class="canvas-tools">
+                                <button class="tool-btn" id="zoomIn" title="확대">🔍+</button>
+                                <button class="tool-btn" id="zoomOut" title="축소">🔍-</button>
+                                <button class="tool-btn" id="resetZoom" title="초기화">↻</button>
+                            </div>
+                        </div>
+                        <div class="canvas-container">
+                            <canvas id="labelingCanvas"></canvas>
+                        </div>
+                        <div class="canvas-info">
+                            <span id="canvasSize">-</span>
+                            <span id="mousePosition">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 오른쪽: 컨트롤 패널 -->
+                <div class="control-panel">
+                    <div class="card">
+                        <h3>분류 정보</h3>
+                        <div class="info-display" id="taxonomyInfo"></div>
+                    </div>
+
+                    <div class="card" id="bboxControlCard">
+                        <h3>바운딩 박스 관리</h3>
+                        <p class="help-text">이미지에서 곤충 영역을 드래그하여 선택하세요</p>
+                        
+                        <div class="bbox-list" id="bboxList">
+                            <div class="empty-state">아직 바운딩 박스가 없습니다</div>
+                        </div>
+
+                        <div class="button-group">
+                            <button class="btn btn-secondary btn-sm" id="clearAllBboxes">전체 삭제</button>
+                            <button class="btn btn-primary btn-sm" id="addBbox">박스 추가</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>키보드 단축키</h3>
+                        <ul class="shortcut-list">
+                            <li><kbd>Delete</kbd> 선택된 박스 삭제</li>
+                            <li><kbd>Esc</kbd> 선택 취소</li>
+                            <li><kbd>+/-</kbd> 확대/축소</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn btn-secondary" id="backToStep2">이전</button>
+                <button type="button" class="btn btn-primary" id="proceedToStep4">다음 단계</button>
+            </div>
+        </section>
+
+        <!-- Step 4: 검토 및 저장 -->
+        <section class="section hidden" id="step4-section">
+            <div class="card">
+                <h2 class="card-title">4단계: 검토 및 저장</h2>
+                <p class="card-description">입력한 정보를 확인하고 저장하세요</p>
+                
+                <div class="review-section">
+                    <h3>분류 정보</h3>
+                    <div id="reviewTaxonomy"></div>
+                </div>
+
+                <div class="review-section" id="reviewBboxSection">
+                    <h3>바운딩 박스</h3>
+                    <div id="reviewBboxes"></div>
+                </div>
+
+                <div class="review-section">
+                    <h3>이미지 미리보기</h3>
+                    <img id="reviewImage" alt="미리보기">
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" id="backToStep3">이전</button>
+                    <button type="button" class="btn btn-success" id="saveData">저장하기</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 로딩 오버레이 -->
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p>저장 중...</p>
+    </div>
+
+    <!-- 성공 모달 -->
+    <div class="modal hidden" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon success">✓</div>
+            <h3>저장 완료!</h3>
+            <p>데이터가 성공적으로 저장되었습니다.</p>
+            <div class="button-group">
+                <button class="btn btn-secondary" id="viewData">데이터 보기</button>
+                <button class="btn btn-primary" id="labelNext">다음 이미지 라벨링</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='labeling_improved.js') }}"></script>
+</body>
+</html>
+

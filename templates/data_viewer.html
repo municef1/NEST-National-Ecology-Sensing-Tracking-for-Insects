@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학습 데이터 조회</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .data-table th, .data-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .data-table th { background-color: #f2f2f2; }
+        .refresh-btn { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        .refresh-btn:hover { background: #0056b3; }
+        .stats { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .stat-item { display: inline-block; margin-right: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">📊 학습 데이터 조회</h1>
+            <div class="nav-links">
+                <a href="/" class="nav-link">탐지/분류</a>
+                <a href="/labeling_detection" class="nav-link">탐지 모델 라벨링</a>
+                <a href="/labeling_classification" class="nav-link">분류 모델 라벨링</a>
+                <a href="/data_viewer" class="nav-link active">데이터 조회</a>
+                {% if session.user_role == 'admin' %}
+                <a href="/admin" class="nav-link">관리자</a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <strong>총 이미지:</strong> <span id="totalCount">0</span>개
+            </div>
+            <div class="stat-item">
+                <strong>목:</strong> <span id="ordersCount">0</span>개
+            </div>
+            <div class="stat-item">
+                <strong>과:</strong> <span id="familiesCount">0</span>개
+            </div>
+            <div class="stat-item">
+                <strong>속:</strong> <span id="generaCount">0</span>개
+            </div>
+            <div class="stat-item">
+                <strong>종:</strong> <span id="speciesCount">0</span>개
+            </div>
+        </div>
+        
+        <div class="stats" style="margin-top: 10px;">
+            <div class="stat-item" style="width: 100%;">
+                <strong>목 분포 분석:</strong>
+                <div id="ordersDistribution" style="margin-top: 10px; max-height: 200px; overflow-y: auto; font-size: 12px;">
+                    로딩 중...
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <button class="refresh-btn" onclick="loadData()">새로고침</button>
+            <div style="float: right;">
+                <button onclick="prevPageGroup()" id="prevGroupBtn" disabled>◀</button>
+                <div id="pageNumbers" style="display: inline-block; margin: 0 10px;"></div>
+                <button onclick="nextPageGroup()" id="nextGroupBtn" disabled>▶</button>
+            </div>
+        </div>
+        
+        <table class="data-table" id="dataTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>파일명</th>
+                    <th>타입</th>
+                    <th>라벨 수</th>
+                    <th>업로드 시간</th>
+                </tr>
+            </thead>
+            <tbody id="dataBody">
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        let currentPage = 1;
+        let totalPages = 1;
+        let currentPageGroup = 1;
+        
+        async function loadData(page = 1) {
+            try {
+                const response = await fetch(`/api/training_data?page=${page}&per_page=10`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    displayData(result.data);
+                    updatePagination(result);
+                    updateStats(result);
+                } else {
+                    alert('데이터 로드 실패: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('데이터 로드 중 오류 발생');
+            }
+        }
+        
+        function updatePagination(result) {
+            currentPage = result.page;
+            totalPages = result.total_pages;
+            currentPageGroup = Math.ceil(currentPage / 10);
+            
+            // 그룹 화살표 버튼 상태
+            document.getElementById('prevGroupBtn').disabled = currentPageGroup <= 1;
+            document.getElementById('nextGroupBtn').disabled = currentPageGroup >= Math.ceil(totalPages / 10);
+            
+            // 페이지 번호 버튼 생성 (1-10, 11-20, ...)
+            const pageNumbers = document.getElementById('pageNumbers');
+            pageNumbers.innerHTML = '';
+            
+            const startPage = (currentPageGroup - 1) * 10 + 1;
+            const endPage = Math.min(currentPageGroup * 10, totalPages);
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.onclick = () => loadData(i);
+                btn.style.cssText = `margin: 0 2px; padding: 5px 10px; border: 1px solid #ddd; cursor: pointer; ${i === currentPage ? 'background: #007bff; color: white;' : 'background: white;'}`;
+                pageNumbers.appendChild(btn);
+            }
+        }
+        
+        function prevPageGroup() {
+            if (currentPageGroup > 1) {
+                const newPage = (currentPageGroup - 2) * 10 + 1;
+                loadData(newPage);
+            }
+        }
+        
+        function nextPageGroup() {
+            if (currentPageGroup < Math.ceil(totalPages / 10)) {
+                const newPage = currentPageGroup * 10 + 1;
+                loadData(newPage);
+            }
+        }
+        
+        function displayData(data) {
+            const tbody = document.getElementById('dataBody');
+            tbody.innerHTML = '';
+            
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                
+                const type = item.image_type === 'detection' ? '탐지' : '분류';
+                const labelCount = item.bbox_data ? (Array.isArray(item.bbox_data) ? item.bbox_data.length : 1) : 1;
+                
+                row.innerHTML = `
+                    <td>${item.id}</td>
+                    <td>${item.filename}</td>
+                    <td>${type}</td>
+                    <td>${labelCount}</td>
+                    <td>${new Date(item.created_at).toLocaleString()}</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+        
+        async function loadTaxonomyStats() {
+            try {
+                const response = await fetch('/api/taxonomy_stats');
+                const stats = await response.json();
+                
+                if (stats.success) {
+                    document.getElementById('totalCount').textContent = stats.total_images;
+                    document.getElementById('ordersCount').textContent = stats.orders_count;
+                    document.getElementById('familiesCount').textContent = stats.families_count;
+                    document.getElementById('generaCount').textContent = stats.genera_count;
+                    document.getElementById('speciesCount').textContent = stats.species_count;
+                    
+                    // 전체 목 분포 표시
+                    const ordersHtml = stats.all_orders.map((item, index) => 
+                        `<div style="margin: 2px 0; padding: 2px 5px; background: ${index % 2 === 0 ? '#f8f9fa' : 'white'}; border-radius: 3px;">
+                            ${index + 1}. <strong>${item.order}</strong>: ${item.count}개 (${item.percentage}%)
+                        </div>`
+                    ).join('');
+                    document.getElementById('ordersDistribution').innerHTML = ordersHtml;
+                }
+            } catch (error) {
+                console.error('통계 로드 오류:', error);
+            }
+        }
+        
+        function updateStats(result) {
+            // 기존 코드 유지
+        }
+        
+        // 페이지 로드 시 데이터 로드
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTaxonomyStats();
+            loadData();
+        });
+    </script>
+    
+    <!-- 로그아웃 버튼 -->
+    <a href="/logout" style="position: fixed; bottom: 20px; right: 20px; background: #e74c3c; color: white; padding: 10px 15px; border-radius: 50px; text-decoration: none; font-size: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 9999;">🚺 로그아웃</a>
+</body>
+</html>

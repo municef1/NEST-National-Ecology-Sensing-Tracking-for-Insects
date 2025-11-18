@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>분류 모델 라벨링 도구</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body { margin: 0; padding: 0; }
+        .advanced-container { width: 100vw; height: 100vh; margin: 0; padding: 0; display: flex; flex-direction: column; }
+        .header { height: 80px; padding: 10px 20px; }
+        .layout { display: grid; grid-template-columns: 280px 1fr 380px; gap: 0; height: calc(100vh - 80px); }
+        .image-list-panel { background: white; padding: 15px; border-right: 1px solid #e5e8eb; overflow-y: auto; }
+        .main-panel { background: white; padding: 15px; display: flex; flex-direction: column; }
+        .side-panel { background: white; padding: 15px; border-left: 1px solid #e5e8eb; overflow-y: auto; }
+        
+        .image-workspace { flex: 1; display: flex; flex-direction: column; }
+        .canvas-container { flex: 1; position: relative; border: 1px solid #e5e8eb; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        
+        .image-item { display: flex; align-items: center; gap: 10px; padding: 8px; border: 1px solid #eee; border-radius: 6px; margin-bottom: 8px; cursor: pointer; }
+        .image-item:hover { background: #f8f9fa; }
+        .image-item.active { background: #e3f2fd; border-color: #2196f3; }
+        .image-item.completed { background: #e8f5e8; border-color: #4caf50; }
+        .image-thumbnail { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; }
+        .image-info { flex: 1; font-size: 12px; }
+        .image-status { font-size: 10px; padding: 2px 6px; border-radius: 10px; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-completed { background: #d4edda; color: #155724; }
+        
+        .batch-upload { border: 2px dashed #ddd; padding: 20px; text-align: center; border-radius: 8px; margin-bottom: 15px; }
+        .batch-upload.dragover { border-color: #3182f6; background: rgba(49, 130, 246, 0.05); }
+        
+        .classification-form { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        
+        .quick-labels { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 15px; }
+        .quick-label { padding: 8px; text-align: center; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .quick-label:hover { background: #f0f0f0; }
+        .quick-label.selected { background: #3182f6; color: white; }
+        
+        .stats { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .stat-item { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <div class="advanced-container">
+        <div class="header">
+            <h1 class="title">🔬 분류 모델 라벨링 도구</h1>
+            <div class="nav-links">
+                <a href="/" class="nav-link">탐지/분류</a>
+                <a href="/labeling_detection" class="nav-link">탐지 모델 라벨링</a>
+                <a href="/labeling_classification" class="nav-link active">분류 모델 라벨링</a>
+                <a href="/data_viewer" class="nav-link">데이터 조회</a>
+                {% if session.user_role == 'admin' %}
+                <a href="/admin" class="nav-link">관리자</a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="layout">
+            <div class="image-list-panel">
+                <h3>이미지 목록</h3>
+                <div class="batch-upload" id="batchUpload">
+                    <p>📁 이미지 업로드</p>
+                    <input type="file" id="batchFiles" multiple accept="image/*" style="display: none;">
+                    <button id="fileSelectBtn">파일 선택</button>
+                    <button id="loadPendingBtn" style="margin-left: 10px; background: #28a745;">미검수 파일 불러오기</button>
+                </div>
+                <div id="imageList"></div>
+            </div>
+            
+            <div class="main-panel">
+                <div class="image-workspace">
+                    <div class="canvas-container" id="canvasContainer">
+                        <canvas id="mainCanvas"></canvas>
+                    </div>
+                </div>
+                
+                <div class="image-controls" style="margin-top: 15px;">
+                    <input type="range" id="zoomSlider" min="1" max="5" step="0.1" value="1" style="width: 100%;">
+                    <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                        <span>100%</span>
+                        <span id="zoomValue">100%</span>
+                        <span>500%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="side-panel">
+                <div class="stats">
+                    <h3>통계</h3>
+                    <div class="stat-item">
+                        <span>총 이미지:</span>
+                        <span id="totalImages">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>라벨링 완료:</span>
+                        <span id="labeledImages">0</span>
+                    </div>
+                </div>
+                
+                <h3>종 검색</h3>
+                <div class="form-group" style="position: relative;">
+                    <input type="text" id="koreanNameSearch" placeholder="국명을 입력하세요 (예: 무당)">
+                    <div id="koreanSearchResults" style="display: none; position: absolute; background: white; border: 1px solid #ccc; border-radius: 4px; max-height: 200px; overflow-y: auto; z-index: 1000; width: 100%; margin-top: 2px;"></div>
+                </div>
+                
+                <div class="form-group" style="position: relative;">
+                    <input type="text" id="scientificNameSearch" placeholder="학명을 입력하세요 (예: Harmonia)">
+                    <div id="scientificSearchResults" style="display: none; position: absolute; background: white; border: 1px solid #ccc; border-radius: 4px; max-height: 200px; overflow-y: auto; z-index: 1000; width: 100%; margin-top: 2px;"></div>
+                </div>
+                
+                <div class="classification-form">
+                    <div class="form-group">
+                        <label>검수자:</label>
+                        <input type="text" id="reviewer" placeholder="이름 입력" value="Admin">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>목 (Order):</label>
+                        <input type="text" id="orderInput" placeholder="예: Coleoptera">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>과 (Family):</label>
+                        <input type="text" id="familyInput" placeholder="예: Coccinellidae">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>속 (Genus):</label>
+                        <input type="text" id="genusInput" placeholder="예: Harmonia">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>종 (Species):</label>
+                        <input type="text" id="speciesInput" placeholder="예: axyridis">
+                    </div>
+                    
+                    <button class="btn btn-primary" id="labelCurrentBtn" style="width: 100%; margin-bottom: 10px;">현재 이미지 라벨링</button>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-primary" id="saveAllBtn" style="width: 100%; margin-bottom: 10px;">모든 데이터 저장</button>
+                    <button class="btn" id="nextPendingBtn" style="width: 100%; background: #17a2b8; color: white;">다음 미검수 파일</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 로그아웃 버튼 -->
+    <a href="/logout" style="position: fixed; bottom: 20px; right: 20px; background: #e74c3c; color: white; padding: 10px 15px; border-radius: 50px; text-decoration: none; font-size: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 9999;">🚺 로그아웃</a>
+    
+    <script src="{{ url_for('static', filename='labeling_classification.js') }}"></script>
+    <script src="{{ url_for('static', filename='taxonomy_autocomplete.js') }}"></script>
+    <script src="{{ url_for('static', filename='korean_name_search.js') }}"></script>
+</body>
+</html>

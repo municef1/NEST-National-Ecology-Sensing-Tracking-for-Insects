@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .admin-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { padding: 10px 20px; border: 1px solid #ddd; background: white; cursor: pointer; }
+        .tab-btn.active { background: #3182f6; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .user-form { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px; }
+        .form-row input, .form-row select { padding: 12px; font-size: 14px; }
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th, .data-table td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        .data-table th { background: #f8f9fa; }
+        .btn-small { padding: 5px 10px; font-size: 12px; margin: 2px; }
+        .image-preview { max-width: 100px; max-height: 100px; object-fit: cover; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">🛠️ 관리자 페이지</h1>
+        <div class="nav-links">
+            <a href="/" class="nav-link">탐지/분류</a>
+            <a href="/labeling_detection" class="nav-link">탐지 모델 라벨링</a>
+            <a href="/labeling_classification" class="nav-link">분류 모델 라벨링</a>
+            <a href="/data_viewer" class="nav-link">데이터 조회</a>
+            <a href="/admin" class="nav-link active">관리자</a>
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <div class="admin-tabs">
+            <button class="tab-btn active" onclick="showTab('users')">사용자 관리</button>
+            <button class="tab-btn" onclick="showTab('data')">라벨링 데이터 관리</button>
+            <button class="tab-btn" onclick="showTab('duplicates')">중복 파일 관리</button>
+            <button class="tab-btn" onclick="showTab('security')">보안 관리</button>
+            <button class="tab-btn" onclick="showTab('whitelist')">화이트리스트 관리</button>
+        </div>
+
+        <!-- 사용자 관리 탭 -->
+        <div id="users-tab" class="tab-content active">
+            <div class="user-form">
+                <h3>새 사용자 추가</h3>
+                <form id="userForm">
+                    <div class="form-row">
+                        <input type="text" id="username" placeholder="사용자명" required>
+                        <input type="password" id="password" placeholder="비밀번호" required>
+                        <input type="text" id="name" placeholder="이름" required>
+                        <select id="role">
+                            <option value="reviewer">검수자</option>
+                            <option value="admin">관리자</option>
+                        </select>
+                        <input type="email" id="email" placeholder="이메일">
+                    </div>
+                    <button type="submit" class="btn btn-primary">사용자 추가</button>
+                </form>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>사용자명</th>
+                        <th>이름</th>
+                        <th>역할</th>
+                        <th>이메일</th>
+                        <th>상태</th>
+                        <th>마지막 로그인</th>
+                        <th>작업</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTable"></tbody>
+            </table>
+        </div>
+
+        <!-- 중복 파일 관리 탭 -->
+        <div id="duplicates-tab" class="tab-content">
+            <div style="margin-bottom: 20px;">
+                <h3>🔄 중복 파일 관리</h3>
+                <button onclick="checkDuplicates()" class="btn btn-primary">중복 검사</button>
+                <button onclick="cleanDuplicates()" class="btn btn-warning">중복 일괄 정리</button>
+                <a href="/admin/duplicates" class="btn btn-secondary" target="_blank">상세 관리 페이지</a>
+            </div>
+            
+            <div id="duplicatesSummary" style="display: none; background: #fff3cd; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                <h4>중복 검사 결과</h4>
+                <div id="duplicatesInfo"></div>
+            </div>
+            
+            <div id="duplicatesLoading" style="display: none; text-align: center; padding: 20px;">
+                <div class="spinner-border" role="status"></div>
+                <p>검사 중...</p>
+            </div>
+        </div>
+
+        <!-- 라벨링 데이터 관리 탭 -->
+        <div id="data-tab" class="tab-content">
+            <div class="stats" style="margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                <div class="stat-item">
+                    <strong>총 이미지:</strong> <span id="adminTotalCount">0</span>개
+                </div>
+                <div class="stat-item">
+                    <strong>목:</strong> <span id="adminOrdersCount">0</span>개
+                </div>
+                <div class="stat-item">
+                    <strong>과:</strong> <span id="adminFamiliesCount">0</span>개
+                </div>
+                <div class="stat-item">
+                    <strong>속:</strong> <span id="adminGeneraCount">0</span>개
+                </div>
+                <div class="stat-item">
+                    <strong>종:</strong> <span id="adminSpeciesCount">0</span>개
+                </div>
+                <div class="stat-item" style="width: 100%; margin-top: 10px;">
+                    <strong>목 분포 분석:</strong>
+                    <div id="adminOrdersDistribution" style="margin-top: 10px; max-height: 200px; overflow-y: auto; font-size: 12px;">
+                        로딩 중...
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <input type="text" id="searchInput" placeholder="검색..." style="padding: 8px; width: 300px;" onkeyup="handleSearch(event)">
+                <select id="typeFilter" style="padding: 8px;" onchange="loadLabeledData()">
+                    <option value="">모든 타입</option>
+                    <option value="detection">탐지</option>
+                    <option value="classification">분류</option>
+                </select>
+                <button onclick="loadLabeledData()" class="btn btn-secondary">새로고침</button>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>이미지</th>
+                        <th>파일명</th>
+                        <th>타입</th>
+                        <th>분류 정보</th>
+                        <th>검수자</th>
+                        <th>생성일</th>
+                        <th>작업</th>
+                    </tr>
+                </thead>
+                <tbody id="dataTable"></tbody>
+            </table>
+        </div>
+
+        <!-- 보안 관리 탭 -->
+        <div id="security-tab" class="tab-content">
+            <div style="margin-bottom: 20px;">
+                <h3>🚫 블랙리스트 관리 (강화된 버전)</h3>
+                <div style="margin-bottom: 10px;">
+                    <button onclick="loadBlacklist()" class="btn btn-secondary">새로고침</button>
+                    <button onclick="addManualBlock()" class="btn btn-primary">수동 차단 추가</button>
+                </div>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <h4>자동 차단 패턴:</h4>
+                    <ul style="margin: 10px 0; font-size: 14px; color: #666;">
+                        <li>악성 경로: /wp-admin, /phpmyadmin, /.env, /shell 등</li>
+                        <li>악성 메소드: CONNECT, TRACE, TRACK</li>
+                        <li>악성 User-Agent: bot, crawler, scanner, exploit 도구 등</li>
+                        <li>SQL 인젝션, XSS, 디렉토리 순회, 명령어 인젝션 패턴</li>
+                        <li>비정상 프록시 헤더 및 바이너리 데이터</li>
+                    </ul>
+                </div>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>IP 주소</th>
+                        <th>차단 사유</th>
+                        <th>시도 횟수</th>
+                        <th>차단 시간</th>
+                        <th>마지막 시도</th>
+                        <th>차단 방식</th>
+                        <th>작업</th>
+                    </tr>
+                </thead>
+                <tbody id="blacklistTable"></tbody>
+            </table>
+        </div>
+
+        <!-- 화이트리스트 관리 탭 -->
+        <div id="whitelist-tab" class="tab-content">
+            <div class="user-form">
+                <h3>✅ 새 IP 주소 추가</h3>
+                <form id="whitelistForm">
+                    <div class="form-row">
+                        <input type="text" id="ipAddress" placeholder="IP 주소 (예: 192.168.1.100 또는 192.168.0.0/16)" required>
+                        <input type="text" id="description" placeholder="설명 (선택사항)">
+                        <button type="submit" class="btn btn-primary">추가</button>
+                    </div>
+                </form>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h3>✅ 허용된 IP 주소 목록</h3>
+                <button onclick="loadWhitelist()" class="btn btn-secondary">새로고침</button>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>IP 주소/대역</th>
+                        <th>설명</th>
+                        <th>추가 시간</th>
+                        <th>작업</th>
+                    </tr>
+                </thead>
+                <tbody id="whitelistTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+            
+            if (tabName === 'users') loadUsers();
+            if (tabName === 'data') {
+                loadAdminTaxonomyStats();
+                loadLabeledData();
+            }
+            if (tabName === 'duplicates') checkDuplicates();
+            if (tabName === 'security') loadBlacklist();
+            if (tabName === 'whitelist') loadWhitelist();
+        }
+
+        async function loadUsers() {
+            try {
+                const response = await fetch('/api/admin/users');
+                const users = await response.json();
+                
+                const tbody = document.getElementById('usersTable');
+                tbody.innerHTML = users.map(user => `
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${user.name}</td>
+                        <td>${user.role}</td>
+                        <td>${user.email || ''}</td>
+                        <td>${user.is_active ? '활성' : '비활성'}</td>
+                        <td>${user.last_login ? new Date(user.last_login).toLocaleString() : '없음'}</td>
+                        <td>
+                            ${user.username === 'esemoon' ? '<span style="color: #666; font-size: 12px;">메인 관리자</span>' : `<button class="btn btn-small btn-danger" onclick="deleteUser(${user.id})">삭제</button>`}
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                alert('사용자 목록 로드 실패: ' + error.message);
+            }
+        }
+
+        let adminCurrentPage = 1;
+        let adminTotalPages = 1;
+        let adminCurrentPageGroup = 1;
+        
+        async function loadAdminTaxonomyStats() {
+            try {
+                const response = await fetch('/api/admin/taxonomy_stats');
+                const stats = await response.json();
+                
+                if (stats.success) {
+                    document.getElementById('adminTotalCount').textContent = stats.total_images;
+                    document.getElementById('adminOrdersCount').textContent = stats.orders_count;
+                    document.getElementById('adminFamiliesCount').textContent = stats.families_count;
+                    document.getElementById('adminGeneraCount').textContent = stats.genera_count;
+                    document.getElementById('adminSpeciesCount').textContent = stats.species_count;
+                    
+                    // 전체 목 분포 표시
+                    const ordersHtml = stats.all_orders.map((item, index) => 
+                        `<div style="margin: 2px 0; padding: 2px 5px; background: ${index % 2 === 0 ? '#f8f9fa' : 'white'}; border-radius: 3px;">
+                            ${index + 1}. <strong>${item.order}</strong>: ${item.count}개 (${item.percentage}%)
+                        </div>`
+                    ).join('');
+                    document.getElementById('adminOrdersDistribution').innerHTML = ordersHtml;
+                }
+            } catch (error) {
+                console.error('관리자 통계 로드 오류:', error);
+            }
+        }
+        
+        async function loadLabeledData(page = 1) {
+            try {
+                const searchQuery = document.getElementById('searchInput').value.trim();
+                const typeFilter = document.getElementById('typeFilter').value;
+                
+                const params = new URLSearchParams();
+                if (searchQuery) params.append('search', searchQuery);
+                if (typeFilter) params.append('type', typeFilter);
+                params.append('page', page);
+                params.append('per_page', 10);
+                
+                const url = '/api/training_data?' + params.toString();
+                const response = await fetch(url);
+                const result = await response.json();
+                
+                if (!result.success) {
+                    throw new Error(result.error);
+                }
+                
+                updateAdminPagination(result);
+                
+                const tbody = document.getElementById('dataTable');
+                if (result.data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #666;">검색 결과가 없습니다.</td></tr>';
+                    return;
+                }
+                
+                tbody.innerHTML = result.data.map(item => {
+                    let imageSrc;
+                    if (item.pending_file_id && item.species_folder) {
+                        const speciesFolder = item.species_folder;
+                        const batchId = item.batch_id || 1;
+                        imageSrc = `/api/storage-image/${batchId}/${speciesFolder}/${item.filename}`;
+                    } else {
+                        imageSrc = `/uploads/${item.filename}`;
+                    }
+                    
+                    return `
+                    <tr>
+                        <td><img src="${imageSrc}" class="image-preview" alt="이미지"></td>
+                        <td>${item.filename}</td>
+                        <td>${item.image_type}</td>
+                        <td>${item.scientific_name || item.korean_name || `${item.order_name} > ${item.family_name}`}</td>
+                        <td>${item.reviewer_name}</td>
+                        <td>${new Date(item.created_at).toLocaleString()}</td>
+                        <td>
+                            <button class="btn btn-small btn-primary" onclick="editData(${item.id})">편집</button>
+                            <button class="btn btn-small btn-danger" onclick="deleteData(${item.id})">삭제</button>
+                        </td>
+                    </tr>
+                    `;
+                }).join('');
+            } catch (error) {
+                alert('데이터 로드 실패: ' + error.message);
+            }
+        }
+        
+        function updateAdminPagination(result) {
+            adminCurrentPage = result.page;
+            adminTotalPages = result.total_pages;
+            adminCurrentPageGroup = Math.ceil(adminCurrentPage / 10);
+            
+            let paginationHtml = document.getElementById('adminPagination');
+            if (!paginationHtml) {
+                paginationHtml = document.createElement('div');
+                paginationHtml.id = 'adminPagination';
+                paginationHtml.style.cssText = 'margin: 20px 0; text-align: center;';
+                document.getElementById('dataTable').parentNode.insertBefore(paginationHtml, document.getElementById('dataTable').nextSibling);
+            }
+            
+            // 그룹 화살표 버튼
+            let html = `<button onclick="adminPrevPageGroup()" ${adminCurrentPageGroup <= 1 ? 'disabled' : ''}>◀</button>`;
+            
+            // 페이지 번호 버튼 (1-10, 11-20, ...)
+            const startPage = (adminCurrentPageGroup - 1) * 10 + 1;
+            const endPage = Math.min(adminCurrentPageGroup * 10, adminTotalPages);
+            
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<button onclick="loadLabeledData(${i})" style="margin: 0 2px; padding: 5px 10px; border: 1px solid #ddd; cursor: pointer; ${i === adminCurrentPage ? 'background: #007bff; color: white;' : 'background: white;'}">${i}</button>`;
+            }
+            
+            html += `<button onclick="adminNextPageGroup()" ${adminCurrentPageGroup >= Math.ceil(adminTotalPages / 10) ? 'disabled' : ''}>▶</button>`;
+            paginationHtml.innerHTML = html;
+        }
+        
+        function adminPrevPageGroup() {
+            if (adminCurrentPageGroup > 1) {
+                const newPage = (adminCurrentPageGroup - 2) * 10 + 1;
+                loadLabeledData(newPage);
+            }
+        }
+        
+        function adminNextPageGroup() {
+            if (adminCurrentPageGroup < Math.ceil(adminTotalPages / 10)) {
+                const newPage = adminCurrentPageGroup * 10 + 1;
+                loadLabeledData(newPage);
+            }
+        }
+
+        document.getElementById('userForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const userData = {
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+                name: document.getElementById('name').value,
+                role: document.getElementById('role').value,
+                email: document.getElementById('email').value
+            };
+
+            try {
+                const response = await fetch('/api/admin/users', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userData)
+                });
+
+                if (response.ok) {
+                    alert('사용자가 추가되었습니다.');
+                    document.getElementById('userForm').reset();
+                    loadUsers();
+                } else {
+                    const error = await response.json();
+                    alert('사용자 추가 실패: ' + error.error);
+                }
+            } catch (error) {
+                alert('사용자 추가 실패: ' + error.message);
+            }
+        });
+
+        async function deleteUser(userId) {
+            if (userId === 1) {
+                alert('메인 관리자 계정은 삭제할 수 없습니다.');
+                return;
+            }
+            
+            if (!confirm('정말 삭제하시겠습니까?')) return;
+            
+            try {
+                const response = await fetch(`/api/admin/users/${userId}`, { method: 'DELETE' });
+                if (response.ok) {
+                    alert('사용자가 삭제되었습니다.');
+                    loadUsers();
+                } else {
+                    alert('삭제 실패');
+                }
+            } catch (error) {
+                alert('삭제 실패: ' + error.message);
+            }
+        }
+
+        async function editData(dataId) {
+            try {
+                // 데이터 정보 가져오기
+                const response = await fetch(`/api/admin/labeled-data/${dataId}`);
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error);
+                }
+                
+                // 타입에 따라 해당 라벨링 페이지로 이동
+                if (data.image_type === 'detection') {
+                    // 탐지 라벨링 페이지로 이동 (데이터 전달)
+                    const editUrl = `/labeling_detection?edit=${dataId}`;
+                    window.open(editUrl, '_blank');
+                } else if (data.image_type === 'classification') {
+                    // 분류 라벨링 페이지로 이동 (데이터 전달)
+                    const editUrl = `/labeling_classification?edit=${dataId}`;
+                    window.open(editUrl, '_blank');
+                } else {
+                    alert('알 수 없는 데이터 타입입니다.');
+                }
+            } catch (error) {
+                alert('편집 데이터 로드 실패: ' + error.message);
+            }
+        }
+
+        async function deleteData(dataId) {
+            if (!confirm('정말 삭제하시겠습니까?')) return;
+            
+            try {
+                const response = await fetch(`/api/admin/labeled-data/${dataId}`, { method: 'DELETE' });
+                if (response.ok) {
+                    alert('데이터가 삭제되었습니다.');
+                    loadLabeledData();
+                } else {
+                    alert('삭제 실패');
+                }
+            } catch (error) {
+                alert('삭제 실패: ' + error.message);
+            }
+        }
+
+        async function loadBlacklist() {
+            try {
+                const response = await fetch('/api/admin/blacklist');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+                
+                const blacklistData = result.blacklist || {};
+                const tbody = document.getElementById('blacklistTable');
+                
+                if (Object.keys(blacklistData).length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #666;">차단된 IP가 없습니다.</td></tr>';
+                } else {
+                    tbody.innerHTML = Object.entries(blacklistData).map(([ip, info]) => {
+                        const blockTime = info.first_blocked || info.blocked_at || info.last_attempt;
+                        return `
+                        <tr>
+                            <td><code>${ip}</code></td>
+                            <td>${info.reason || '상세 정보 없음'}</td>
+                            <td>${info.attempts || 1}</td>
+                            <td>${blockTime ? new Date(blockTime).toLocaleString() : '알 수 없음'}</td>
+                            <td>
+                                <button class="btn btn-small btn-success" onclick="unblockIP('${ip}')">차단해제</button>
+                            </td>
+                        </tr>
+                        `;
+                    }).join('');
+                }
+            } catch (error) {
+                console.error('블랙리스트 로드 오류:', error);
+                document.getElementById('blacklistTable').innerHTML = 
+                    '<tr><td colspan="5" style="text-align: center; color: red;">블랙리스트 로드 실패: ' + error.message + '</td></tr>';
+            }
+        }
+
+        function addManualBlock() {
+            const ip = prompt('IP 주소를 입력하세요:');
+            if (!ip) return;
+            
+            const reason = prompt('차단 사유를 입력하세요:', '관리자 수동 차단');
+            if (!reason) return;
+            
+            fetch('/api/admin/blacklist', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ip: ip, reason: reason })
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    alert(result.message);
+                    loadBlacklist();
+                } else {
+                    alert('추가 실패: ' + result.error);
+                }
+            })
+            .catch(error => {
+                alert('추가 실패: ' + error.message);
+            });
+        }
+
+        async function unblockIP(ip) {
+            if (!confirm(`IP ${ip}의 차단을 해제하시겠습니까?`)) return;
+            
+            try {
+                const response = await fetch(`/api/admin/blacklist/${ip}`, { method: 'DELETE' });
+                if (response.ok) {
+                    alert('차단이 해제되었습니다.');
+                    loadBlacklist();
+                } else {
+                    alert('차단 해제 실패');
+                }
+            } catch (error) {
+                alert('차단 해제 실패: ' + error.message);
+            }
+        }
+
+        async function loadWhitelist() {
+            try {
+                const response = await fetch('/api/admin/whitelist');
+                const whitelist = await response.json();
+                
+                const tbody = document.getElementById('whitelistTable');
+                if (whitelist.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #666;">등록된 IP가 없습니다.</td></tr>';
+                } else {
+                    tbody.innerHTML = whitelist.map(item => `
+                        <tr>
+                            <td><code>${item.ip_address}</code></td>
+                            <td>${item.description || '설명 없음'}</td>
+                            <td>${new Date(item.created_at).toLocaleString()}</td>
+                            <td>
+                                ${item.is_default ? '<span style="color: #666; font-size: 12px;">기본 설정</span>' : `<button class="btn btn-small btn-danger" onclick="removeFromWhitelist('${item.ip_address}')">삭제</button>`}
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('화이트리스트 로드 오류:', error);
+                document.getElementById('whitelistTable').innerHTML = 
+                    '<tr><td colspan="4" style="text-align: center; color: red;">화이트리스트 로드 실패</td></tr>';
+            }
+        }
+
+        document.getElementById('whitelistForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const ipData = {
+                ip_address: document.getElementById('ipAddress').value,
+                description: document.getElementById('description').value
+            };
+
+            try {
+                const response = await fetch('/api/admin/whitelist', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(ipData)
+                });
+
+                if (response.ok) {
+                    alert('IP 주소가 추가되었습니다.');
+                    document.getElementById('whitelistForm').reset();
+                    loadWhitelist();
+                } else {
+                    const error = await response.json();
+                    alert('IP 추가 실패: ' + error.error);
+                }
+            } catch (error) {
+                alert('IP 추가 실패: ' + error.message);
+            }
+        });
+
+        async function removeFromWhitelist(ip) {
+            if (!confirm(`IP ${ip}를 화이트리스트에서 제거하시겠습니까?`)) return;
+            
+            try {
+                const response = await fetch(`/api/admin/whitelist/${encodeURIComponent(ip)}`, { method: 'DELETE' });
+                if (response.ok) {
+                    alert('IP가 제거되었습니다.');
+                    loadWhitelist();
+                } else {
+                    alert('IP 제거 실패');
+                }
+            } catch (error) {
+                alert('IP 제거 실패: ' + error.message);
+            }
+        }
+
+        // 중복 일괄 정리 기능
+        async function cleanDuplicates() {
+            if (!confirm('중복 파일을 자동으로 정리하시겠습니까?\n(가장 오래된 것을 남기고 나머지 삭제)')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/admin/duplicates/clean', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(data.message);
+                    checkDuplicates(); // 다시 검사
+                } else {
+                    alert('정리 실패: ' + data.error);
+                }
+            } catch (error) {
+                alert('정리 중 오류가 발생했습니다: ' + error.message);
+            }
+        }
+
+        // 중복 검사 기능
+        async function checkDuplicates() {
+            document.getElementById('duplicatesLoading').style.display = 'block';
+            document.getElementById('duplicatesSummary').style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/admin/duplicates/check');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const summary = data.summary;
+                    const infoHtml = `
+                        <div class="row">
+                            <div class="col-md-4"><strong>전체 레코드:</strong> ${summary.total_records}개</div>
+                            <div class="col-md-4"><strong>파일명 중복:</strong> ${summary.filename_duplicates}개</div>
+                            <div class="col-md-4"><strong>pending_file_id 중복:</strong> ${summary.pending_id_duplicates}개</div>
+                        </div>
+                        ${summary.filename_duplicates > 0 || summary.pending_id_duplicates > 0 ? 
+                            '<div style="margin-top: 10px; color: #856404;"><strong>⚠️ 중복 파일이 발견되었습니다. 상세 관리 페이지에서 제거하세요.</strong></div>' : 
+                            '<div style="margin-top: 10px; color: #155724;"><strong>✅ 중복 파일이 없습니다!</strong></div>'
+                        }
+                    `;
+                    
+                    document.getElementById('duplicatesInfo').innerHTML = infoHtml;
+                    document.getElementById('duplicatesSummary').style.display = 'block';
+                } else {
+                    alert('오류: ' + data.error);
+                }
+            } catch (error) {
+                alert('검사 중 오류가 발생했습니다: ' + error.message);
+            } finally {
+                document.getElementById('duplicatesLoading').style.display = 'none';
+            }
+        }
+
+        // 검색 기능
+        function handleSearch(event) {
+            if (event.key === 'Enter') {
+                loadLabeledData();
+            }
+        }
+        
+        // 페이지 로드 시 사용자 목록 로드
+        loadUsers();
+    </script>
+    
+    <!-- 로그아웃 버튼 -->
+    <a href="/logout" style="position: fixed; bottom: 20px; right: 20px; background: #e74c3c; color: white; padding: 10px 15px; border-radius: 50px; text-decoration: none; font-size: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 9999;">🚺 로그아웃</a>
+</body>
+</html>

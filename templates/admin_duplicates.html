@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>중복 파일 관리 - 관리자</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .duplicate-group { border: 1px solid #dee2e6; margin-bottom: 20px; padding: 15px; border-radius: 5px; }
+        .duplicate-record { background: #f8f9fa; margin: 5px 0; padding: 10px; border-radius: 3px; }
+        .btn-danger { margin: 5px; }
+        .summary-card { background: #e3f2fd; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>중복 파일 관리</h2>
+            <div>
+                <button class="btn btn-primary" onclick="checkDuplicates()">중복 검사</button>
+                <a href="/admin" class="btn btn-secondary">관리자 메인</a>
+            </div>
+        </div>
+
+        <div id="loading" class="text-center" style="display: none;">
+            <div class="spinner-border" role="status"></div>
+            <p>중복 검사 중...</p>
+        </div>
+
+        <div id="summary" style="display: none;"></div>
+        <div id="duplicates"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        async function checkDuplicates() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('summary').style.display = 'none';
+            document.getElementById('duplicates').innerHTML = '';
+
+            try {
+                const response = await fetch('/api/admin/duplicates/check');
+                const data = await response.json();
+
+                if (data.success) {
+                    displaySummary(data.summary);
+                    displayDuplicates(data.duplicates);
+                } else {
+                    alert('오류: ' + data.error);
+                }
+            } catch (error) {
+                alert('검사 중 오류가 발생했습니다: ' + error.message);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        function displaySummary(summary) {
+            const summaryHtml = `
+                <div class="summary-card">
+                    <h4>중복 검사 결과</h4>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>전체 레코드:</strong> ${summary.total_records}개
+                        </div>
+                        <div class="col-md-4">
+                            <strong>파일명 중복:</strong> ${summary.filename_duplicates}개
+                        </div>
+                        <div class="col-md-4">
+                            <strong>pending_file_id 중복:</strong> ${summary.pending_id_duplicates}개
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('summary').innerHTML = summaryHtml;
+            document.getElementById('summary').style.display = 'block';
+        }
+
+        function displayDuplicates(duplicates) {
+            const container = document.getElementById('duplicates');
+            
+            if (duplicates.length === 0) {
+                container.innerHTML = '<div class="alert alert-success">중복 파일이 없습니다!</div>';
+                return;
+            }
+
+            let html = '<h4>중복 파일 목록</h4>';
+            
+            duplicates.forEach(dup => {
+                html += `
+                    <div class="duplicate-group">
+                        <h5>${dup.type}: ${dup.key} (${dup.count}개)</h5>
+                        ${dup.records.map(record => `
+                            <div class="duplicate-record">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <strong>ID:</strong> ${record.id} | 
+                                        <strong>파일명:</strong> ${record.filename || 'N/A'} | 
+                                        <strong>검수자:</strong> ${record.reviewer_name || 'N/A'} |
+                                        <strong>생성일:</strong> ${new Date(record.created_at).toLocaleString()}
+                                    </div>
+                                    <div class="col-md-4 text-end">
+                                        <button class="btn btn-danger btn-sm" onclick="removeDuplicate(${record.id})">
+                                            삭제
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        async function removeDuplicate(id) {
+            if (!confirm(`ID ${id} 레코드를 삭제하시겠습니까?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/admin/duplicates/remove', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: id })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('삭제되었습니다.');
+                    checkDuplicates(); // 다시 검사
+                } else {
+                    alert('삭제 실패: ' + data.error);
+                }
+            } catch (error) {
+                alert('삭제 중 오류가 발생했습니다: ' + error.message);
+            }
+        }
+
+        // 페이지 로드 시 자동 검사
+        window.onload = function() {
+            checkDuplicates();
+        };
+    </script>
+</body>
+</html>

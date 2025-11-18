@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지 - 강화된 보안</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .admin-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { padding: 10px 20px; border: 1px solid #ddd; background: white; cursor: pointer; }
+        .tab-btn.active { background: #3182f6; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .user-form { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px; }
+        .form-row input, .form-row select { padding: 12px; font-size: 14px; }
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th, .data-table td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        .data-table th { background: #f8f9fa; }
+        .btn-small { padding: 5px 10px; font-size: 12px; margin: 2px; }
+        .image-preview { max-width: 100px; max-height: 100px; object-fit: cover; }
+        .security-info { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .ip-code { background: #f8f9fa; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        .attempts-badge { background: #e74c3c; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; }
+        .auto-badge { background: #f39c12; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; }
+        .manual-badge { background: #3498db; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; }
+        .malicious-reason { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">🛠️ 관리자 페이지 - 강화된 보안</h1>
+        <div class="nav-links">
+            <a href="/" class="nav-link">탐지/분류</a>
+            <a href="/labeling_detection" class="nav-link">탐지 모델 라벨링</a>
+            <a href="/labeling_classification" class="nav-link">분류 모델 라벨링</a>
+            <a href="/data_viewer" class="nav-link">데이터 조회</a>
+            <a href="/admin" class="nav-link active">관리자</a>
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <div class="admin-tabs">
+            <button class="tab-btn active" onclick="showTab('security')">🚫 보안 관리</button>
+            <button class="tab-btn" onclick="showTab('users')">👥 사용자 관리</button>
+            <button class="tab-btn" onclick="showTab('data')">📊 데이터 관리</button>
+            <button class="tab-btn" onclick="showTab('whitelist')">✅ 화이트리스트</button>
+        </div>
+
+        <!-- 보안 관리 탭 (기본 활성화) -->
+        <div id="security-tab" class="tab-content active">
+            <div style="margin-bottom: 20px;">
+                <h3>🚫 블랙리스트 관리 (강화된 버전)</h3>
+                <div style="margin-bottom: 10px;">
+                    <button onclick="loadBlacklist()" class="btn btn-secondary">🔄 새로고침</button>
+                    <button onclick="addManualBlock()" class="btn btn-primary">➕ 수동 차단 추가</button>
+                    <button onclick="clearAllBlacklist()" class="btn btn-danger">🗑️ 전체 초기화</button>
+                </div>
+                <div class="security-info">
+                    <h4>🤖 자동 차단 패턴:</h4>
+                    <ul style="margin: 10px 0; font-size: 14px; color: #666;">
+                        <li><strong>악성 경로:</strong> /wp-admin, /phpmyadmin, /.env, /shell, /cmd, /eval 등</li>
+                        <li><strong>악성 메소드:</strong> CONNECT, TRACE, TRACK</li>
+                        <li><strong>악성 User-Agent:</strong> bot, crawler, scanner, exploit 도구 등</li>
+                        <li><strong>공격 패턴:</strong> SQL 인젝션, XSS, 디렉토리 순회, 명령어 인젝션</li>
+                        <li><strong>비정상 요청:</strong> 프록시 헤더, 바이너리 데이터, TLS handshake</li>
+                    </ul>
+                </div>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>IP 주소</th>
+                        <th>차단 사유</th>
+                        <th>시도 횟수</th>
+                        <th>차단 시간</th>
+                        <th>마지막 시도</th>
+                        <th>차단 방식</th>
+                        <th>작업</th>
+                    </tr>
+                </thead>
+                <tbody id="blacklistTable"></tbody>
+            </table>
+        </div>
+
+        <!-- 사용자 관리 탭 -->
+        <div id="users-tab" class="tab-content">
+            <div class="user-form">
+                <h3>새 사용자 추가</h3>
+                <form id="userForm">
+                    <div class="form-row">
+                        <input type="text" id="username" placeholder="사용자명" required>
+                        <input type="password" id="password" placeholder="비밀번호" required>
+                        <input type="text" id="name" placeholder="이름" required>
+                        <select id="role">
+                            <option value="reviewer">검수자</option>
+                            <option value="admin">관리자</option>
+                        </select>
+                        <input type="email" id="email" placeholder="이메일">
+                    </div>
+                    <button type="submit" class="btn btn-primary">사용자 추가</button>
+                </form>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>사용자명</th>
+                        <th>이름</th>
+                        <th>역할</th>
+                        <th>이메일</th>
+                        <th>상태</th>
+                        <th>마지막 로그인</th>
+                        <th>작업</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTable"></tbody>
+            </table>
+        </div>
+
+        <!-- 데이터 관리 탭 -->
+        <div id="data-tab" class="tab-content">
+            <div style="margin-bottom: 20px;">
+                <input type="text" id="searchInput" placeholder="검색..." style="padding: 8px; width: 300px;" onkeyup="handleSearch(event)">
+                <select id="typeFilter" style="padding: 8px;" onchange="loadLabeledData()">
+                    <option value="">모든 타입</option>
+                    <option value="detection">탐지</option>
+                    <option value="classification">분류</option>
+                </select>
+                <button onclick="loadLabeledData()" class="btn btn-secondary">새로고침</button>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>이미지</th>
+                        <th>파일명</th>
+                        <th>타입</th>
+                        <th>분류 정보</th>
+                        <th>검수자</th>
+                        <th>생성일</th>
+                        <th>작업</th>
+                    </tr>
+                </thead>
+                <tbody id="dataTable"></tbody>
+            </table>
+        </div>
+
+        <!-- 화이트리스트 관리 탭 -->
+        <div id="whitelist-tab" class="tab-content">
+            <div class="user-form">
+                <h3>✅ 새 IP 주소 추가</h3>
+                <form id="whitelistForm">
+                    <div class="form-row">
+                        <input type="text" id="ipAddress" placeholder="IP 주소 (예: 192.168.1.100 또는 192.168.0.0/16)" required>
+                        <input type="text" id="description" placeholder="설명 (선택사항)">
+                        <button type="submit" class="btn btn-primary">추가</button>
+                    </div>
+                </form>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>IP 주소/대역</th>
+                        <th>설명</th>
+                        <th>추가 시간</th>
+                        <th>작업</th>
+                    </tr>
+                </thead>
+                <tbody id="whitelistTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+            
+            if (tabName === 'users') loadUsers();
+            if (tabName === 'data') loadLabeledData();
+            if (tabName === 'security') loadBlacklist();
+            if (tabName === 'whitelist') loadWhitelist();
+        }
+
+        async function loadBlacklist() {
+            try {
+                const response = await fetch('/api/admin/blacklist');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+                
+                const blacklistData = result.blacklist || {};
+                const tbody = document.getElementById('blacklistTable');
+                
+                if (Object.keys(blacklistData).length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #666;">차단된 IP가 없습니다.</td></tr>';
+                } else {
+                    tbody.innerHTML = Object.entries(blacklistData).map(([ip, info]) => {
+                        const blockTime = info.first_blocked || info.blocked_at || info.last_attempt;
+                        const lastAttempt = info.last_attempt;
+                        const blockedBy = info.blocked_by || 'unknown';
+                        const reasonClass = info.reason && info.reason.includes('악성') ? 'malicious-reason' : '';
+                        
+                        return `
+                        <tr>
+                            <td><code class="ip-code">${ip}</code></td>
+                            <td class="${reasonClass}">${info.reason || '상세 정보 없음'}</td>
+                            <td><span class="attempts-badge">${info.attempts || 1}</span></td>
+                            <td>${blockTime ? new Date(blockTime).toLocaleString() : '알 수 없음'}</td>
+                            <td>${lastAttempt ? new Date(lastAttempt).toLocaleString() : '-'}</td>
+                            <td><span class="${blockedBy === 'auto_detection' ? 'auto-badge' : 'manual-badge'}">${blockedBy === 'auto_detection' ? '자동감지' : '수동추가'}</span></td>
+                            <td>
+                                <button class="btn btn-small btn-success" onclick="unblockIP('${ip}')">차단해제</button>
+                                <button class="btn btn-small btn-info" onclick="showIPDetails('${ip}', ${JSON.stringify(info).replace(/"/g, '&quot;')})">상세정보</button>
+                            </td>
+                        </tr>
+                        `;
+                    }).join('');
+                }
+            } catch (error) {
+                console.error('블랙리스트 로드 오류:', error);
+                document.getElementById('blacklistTable').innerHTML = 
+                    '<tr><td colspan="7" style="text-align: center; color: red;">블랙리스트 로드 실패: ' + error.message + '</td></tr>';
+            }
+        }
+        
+        function addManualBlock() {
+            const ip = prompt('IP 주소를 입력하세요:');
+            if (!ip) return;
+            
+            const reason = prompt('차단 사유를 입력하세요:', '관리자 수동 차단');
+            if (!reason) return;
+            
+            fetch('/api/admin/blacklist', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ip: ip, reason: reason })
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    alert('✅ ' + result.message);
+                    loadBlacklist();
+                } else {
+                    alert('❌ 추가 실패: ' + result.error);
+                }
+            })
+            .catch(error => {
+                alert('❌ 추가 실패: ' + error.message);
+            });
+        }
+        
+        function showIPDetails(ip, info) {
+            const details = `
+📊 IP 상세 정보: ${ip}
+
+차단 사유: ${info.reason || '알 수 없음'}
+시도 횟수: ${info.attempts || 1}
+처음 차단: ${info.first_blocked ? new Date(info.first_blocked).toLocaleString() : '알 수 없음'}
+마지막 시도: ${info.last_attempt ? new Date(info.last_attempt).toLocaleString() : '알 수 없음'}
+메소드: ${info.method || '알 수 없음'}
+URL: ${info.url || '알 수 없음'}
+User-Agent: ${info.user_agent || '알 수 없음'}
+차단 방식: ${info.blocked_by === 'auto_detection' ? '자동 감지' : '수동 추가'}
+            `;
+            alert(details);
+        }
+
+        async function unblockIP(ip) {
+            if (!confirm(`⚠️ IP ${ip}의 차단을 해제하시겠습니까?\n\n해제 후 해당 IP에서 다시 악성 요청이 오면 자동으로 다시 차단됩니다.`)) return;
+            
+            try {
+                const response = await fetch(`/api/admin/blacklist/${ip}`, { method: 'DELETE' });
+                if (response.ok) {
+                    alert('✅ 차단이 해제되었습니다.');
+                    loadBlacklist();
+                } else {
+                    alert('❌ 차단 해제 실패');
+                }
+            } catch (error) {
+                alert('❌ 차단 해제 실패: ' + error.message);
+            }
+        }
+
+        function clearAllBlacklist() {
+            if (!confirm('⚠️ 모든 블랙리스트를 초기화하시겠습니까?\n\n이 작업은 되돌릴 수 없습니다.')) return;
+            
+            // 구현 필요 시 API 추가
+            alert('이 기능은 아직 구현되지 않았습니다.');
+        }
+
+        // 기존 함수들 (사용자, 데이터, 화이트리스트 관리)
+        async function loadUsers() {
+            try {
+                const response = await fetch('/api/admin/users');
+                const users = await response.json();
+                
+                const tbody = document.getElementById('usersTable');
+                tbody.innerHTML = users.map(user => `
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${user.name}</td>
+                        <td>${user.role}</td>
+                        <td>${user.email || ''}</td>
+                        <td>${user.is_active ? '활성' : '비활성'}</td>
+                        <td>${user.last_login ? new Date(user.last_login).toLocaleString() : '없음'}</td>
+                        <td>
+                            ${user.username === 'esemoon' ? '<span style="color: #666; font-size: 12px;">메인 관리자</span>' : `<button class="btn btn-small btn-danger" onclick="deleteUser(${user.id})">삭제</button>`}
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                alert('사용자 목록 로드 실패: ' + error.message);
+            }
+        }
+
+        async function loadLabeledData(page = 1) {
+            // 기존 구현 유지
+            alert('데이터 관리 기능은 기존 관리자 페이지를 사용하세요.');
+        }
+
+        async function loadWhitelist() {
+            try {
+                const response = await fetch('/api/admin/whitelist');
+                const whitelist = await response.json();
+                
+                const tbody = document.getElementById('whitelistTable');
+                if (whitelist.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #666;">등록된 IP가 없습니다.</td></tr>';
+                } else {
+                    tbody.innerHTML = whitelist.map(item => `
+                        <tr>
+                            <td><code class="ip-code">${item.ip_address}</code></td>
+                            <td>${item.description || '설명 없음'}</td>
+                            <td>${new Date(item.created_at).toLocaleString()}</td>
+                            <td>
+                                ${item.is_default ? '<span style="color: #666; font-size: 12px;">기본 설정</span>' : `<button class="btn btn-small btn-danger" onclick="removeFromWhitelist('${item.ip_address}')">삭제</button>`}
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('화이트리스트 로드 오류:', error);
+                document.getElementById('whitelistTable').innerHTML = 
+                    '<tr><td colspan="4" style="text-align: center; color: red;">화이트리스트 로드 실패</td></tr>';
+            }
+        }
+
+        // 페이지 로드 시 보안 관리 탭 로드
+        loadBlacklist();
+    </script>
+    
+    <!-- 로그아웃 버튼 -->
+    <a href="/logout" style="position: fixed; bottom: 20px; right: 20px; background: #e74c3c; color: white; padding: 10px 15px; border-radius: 50px; text-decoration: none; font-size: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 9999;">🚪 로그아웃</a>
+</body>
+</html>

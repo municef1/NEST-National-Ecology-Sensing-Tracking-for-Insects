@@ -17,6 +17,8 @@ import json
 # 로컬 모듈 임포트
 from detector import InsectDetector
 from order_classifier import OrderClassifier
+# from classifier import InsectClassifier
+# from database import Database
 from utils import (
     generate_unique_filename,
     ensure_dir,
@@ -206,10 +208,101 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/labeling')
+@login_required
+def labeling():
+    """라벨링 페이지"""
+    return render_template('labeling.html')
 
 
+@app.route('/labeling_detection')
+@login_required
+def labeling_detection():
+    """탐지 모델 라벨링 페이지"""
+    return render_template('labeling_advanced.html')
 
 
+@app.route('/labeling_classification')
+@login_required
+def labeling_classification():
+    """분류 모델 라벨링 페이지"""
+    return render_template('labeling_classification.html')
+
+
+@app.route('/data_viewer')
+@login_required
+def data_viewer():
+    """학습 데이터 조회 페이지"""
+    return render_template('data_viewer.html')
+
+
+@app.route('/admin')
+@admin_required
+def admin_page():
+    """관리자 페이지"""
+    return render_template('admin.html')
+
+
+@app.route('/admin/security')
+@admin_required
+def admin_security_page():
+    """강화된 보안 관리 페이지"""
+    return render_template('admin_enhanced.html')
+
+
+@app.route('/api/admin/blacklist', methods=['GET'])
+@admin_required
+def get_blacklist():
+    """블랙리스트 조회 (강화된 버전)"""
+    try:
+        blacklist = enhanced_blacklist_manager.get_all()
+        return jsonify({
+            'success': True,
+            'blacklist': blacklist,
+            'count': len(blacklist)
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/admin/blacklist/<ip>', methods=['DELETE'])
+@admin_required
+def remove_from_blacklist(ip):
+    """블랙리스트에서 IP 제거 (강화된 버전)"""
+    try:
+        if enhanced_blacklist_manager.remove_ip(ip):
+            return jsonify({
+                'success': True,
+                'message': f'IP {ip}가 블랙리스트에서 제거되었습니다.'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'message': f'IP {ip}를 찾을 수 없습니다.'
+            }), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/admin/blacklist', methods=['POST'])
+@admin_required
+def add_to_blacklist_manual():
+    """수동으로 블랙리스트에 IP 추가 (강화된 버전)"""
+    try:
+        data = request.get_json()
+        ip = data.get('ip')
+        reason = data.get('reason', '관리자 수동 차단')
+        
+        if not ip:
+            return jsonify({'error': 'IP 주소가 필요합니다.'}), 400
+        
+        enhanced_blacklist_manager.add_ip(ip, reason, 'MANUAL', '', '관리자 수동 추가')
+        return jsonify({
+            'success': True,
+            'message': f'IP {ip}가 블랙리스트에 추가되었습니다.'
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/labeling_improved')
