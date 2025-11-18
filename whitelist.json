@@ -29,34 +29,6 @@
     "is_default": true,
     "created_at": "2024-01-01T00:00:00Z"
   },
-  {
-    "ip_address": "175.193.255.236",
-    "description": "메인 사용자 IP",
-    "is_default": false,
-    "created_at": "2024-01-01T00:00:00Z"
-  },
-  {
-    "ip_address": "124.61.16.167",
-    "description": "우다현",
-    "is_default": false,
-    "created_at": "2025-10-25T12:30:32.738084Z"
-  },
-  {
-    "ip_address": "203.237.153.114",
-    "description": "우다현2",
-    "is_default": false,
-    "created_at": "2025-10-27T09:35:01.315571Z"
-  },
-  {
-    "ip_address": "59.13.5.211",
-    "description": "홍용기",
-    "is_default": false,
-    "created_at": "2025-11-18T22:39:12.309356Z"
-  },
-  {
-    "ip_address": "49.169.225.157",
-    "description": "홍용기2",
-    "is_default": false,
-    "created_at": "2025-11-18T22:40:03.332358Z"
-  }
+
+
 ]
