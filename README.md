@@ -53,6 +53,23 @@ AI 기반 곤충 탐지 및 분류 시스템 개발 프로젝트입니다.
 - **Storage**: 로컬 파일 시스템
 - **Security**: IP 화이트리스트, 악성 패턴 감지
 
+## 📸 시스템 데모
+
+### 1단계: 이미지 업로드
+![이미지 업로드](docs/step1_upload.png)
+
+### 2단계: 곤충 탐지
+![곤충 탐지](docs/step2_detection.png)
+
+### 3단계: 목 분류
+![목 분류](docs/step3_classification.png)
+
+### 4단계: 위험도 평가
+![위험도 평가](docs/step4_risk.png)
+
+### 5단계: 종 정보 제공
+![종 정보](docs/step5_info.png)
+
 ## ✨ 주요 기능
 
 ### 🎯 **2단계 AI 파이프라인**
