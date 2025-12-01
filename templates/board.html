@@ -1,0 +1,1975 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>NEST 곤충생태지도 - 게시판</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+      background: #FFFFFF;
+      color: #1F2937;
+      line-height: 1.6;
+      padding-bottom: 100px;
+    }
+
+    /* 상단 헤더 */
+    .top-header {
+      background: linear-gradient(135deg, #3182F6 0%, #4285F4 100%);
+      padding: 12px 16px;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .app-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .app-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #34A8C7 0%, #8BC34A 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .app-title-text {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* 정보 배너 */
+    .info-banner {
+      background: linear-gradient(135deg, #E8F0FE 0%, #DBEAFE 100%);
+      padding: 16px;
+      margin: 16px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .info-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .info-content {
+      flex: 1;
+    }
+
+    .info-title {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 4px;
+      color: #1F2937;
+    }
+
+    .info-text {
+      font-size: 13px;
+      color: #6B7280;
+      line-height: 1.5;
+    }
+
+    /* 섹션 스타일 */
+    .section {
+      margin: 24px 16px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #1F2937;
+    }
+
+    .location-info {
+      font-size: 12px;
+      font-weight: 400;
+      color: #6B7280;
+      margin-top: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 480px) {
+      .location-info {
+        font-size: 11px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        white-space: normal;
+      }
+    }
+
+    /* 현재 위치 표시 */
+    .current-location {
+      background: linear-gradient(135deg, #E8F0FE 0%, #DBEAFE 100%);
+      padding: 12px 16px;
+      margin: 16px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #1F2937;
+      font-weight: 500;
+    }
+
+    .current-location-icon {
+      font-size: 18px;
+    }
+
+    /* 내 주변 위험종 알림 */
+    .nearby-risk-alert {
+      background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+      border: 2px solid #F44336;
+      padding: 16px;
+      margin: 16px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(244, 67, 54, 0.2);
+    }
+
+    .nearby-risk-alert-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      font-weight: 700;
+      font-size: 16px;
+      color: #991B1B;
+    }
+
+    .nearby-risk-alert-icon {
+      font-size: 24px;
+    }
+
+    .nearby-risk-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nearby-risk-item {
+      background: white;
+      padding: 12px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nearby-risk-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .nearby-risk-item-image {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .nearby-risk-item-info {
+      flex: 1;
+    }
+
+    .nearby-risk-item-species {
+      font-weight: 600;
+      font-size: 14px;
+      color: #1F2937;
+      margin-bottom: 4px;
+    }
+
+    .nearby-risk-item-distance {
+      font-size: 12px;
+      color: #6B7280;
+    }
+
+    /* 이미지 상세 모달 */
+    .image-detail-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 10000;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 0;
+      overflow-y: auto;
+      backdrop-filter: blur(4px);
+    }
+
+    .image-detail-modal.active {
+      display: flex;
+    }
+
+    .image-detail-content {
+      background: white;
+      border-radius: 0;
+      width: 100%;
+      max-width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: visible;
+    }
+
+    @media (min-width: 768px) {
+      .image-detail-modal {
+        align-items: center;
+        padding: 20px;
+      }
+      .image-detail-content {
+        border-radius: 16px;
+        max-width: 600px;
+        min-height: auto;
+        max-height: 90vh;
+        overflow: hidden;
+      }
+    }
+
+    .image-detail-header {
+      padding: 16px;
+      border-bottom: 1px solid #E5E7EB;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .image-detail-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1F2937;
+    }
+
+    .image-detail-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #6B7280;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .image-detail-close:active {
+      background: #F3F4F6;
+    }
+
+    .image-detail-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      background: white;
+    }
+
+    .species-info-section {
+      margin-bottom: 20px;
+      padding: 20px;
+      background: #F9FAFB;
+      border-radius: 12px;
+      border-left: 4px solid #3182F6;
+    }
+
+    .species-name {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1F2937;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .species-scientific {
+      font-size: 14px;
+      color: #6B7280;
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding: 12px;
+      background: white;
+      border-radius: 8px;
+    }
+
+    .info-label {
+      font-weight: 700;
+      color: #374151;
+      min-width: 80px;
+      font-size: 14px;
+    }
+
+    .info-value {
+      flex: 1;
+      color: #1F2937;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .image-detail-image {
+      width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      background: #000;
+      margin-bottom: 0;
+    }
+
+    @media (min-width: 768px) {
+      .image-detail-image {
+        max-height: 300px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        background: transparent;
+      }
+    }
+
+    /* 갤러리 아이템 압축 스타일 */
+    .gallery-item-compact {
+      display: flex;
+      flex-direction: column;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #E5E7EB;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      position: relative;
+    }
+
+    .gallery-item-compact:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      border-color: #3182F6;
+    }
+
+    .gallery-item-compact-header {
+      position: relative;
+      width: 100%;
+      height: 160px;
+      overflow: hidden;
+      background: #F3F4F6;
+    }
+
+    .gallery-item-compact-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .gallery-item-compact:hover .gallery-item-compact-image {
+      transform: scale(1.1);
+    }
+
+    .gallery-item-compact-actions {
+      position: absolute;
+      bottom: 6px;
+      left: 6px;
+      right: 6px;
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .gallery-item-compact-action {
+      background: rgba(255, 255, 255, 0.95);
+      border: none;
+      border-radius: 16px;
+      padding: 4px 10px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #1F2937;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex: 1;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .gallery-item-compact-action:hover {
+      background: white;
+    }
+
+    .gallery-item-compact-action:active {
+      transform: scale(0.95);
+    }
+
+    .gallery-item-compact-action.liked {
+      background: rgba(254, 226, 226, 0.95);
+      color: #DC2626;
+    }
+
+    .section-icon {
+      font-size: 20px;
+    }
+
+    .view-all-link {
+      font-size: 14px;
+      color: #3182F6;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .view-all-link:active {
+      opacity: 0.7;
+    }
+
+    /* 빈 상태 */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #9CA3AF;
+    }
+
+    .empty-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .empty-text {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .empty-subtext {
+      font-size: 12px;
+      color: #9CA3AF;
+    }
+
+    /* 관찰 카드 */
+    .observation-card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border: 1px solid #E5E7EB;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .observation-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    .observation-card-image {
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .observation-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .observation-image {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #F3F4F6;
+    }
+
+    .observation-info {
+      flex: 1;
+    }
+
+    .observation-species {
+      font-weight: 600;
+      font-size: 15px;
+      color: #1F2937;
+      margin-bottom: 4px;
+    }
+
+    .observation-location {
+      font-size: 12px;
+      color: #6B7280;
+    }
+
+    .observation-time {
+      font-size: 11px;
+      color: #9CA3AF;
+    }
+
+    /* 갤러리 그리드 */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .gallery-item {
+      display: flex;
+      flex-direction: column;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #E5E7EB;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      position: relative;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      border-color: #3182F6;
+    }
+
+    .gallery-item-header {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      background: #F3F4F6;
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .gallery-item:hover .gallery-image {
+      transform: scale(1.1);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+      padding: 12px;
+      color: white;
+    }
+
+    .gallery-content {
+      padding: 16px;
+    }
+
+    .gallery-info {
+      font-size: 12px;
+    }
+
+    .gallery-species {
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 15px;
+      color: #1F2937;
+    }
+
+    .gallery-location {
+      font-size: 12px;
+      color: #6B7280;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .gallery-datetime {
+      font-size: 12px;
+      color: #6B7280;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .gallery-weather {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      padding: 6px 10px;
+      background: #F5F7FA;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+
+    .weather-icon {
+      font-size: 16px;
+    }
+
+    .weather-temp {
+      font-weight: 600;
+      color: #1F2937;
+    }
+
+    .gallery-actions-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #E5E7EB;
+    }
+
+    /* 좋아요/댓글 버튼 */
+    .gallery-actions {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .action-btn {
+      background: #F5F7FA;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #1F2937;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .action-btn:hover {
+      background: #E5E7EB;
+    }
+
+    .action-btn:active {
+      transform: scale(0.95);
+    }
+
+    .action-btn.liked {
+      background: #FEE2E2;
+      color: #DC2626;
+    }
+
+    .gallery-item-compact-action.liked {
+      background: transparent !important;
+    }
+
+    .gallery-item-compact-action.liked .like-count {
+      color: #DC2626 !important;
+    }
+
+    .action-btn .action-icon {
+      font-size: 14px;
+    }
+
+    .action-btn .comment-count {
+      font-size: 12px;
+    }
+
+    /* 댓글 모달 */
+    .comment-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .comment-modal.active {
+      display: flex;
+    }
+
+    .comment-modal-content {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 500px;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .comment-modal-header {
+      padding: 16px;
+      border-bottom: 1px solid #E5E7EB;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .comment-modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1F2937;
+    }
+
+    .comment-modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #6B7280;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .comment-modal-close:active {
+      background: #F3F4F6;
+    }
+
+    .comment-modal-image {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+    }
+
+    .comment-modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+
+    .comment-list {
+      margin-bottom: 16px;
+    }
+
+    .comment-item {
+      padding: 12px;
+      background: #F9FAFB;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .comment-text {
+      font-size: 14px;
+      color: #1F2937;
+      margin-bottom: 4px;
+      line-height: 1.5;
+    }
+
+    .comment-time {
+      font-size: 11px;
+      color: #9CA3AF;
+    }
+
+    .comment-empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: #9CA3AF;
+      font-size: 14px;
+    }
+
+    .comment-input-area {
+      padding: 16px;
+      border-top: 1px solid #E5E7EB;
+      background: white;
+    }
+
+    .comment-input-wrapper {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    .comment-input {
+      flex: 1;
+      padding: 10px 12px;
+      border: 1px solid #E5E7EB;
+      border-radius: 20px;
+      font-size: 14px;
+      resize: none;
+      min-height: 40px;
+      max-height: 100px;
+      font-family: inherit;
+    }
+
+    .comment-input:focus {
+      outline: none;
+      border-color: #3182F6;
+    }
+
+    .comment-submit-btn {
+      background: #3182F6;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .comment-submit-btn:active {
+      background: #2563EB;
+    }
+
+    .comment-submit-btn:disabled {
+      background: #9CA3AF;
+      cursor: not-allowed;
+    }
+
+    /* 하단 네비게이션 */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid #E5E7EB;
+      padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+      z-index: 9999;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 16px;
+      background: none;
+      border: none;
+      color: #6B7280;
+      font-size: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item.active {
+      color: #3182F6;
+    }
+
+    .nav-icon {
+      font-size: 24px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: transparent;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item.active .nav-icon {
+      background: #E8F0FE;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // 모든 관찰 데이터 (서버에서 전달, 오늘 날짜만)
+    const allObservations = {{ all_observations_with_location | tojson }};
+    
+    // 전체 관찰 데이터 (상세 정보 포함)
+    window.todayObservationsData = {{ today_observations | tojson }};
+
+    // 두 좌표 간의 거리 계산 (Haversine 공식)
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371; // 지구 반지름 (km)
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = 
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c; // 거리 (km)
+    }
+
+    // 역지오코딩 함수 (간단한 버전 - 시/구 정보만)
+    async function reverseGeocode(lat, lon) {
+      try {
+        // OpenStreetMap Nominatim API 사용 (무료)
+        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`);
+        const data = await response.json();
+        
+        if (data.address) {
+          const city = data.address.city || data.address.town || data.address.village || '';
+          const district = data.address.suburb || data.address.county || '';
+          const state = data.address.state || '';
+          
+          // 한국의 경우 시/도와 구/군 정보 추출
+          if (data.address.country_code === 'kr') {
+            const sido = data.address.state || '';
+            const sigungu = data.address.city || data.address.county || '';
+            return `${sido} ${sigungu}`.trim() || '위치 정보 없음';
+          }
+          
+          return `${city} ${district}`.trim() || state || '위치 정보 없음';
+        }
+        return '위치 정보 없음';
+      } catch (error) {
+        console.error('역지오코딩 오류:', error);
+        return '위치 정보 없음';
+      }
+    }
+
+
+
+    // 위험종 판단 함수
+    function isRiskSpecies(observation) {
+      // classification에서 threat_level 확인
+      if (observation.classification && observation.classification.threat_level) {
+        const threatLevel = observation.classification.threat_level;
+        return threatLevel.includes('인체 고위험') || 
+               threatLevel.includes('인체 중위험') || 
+               threatLevel.includes('공격성·독성') ||
+               threatLevel.includes('독성·피부염') ||
+               threatLevel.includes('질병 매개');
+      }
+      
+      // risk_assessment 확인
+      if (observation.risk_assessment && observation.risk_assessment.threat_level) {
+        const threatLevel = observation.risk_assessment.threat_level;
+        return threatLevel.includes('인체 고위험') || 
+               threatLevel.includes('인체 중위험') || 
+               threatLevel.includes('공격성·독성') ||
+               threatLevel.includes('독성·피부염') ||
+               threatLevel.includes('질병 매개');
+      }
+      
+      return false;
+    }
+
+    // 위치 패널 토글
+    function toggleLocationPanel() {
+      const panel = document.getElementById('locationPanel');
+      const icon = document.getElementById('locationToggleIcon');
+      
+      if (panel.style.display === 'none') {
+        panel.style.display = 'block';
+        icon.style.transform = 'rotate(180deg)';
+      } else {
+        panel.style.display = 'none';
+        icon.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    async function saveLocation() {
+      const input = document.getElementById('locationInput');
+      const location = input.value.trim();
+      
+      if (!location) {
+        alert('위치를 입력해주세요.');
+        return;
+      }
+
+      // 지오코딩으로 좌표 변환
+      try {
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location + ', South Korea')}&limit=1`);
+        const data = await response.json();
+        
+        if (data && data.length > 0) {
+          const userLat = parseFloat(data[0].lat);
+          const userLon = parseFloat(data[0].lon);
+          
+          // 로컬 스토리지에 저장
+          localStorage.setItem('userLocation', JSON.stringify({
+            lat: userLat,
+            lon: userLon,
+            name: location
+          }));
+          
+          // UI 업데이트
+          const locationText = document.getElementById('locationText');
+          if (locationText) {
+            locationText.textContent = location;
+          }
+          
+          // 패널 닫기
+          const panel = document.getElementById('locationPanel');
+          const icon = document.getElementById('locationToggleIcon');
+          if (panel) panel.style.display = 'none';
+          if (icon) icon.style.transform = 'rotate(0deg)';
+          
+          // 입력 초기화
+          const input = document.getElementById('locationInput');
+          if (input) input.value = '';
+          
+          // 주변 관찰 다시 로드
+          loadNearbyObservations();
+        } else {
+          alert('위치를 찾을 수 없습니다. 다시 입력해주세요.');
+        }
+      } catch (error) {
+        console.error('지오코딩 오류:', error);
+        alert('위치 검색 중 오류가 발생했습니다.');
+      }
+    }
+
+    // 사용자 위치 가져오기 및 가까운 관찰 표시
+    async function loadNearbyObservations() {
+      const nearbyContainer = document.getElementById('nearbyObservations');
+      const riskAlertContainer = document.getElementById('nearbyRiskAlert');
+      
+      // 저장된 위치 확인
+      const savedLocation = localStorage.getItem('userLocation');
+      if (!savedLocation) {
+        if (nearbyContainer) {
+          nearbyContainer.innerHTML = '<div class="empty-state"><div class="empty-text">위치를 설정해주세요.</div></div>';
+        }
+        if (riskAlertContainer) {
+          riskAlertContainer.style.display = 'none';
+        }
+        return;
+      }
+
+      const userLocation = JSON.parse(savedLocation);
+      const userLat = userLocation.lat;
+      const userLon = userLocation.lon;
+      
+      // 위치 정보 표시 업데이트
+      const locationText = document.getElementById('locationText');
+      if (locationText) {
+        locationText.textContent = userLocation.name;
+      }
+
+      (async function() {
+          
+          // 전역 변수에 저장 (리사이즈 시 사용)
+          currentUserLat = userLat;
+          currentUserLon = userLon;
+
+
+
+          // 모든 관찰 데이터에 분류 정보 추가 (서버에서 전달된 데이터 사용)
+          const observationsWithFullData = allObservations.map(obs => {
+            // 서버에서 전달된 today_observations에서 해당 파일명 찾기
+            const fullData = window.todayObservationsData?.find(t => t.filename === obs.filename);
+            return {
+              ...obs,
+              classification: fullData?.classification || null,
+              risk_assessment: fullData?.classification?.risk_assessment || null
+            };
+          });
+
+          // 각 관찰과의 거리 계산
+          const observationsWithDistance = observationsWithFullData.map(obs => {
+            const distance = calculateDistance(userLat, userLon, obs.lat, obs.lon);
+            return { ...obs, distance };
+          });
+
+          // 거리순으로 정렬
+          observationsWithDistance.sort((a, b) => a.distance - b.distance);
+
+          // 위험종 필터링 (5km 이내)
+          const nearbyRisks = observationsWithDistance
+            .filter(obs => obs.distance <= 5 && isRiskSpecies(obs))
+            .slice(0, 3);
+
+          // 위험종 알림 표시
+          if (riskAlertContainer) {
+            if (nearbyRisks.length > 0) {
+              let riskHtml = `
+                <div class="nearby-risk-alert-header">
+                  <span class="nearby-risk-alert-icon">⚠️</span>
+                  <span>내 주변 위험종 발견 (${nearbyRisks.length}건)</span>
+                </div>
+                <div class="nearby-risk-list">
+              `;
+              
+              nearbyRisks.forEach((obs, index) => {
+                const distanceText = obs.distance < 1 
+                  ? `${Math.round(obs.distance * 1000)}m` 
+                  : `${obs.distance.toFixed(1)}km`;
+                
+                const threatLevel = obs.classification?.threat_level || 
+                                  (obs.risk_assessment?.threat_level || '위험종');
+                
+                riskHtml += `
+                  <div class="nearby-risk-item" onclick="showImageDetail('${obs.filename}')">
+                    <img src="/uploads/${obs.filename}" alt="${obs.species}" class="nearby-risk-item-image" />
+                    <div class="nearby-risk-item-info">
+                      <div class="nearby-risk-item-species">${obs.species}</div>
+                      <div class="nearby-risk-item-distance">📍 ${distanceText} 거리 · ${threatLevel}</div>
+                    </div>
+                  </div>
+                `;
+              });
+              
+              riskHtml += '</div>';
+              riskAlertContainer.innerHTML = riskHtml;
+              riskAlertContainer.style.display = 'block';
+            } else {
+              riskAlertContainer.style.display = 'none';
+            }
+          }
+
+          // 가장 가까운 3개 선택 (일반 관찰)
+          const nearby = observationsWithDistance
+            .filter(obs => !isRiskSpecies(obs))
+            .slice(0, 3);
+
+          if (nearbyContainer) {
+            if (nearby.length === 0) {
+              nearbyContainer.innerHTML = '<div class="empty-state"><div class="empty-text">주변에 공유된 관찰이 없습니다.</div></div>';
+              return;
+            }
+
+            // 카드 생성
+            let html = '';
+            nearby.forEach((obs, index) => {
+              const distanceText = obs.distance < 1 
+                ? `${Math.round(obs.distance * 1000)}m` 
+                : `${obs.distance.toFixed(1)}km`;
+              
+              html += `
+                <div class="observation-card" onclick="showImageDetail('${obs.filename}')">
+                  <img src="/uploads/${obs.filename}" alt="${obs.species}" class="observation-card-image" />
+                  <div class="observation-header">
+                    <div class="observation-info">
+                      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                        <span style="background: #3182F6; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">#${index + 1}</span>
+                        <div class="observation-species">${obs.species}</div>
+                      </div>
+                      <div class="observation-location">📍 ${distanceText} 거리</div>
+                      ${obs.datetime_taken ? `<div class="observation-time">📅 ${obs.datetime_taken}</div>` : ''}
+                    </div>
+                  </div>
+                </div>
+              `;
+            });
+
+            nearbyContainer.innerHTML = html;
+          }
+      })();
+    }
+
+    // 이미지 상세 정보 표시
+    function showImageDetail(filename) {
+      // 서버에서 관찰 데이터 가져오기
+      const observation = window.todayObservationsData?.find(obs => obs.filename === filename);
+      if (!observation) {
+        alert('관찰 정보를 찾을 수 없습니다.');
+        return;
+      }
+
+      const modal = document.getElementById('imageDetailModal');
+      const modalImage = document.getElementById('imageDetailImage');
+      const modalBody = document.getElementById('imageDetailBody');
+      
+      if (!modal || !modalImage || !modalBody) return;
+
+      // 이미지 설정
+      modalImage.src = `/uploads/${filename}`;
+      modalImage.alt = observation.species || '곤충 이미지';
+
+      // 상세 정보 생성
+      let detailHtml = '';
+      
+      console.log('Observation data:', observation);
+      console.log('Classification:', observation.classification);
+      if (observation.classification?.risk_assessment) {
+        console.log('Risk Assessment:', observation.classification.risk_assessment);
+      }
+      
+      // 종 정보
+      if (observation.classification) {
+        const cls = observation.classification;
+        const riskInfo = cls.risk_assessment_from_species_info || {};
+        
+        detailHtml += `
+          <div class="species-info-section">
+            <div class="species-name">${cls.korean_name || cls.species || '미분류'}</div>
+            ${cls.species && cls.korean_name ? `<div class="species-scientific">${cls.species}</div>` : ''}
+            ${cls.order ? `<div class="info-row"><div class="info-label">목</div><div class="info-value">${cls.order}</div></div>` : ''}
+            ${cls.family ? `<div class="info-row"><div class="info-label">과</div><div class="info-value">${cls.family}</div></div>` : ''}
+            ${cls.genus ? `<div class="info-row"><div class="info-label">속</div><div class="info-value">${cls.genus}</div></div>` : ''}
+          </div>
+        `;
+        
+        // 위험도 정보
+        if (cls.threat_level) {
+          const riskColor = cls.risk_level_color || '#F44336';
+          
+          detailHtml += `
+            <div style="margin-bottom: 20px; padding: 20px; background: #FEE2E2; border-radius: 12px; border-left: 4px solid ${riskColor};">
+              <div style="font-weight: 700; font-size: 16px; color: #991B1B; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 24px;">⚠️</span>
+                <span>위험도 평가</span>
+              </div>
+              <div style="background: ${riskColor}; color: white; padding: 12px 16px; border-radius: 10px; font-size: 15px; font-weight: 700; text-align: center; width: 100%;">
+                ${cls.threat_level}
+              </div>
+            </div>
+          `;
+        }
+        
+        // 인체 위험 정보
+        if (riskInfo.human_risks) {
+          const hr = riskInfo.human_risks;
+          detailHtml += `
+            <div style="margin-bottom: 20px; padding: 20px; background: #FEF3C7; border-radius: 12px; border-left: 4px solid #F59E0B;">
+              <div style="font-weight: 700; font-size: 16px; color: #1F2937; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 24px;">🚨</span>
+                <span>인체 위험 정보</span>
+              </div>
+              ${hr.venom_toxicity ? `<div class="info-row"><div class="info-label">독성</div><div class="info-value">${hr.venom_toxicity}</div></div>` : ''}
+              ${hr.behavior ? `<div class="info-row"><div class="info-label">행동</div><div class="info-value">${hr.behavior}</div></div>` : ''}
+              ${hr.symptoms && hr.symptoms.length > 0 ? `
+                <div style="margin-top: 12px; padding: 12px; background: white; border-radius: 8px;">
+                  <div style="font-weight: 700; margin-bottom: 8px; font-size: 14px;">증상</div>
+                  <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.8;">
+                    ${hr.symptoms.map(s => `<li>${s}</li>`).join('')}
+                  </ul>
+                </div>
+              ` : ''}
+            </div>
+          `;
+        }
+      }
+
+
+
+      // 위치 정보
+      if (observation.lat && observation.lon) {
+        detailHtml += `
+          <div style="margin-bottom: 20px; padding: 20px; background: #F0F9FF; border-radius: 12px; border-left: 4px solid #3B82F6;">
+            <div style="font-weight: 700; font-size: 16px; color: #1F2937; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 24px;">📍</span>
+              <span>위치 정보</span>
+            </div>
+            <div class="info-row">
+              <div class="info-label">위도</div>
+              <div class="info-value">${observation.lat.toFixed(6)}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">경도</div>
+              <div class="info-value">${observation.lon.toFixed(6)}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 날씨 정보
+      if (observation.weather) {
+        detailHtml += `
+          <div style="margin-bottom: 20px; padding: 20px; background: #FEF3C7; border-radius: 12px; border-left: 4px solid #F59E0B;">
+            <div style="font-weight: 700; font-size: 16px; color: #1F2937; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 24px;">🌤️</span>
+              <span>날씨 정보</span>
+            </div>
+            <div class="info-row">
+              <div class="info-label">날씨</div>
+              <div class="info-value">${observation.weather.icon} ${observation.weather.weather_description}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">온도</div>
+              <div class="info-value">${observation.weather.temperature}°C</div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 촬영 시간
+      if (observation.datetime_taken) {
+        detailHtml += `
+          <div style="margin-bottom: 20px; padding: 20px; background: #F3F4F6; border-radius: 12px; border-left: 4px solid #6B7280;">
+            <div style="font-weight: 700; font-size: 16px; color: #1F2937; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 24px;">📅</span>
+              <span>촬영 시간</span>
+            </div>
+            <div class="info-row">
+              <div class="info-label">일시</div>
+              <div class="info-value">${observation.datetime_taken}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 좋아요와 댓글 (상세정보 아래)
+      detailHtml += `
+        <div style="margin-top: 24px; padding-top: 16px; border-top: 2px solid #E5E7EB;">
+          <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 16px;">
+            <button id="detailLikeBtn" class="gallery-item-compact-action like-btn" data-filename="${filename}" onclick="toggleLike('${filename}', this)" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 24px; padding: 0;">
+              <span style="font-size: 28px;">🤍</span>
+              <span class="like-count" style="font-size: 16px; font-weight: 600; color: #1F2937;">0</span>
+            </button>
+            <button id="detailCommentBtn" class="gallery-item-compact-action comment-btn" data-filename="${filename}" onclick="showCommentModal('${filename}', '${observation.species || '곤충'}', '${observation.location || '위치 정보 없음'}')" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 24px; padding: 0;">
+              <span style="font-size: 28px;">💬</span>
+              <span class="comment-count" style="font-size: 16px; font-weight: 600; color: #1F2937;">0</span>
+            </button>
+          </div>
+          <div id="detailCommentList" style="margin-top: 12px;">
+            <!-- 댓글 목록이 여기에 표시됩니다 -->
+          </div>
+        </div>
+      `;
+
+      // 내용이 비어있으면 기본 메시지 표시
+      if (!detailHtml.trim()) {
+        detailHtml = '<div style="padding: 20px; text-align: center; color: #6B7280;">상세 정보가 없습니다.</div>';
+      }
+      
+      modalBody.innerHTML = detailHtml;
+      modal.classList.add('active');
+      
+      // 좋아요와 댓글 수 로드 및 댓글 목록 표시
+      setTimeout(() => {
+        const likeBtn = document.getElementById('detailLikeBtn');
+        const commentBtn = document.getElementById('detailCommentBtn');
+        const commentList = document.getElementById('detailCommentList');
+        
+        if (likeBtn) {
+          fetch(`/api/likes/${filename}`)
+            .then(response => response.json())
+            .then(data => {
+              const countSpan = likeBtn.querySelector('.like-count');
+              const iconSpan = likeBtn.querySelector('span:first-child');
+              if (countSpan) {
+                countSpan.textContent = data.count;
+              }
+              if (data.liked) {
+                likeBtn.classList.add('liked');
+                if (iconSpan) {
+                  iconSpan.textContent = '❤️';
+                }
+              } else {
+                if (iconSpan) {
+                  iconSpan.textContent = '🤍';
+                }
+              }
+            })
+            .catch(error => console.error('좋아요 로드 오류:', error));
+        }
+        
+        if (commentBtn && commentList) {
+          fetch(`/api/comments/${filename}`)
+            .then(response => response.json())
+            .then(data => {
+              const countSpan = commentBtn.querySelector('.comment-count');
+              if (countSpan) {
+                countSpan.textContent = data.comments ? data.comments.length : 0;
+              }
+              
+              // 댓글 목록 표시
+              if (data.comments && data.comments.length > 0) {
+                displayCommentsInDetail(data.comments, commentList, filename);
+              } else {
+                commentList.innerHTML = '<div style="text-align: center; padding: 20px; color: #9CA3AF; font-size: 14px;">댓글이 없습니다.</div>';
+              }
+            })
+            .catch(error => {
+              console.error('댓글 로드 오류:', error);
+              commentList.innerHTML = '<div style="text-align: center; padding: 20px; color: #9CA3AF; font-size: 14px;">댓글을 불러올 수 없습니다.</div>';
+            });
+        }
+      }, 100);
+    }
+
+    // 상세 정보 모달에서 댓글 목록 표시 함수
+    function displayCommentsInDetail(comments, container, filename) {
+      const SHOW_LIMIT = 3;
+      const totalComments = comments.length;
+      const shouldCollapse = totalComments > SHOW_LIMIT;
+      
+      let html = '';
+      
+      // 처음 3개만 표시 (접혀있을 때)
+      const commentsToShow = shouldCollapse ? comments.slice(0, SHOW_LIMIT) : comments;
+      
+      commentsToShow.forEach((comment, index) => {
+        const date = new Date(comment.timestamp);
+        const timeStr = date.toLocaleString('ko-KR', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+        
+        html += `
+          <div class="detail-comment-item" style="padding: 12px; background: #F9FAFB; border-radius: 8px; margin-bottom: 8px;">
+            <div class="detail-comment-text" style="font-size: 14px; color: #1F2937; margin-bottom: 4px; line-height: 1.5;">${escapeHtml(comment.text)}</div>
+            <div class="detail-comment-time" style="font-size: 11px; color: #9CA3AF;">${timeStr}</div>
+          </div>
+        `;
+      });
+      
+      // 숨겨진 댓글들 (접혀있을 때)
+      if (shouldCollapse) {
+        html += `
+          <div id="hiddenComments" style="display: none;">
+            ${comments.slice(SHOW_LIMIT).map(comment => {
+              const date = new Date(comment.timestamp);
+              const timeStr = date.toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+              });
+              return `
+                <div class="detail-comment-item" style="padding: 12px; background: #F9FAFB; border-radius: 8px; margin-bottom: 8px;">
+                  <div class="detail-comment-text" style="font-size: 14px; color: #1F2937; margin-bottom: 4px; line-height: 1.5;">${escapeHtml(comment.text)}</div>
+                  <div class="detail-comment-time" style="font-size: 11px; color: #9CA3AF;">${timeStr}</div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }
+      
+      // 접기/펼치기 버튼 (맨 아래)
+      if (shouldCollapse) {
+        html += `
+          <button id="expandCommentsBtn" onclick="expandComments('${filename}')" style="width: 100%; padding: 10px; background: #F3F4F6; border: none; border-radius: 8px; color: #6B7280; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; transition: background 0.2s;">
+            댓글 ${totalComments - SHOW_LIMIT}개 더 보기
+          </button>
+        `;
+      }
+      
+      container.innerHTML = html;
+    }
+
+    // 댓글 펼치기 함수
+    function expandComments(filename) {
+      const hiddenComments = document.getElementById('hiddenComments');
+      const expandBtn = document.getElementById('expandCommentsBtn');
+      
+      if (hiddenComments && expandBtn) {
+        if (hiddenComments.style.display === 'none' || hiddenComments.style.display === '') {
+          hiddenComments.style.display = 'block';
+          expandBtn.textContent = '댓글 접기';
+          expandBtn.style.background = '#E5E7EB';
+        } else {
+          hiddenComments.style.display = 'none';
+          const commentList = document.getElementById('detailCommentList');
+          if (commentList) {
+            fetch(`/api/comments/${filename}`)
+              .then(response => response.json())
+              .then(data => {
+                if (data.comments && data.comments.length > 0) {
+                  displayCommentsInDetail(data.comments, commentList, filename);
+                }
+              })
+              .catch(error => console.error('댓글 로드 오류:', error));
+          }
+        }
+      }
+    }
+
+    function closeImageDetail() {
+      const modal = document.getElementById('imageDetailModal');
+      if (modal) {
+        modal.classList.remove('active');
+      }
+    }
+
+    function closeImageDetailOnBackdrop(event) {
+      if (event.target.id === 'imageDetailModal') {
+        closeImageDetail();
+      }
+    }
+
+    // 좋아요/댓글 기능
+    let currentCommentFilename = null;
+
+    // 좋아요 및 댓글 수 로드
+    function loadLikes() {
+      document.querySelectorAll('.like-btn').forEach(btn => {
+        const filename = btn.getAttribute('data-filename');
+        fetch(`/api/likes/${filename}`)
+          .then(response => response.json())
+          .then(data => {
+            const countSpan = btn.querySelector('.like-count');
+            if (countSpan) {
+              countSpan.textContent = data.count;
+            }
+            if (data.liked) {
+              btn.classList.add('liked');
+            }
+          })
+          .catch(error => console.error('좋아요 로드 오류:', error));
+      });
+      
+      // 댓글 수 로드
+      document.querySelectorAll('.comment-btn').forEach(btn => {
+        const filename = btn.getAttribute('data-filename');
+        fetch(`/api/comments/${filename}`)
+          .then(response => response.json())
+          .then(data => {
+            const countSpan = btn.querySelector('.comment-count');
+            if (countSpan) {
+              countSpan.textContent = data.comments ? data.comments.length : 0;
+            }
+          })
+          .catch(error => console.error('댓글 수 로드 오류:', error));
+      });
+    }
+
+    // 좋아요 토글
+    function toggleLike(filename, btnElement) {
+      fetch(`/api/likes/${filename}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          const countSpan = btnElement.querySelector('.like-count');
+          const iconSpan = btnElement.querySelector('span:first-child');
+          if (countSpan) {
+            countSpan.textContent = data.count;
+          }
+          if (data.liked) {
+            btnElement.classList.add('liked');
+            if (iconSpan) {
+              iconSpan.textContent = '❤️';
+            }
+          } else {
+            btnElement.classList.remove('liked');
+            if (iconSpan) {
+              iconSpan.textContent = '🤍';
+            }
+          }
+        })
+        .catch(error => console.error('좋아요 토글 오류:', error));
+    }
+
+    // 댓글 모달 표시
+    function showCommentModal(filename, species, location) {
+      currentCommentFilename = filename;
+      const modal = document.getElementById('commentModal');
+      const image = document.getElementById('commentModalImage');
+      image.src = `/uploads/${filename}`;
+      image.alt = species;
+      
+      modal.classList.add('active');
+      loadComments(filename);
+    }
+
+    // 댓글 모달 닫기
+    function closeCommentModal() {
+      const modal = document.getElementById('commentModal');
+      modal.classList.remove('active');
+      currentCommentFilename = null;
+      document.getElementById('commentInput').value = '';
+    }
+
+    // 백드롭 클릭 시 모달 닫기
+    function closeCommentModalOnBackdrop(event) {
+      if (event.target.id === 'commentModal') {
+        closeCommentModal();
+      }
+    }
+
+    // 댓글 로드
+    function loadComments(filename) {
+      const commentList = document.getElementById('commentList');
+      
+      fetch(`/api/comments/${filename}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.comments && data.comments.length > 0) {
+            let html = '';
+            data.comments.forEach(comment => {
+              const date = new Date(comment.timestamp);
+              const timeStr = date.toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+              });
+              html += `
+                <div class="comment-item">
+                  <div class="comment-text">${escapeHtml(comment.text)}</div>
+                  <div class="comment-time">${timeStr}</div>
+                </div>
+              `;
+            });
+            commentList.innerHTML = html;
+            
+            // 댓글 수 업데이트
+            const commentBtn = document.querySelector(`.comment-btn[data-filename="${filename}"]`);
+            if (commentBtn) {
+              const countSpan = commentBtn.querySelector('.comment-count');
+              if (countSpan) {
+                countSpan.textContent = data.comments.length;
+              }
+            }
+          } else {
+            commentList.innerHTML = '<div class="comment-empty">댓글이 없습니다. 첫 댓글을 남겨보세요!</div>';
+            
+            // 댓글 수 업데이트
+            const commentBtn = document.querySelector(`.comment-btn[data-filename="${filename}"]`);
+            if (commentBtn) {
+              const countSpan = commentBtn.querySelector('.comment-count');
+              if (countSpan) {
+                countSpan.textContent = '0';
+              }
+            }
+          }
+        })
+        .catch(error => {
+          console.error('댓글 로드 오류:', error);
+          commentList.innerHTML = '<div class="comment-empty">댓글을 불러올 수 없습니다.</div>';
+        });
+    }
+
+    // 댓글 제출
+    function submitComment() {
+      if (!currentCommentFilename) return;
+      
+      const input = document.getElementById('commentInput');
+      const text = input.value.trim();
+      
+      if (!text) {
+        alert('댓글을 입력해주세요.');
+        return;
+      }
+
+      const submitBtn = document.getElementById('commentSubmitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = '등록 중...';
+
+      fetch(`/api/comments/${currentCommentFilename}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text: text })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            alert(data.error);
+          } else {
+            input.value = '';
+            loadComments(currentCommentFilename);
+            
+            // 댓글 수 업데이트
+            const commentBtn = document.querySelector(`.comment-btn[data-filename="${currentCommentFilename}"]`);
+            if (commentBtn) {
+              fetch(`/api/comments/${currentCommentFilename}`)
+                .then(response => response.json())
+                .then(commentData => {
+                  const countSpan = commentBtn.querySelector('.comment-count');
+                  if (countSpan) {
+                    countSpan.textContent = commentData.comments ? commentData.comments.length : 0;
+                  }
+                });
+            }
+          }
+        })
+        .catch(error => {
+          console.error('댓글 제출 오류:', error);
+          alert('댓글 등록에 실패했습니다.');
+        })
+        .finally(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '등록';
+        });
+    }
+
+    // HTML 이스케이프
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Enter 키로 댓글 제출 (Shift+Enter는 줄바꿈)
+    document.addEventListener('DOMContentLoaded', function() {
+      const commentInput = document.getElementById('commentInput');
+      if (commentInput) {
+        commentInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            submitComment();
+          }
+        });
+      }
+    });
+
+    // 페이지 로드 시 실행
+    document.addEventListener('DOMContentLoaded', function() {
+      loadLikes();
+      
+      // 저장된 위치 확인 및 표시
+      const savedLocation = localStorage.getItem('userLocation');
+      if (savedLocation) {
+        const userLocation = JSON.parse(savedLocation);
+        const locationText = document.getElementById('locationText');
+        if (locationText) {
+          locationText.textContent = userLocation.name;
+        }
+      } else {
+        const locationText = document.getElementById('locationText');
+        if (locationText) {
+          locationText.textContent = '위치 설정 필요';
+        }
+      }
+      
+      loadNearbyObservations();
+    });
+  </script>
+  <!-- 상단 헤더 -->
+  <div class="top-header">
+    <div class="app-title">
+      <div class="app-icon">🐛</div>
+      <span class="app-title-text">NEST</span>
+    </div>
+  </div>
+
+  <!-- 정보 배너 -->
+  <div class="info-banner">
+    <div class="info-icon">🎯</div>
+    <div class="info-content">
+      <div class="info-title">곤충 관찰 공유 플랫폼</div>
+      <div class="info-text">공유된 곤충 관찰을 확인하고, 직접 촬영해 공유할 수 있습니다.</div>
+    </div>
+  </div>
+
+
+  <!-- 현재 위치 표시 (접기/펼치기) -->
+  <div style="margin: 16px; position: relative;">
+    <div class="current-location" id="userLocationInfo" style="cursor: pointer; display: flex; align-items: center; justify-content: space-between;" onclick="toggleLocationPanel()">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="current-location-icon">📍</span>
+        <span id="locationText">내 위치</span>
+      </div>
+      <span id="locationToggleIcon" style="font-size: 20px; transition: transform 0.3s ease;">▼</span>
+    </div>
+    <div id="locationPanel" style="display: none; margin-top: 12px; padding: 16px; background: white; border-radius: 12px; border: 2px solid #E8F0FE; animation: slideDown 0.3s ease;">
+      <input type="text" id="locationInput" placeholder="예: 서울 강남구" style="width: 100%; padding: 12px; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 14px; margin-bottom: 12px;" />
+      <button onclick="saveLocation()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #3182F6 0%, #4285F4 100%); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">
+        📍 저장
+      </button>
+    </div>
+  </div>
+
+  <style>
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+
+
+  <!-- 내 주변 위험종 알림 -->
+  <div id="nearbyRiskAlert" class="nearby-risk-alert" style="display: none;"></div>
+
+  <!-- 오늘의 베스트 관찰 갤러리 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="section-icon">🏆</span>
+        <span>오늘의 베스트 관찰 갤러리</span>
+      </div>
+    </div>
+    {% if best_observations and best_observations|length > 0 %}
+    <div class="gallery-grid">
+      {% for observation in best_observations %}
+      <div class="gallery-item-compact" onclick="showImageDetail('{{ observation.filename }}')">
+        <div class="gallery-item-compact-header">
+          <img src="{{ url_for('uploaded_file', filename=observation.filename) }}" 
+               alt="{{ observation.species }}" 
+               class="gallery-item-compact-image">
+          <div class="gallery-item-compact-actions">
+            <button class="gallery-item-compact-action like-btn" data-filename="{{ observation.filename }}" onclick="event.stopPropagation(); toggleLike('{{ observation.filename }}', this)">
+              <span>❤️</span>
+              <span class="like-count">{{ observation.likes_count }}</span>
+            </button>
+            <button class="gallery-item-compact-action comment-btn" data-filename="{{ observation.filename }}" onclick="event.stopPropagation(); showCommentModal('{{ observation.filename }}', '{{ observation.species }}', '{{ observation.location }}')">
+              <span>💬</span>
+              <span class="comment-count">{{ observation.comments_count }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-icon">🏆</div>
+      <div class="empty-text">아직 베스트 관찰이 없습니다.</div>
+      <div class="empty-subtext">좋아요와 댓글을 많이 받은 관찰이 여기에 표시됩니다!</div>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- 오늘의 관찰 갤러리 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="section-icon">⭐</span>
+        <span>오늘의 관찰 갤러리</span>
+      </div>
+    </div>
+    {% if today_observations and today_observations|length > 0 %}
+    <div class="gallery-grid">
+      {% for observation in today_observations %}
+      <div class="gallery-item-compact" onclick="showImageDetail('{{ observation.filename }}')">
+        <div class="gallery-item-compact-header">
+          <img src="{{ url_for('uploaded_file', filename=observation.filename) }}" 
+               alt="{{ observation.species }}" 
+               class="gallery-item-compact-image">
+          <div class="gallery-item-compact-actions">
+            <button class="gallery-item-compact-action like-btn" data-filename="{{ observation.filename }}" onclick="event.stopPropagation(); toggleLike('{{ observation.filename }}', this)">
+              <span>❤️</span>
+              <span class="like-count">0</span>
+            </button>
+            <button class="gallery-item-compact-action comment-btn" data-filename="{{ observation.filename }}" onclick="event.stopPropagation(); showCommentModal('{{ observation.filename }}', '{{ observation.species }}', '{{ observation.location }}')">
+              <span>💬</span>
+              <span class="comment-count">0</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-icon">🦗</div>
+      <div class="empty-text">아직 공유된 관찰이 없습니다.</div>
+      <div class="empty-subtext">첫 번째 관찰자가 되어보세요!</div>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- 이미지 상세 모달 -->
+  <div id="imageDetailModal" class="image-detail-modal" onclick="closeImageDetailOnBackdrop(event)">
+    <div class="image-detail-content" onclick="event.stopPropagation()">
+      <div class="image-detail-header">
+        <div class="image-detail-title">상세 정보</div>
+        <button class="image-detail-close" onclick="closeImageDetail()">×</button>
+      </div>
+      <div class="image-detail-body">
+        <img id="imageDetailImage" src="" alt="" class="image-detail-image" />
+        <div id="imageDetailBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 댓글 모달 -->
+  <div id="commentModal" class="comment-modal" onclick="closeCommentModalOnBackdrop(event)">
+    <div class="comment-modal-content" onclick="event.stopPropagation()">
+      <div class="comment-modal-header">
+        <div class="comment-modal-title">댓글</div>
+        <button class="comment-modal-close" onclick="closeCommentModal()">×</button>
+      </div>
+      <img id="commentModalImage" src="" alt="" class="comment-modal-image" />
+      <div class="comment-modal-body">
+        <div id="commentList" class="comment-list">
+          <div class="comment-empty">댓글이 없습니다. 첫 댓글을 남겨보세요!</div>
+        </div>
+      </div>
+      <div class="comment-input-area">
+        <div class="comment-input-wrapper">
+          <textarea id="commentInput" class="comment-input" placeholder="댓글을 입력하세요..." rows="1"></textarea>
+          <button id="commentSubmitBtn" class="comment-submit-btn" onclick="submitComment()">등록</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 하단 네비게이션 -->
+  <div class="bottom-nav">
+    <a href="{{ url_for('board_page') }}" class="nav-item active">
+      <div class="nav-icon">📋</div>
+      <div>게시판</div>
+    </a>
+    <a href="{{ url_for('index') }}" class="nav-item">
+      <div class="nav-icon">📷</div>
+      <div>촬영</div>
+    </a>
+    <a href="{{ url_for('map_page') }}" class="nav-item">
+      <div class="nav-icon">🗺️</div>
+      <div>지도</div>
+    </a>
+  </div>
+</body>
+</html>
+

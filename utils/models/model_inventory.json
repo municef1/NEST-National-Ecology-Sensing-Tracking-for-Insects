@@ -1,0 +1,4560 @@
+{
+  "order": {
+    "best_classifier": {
+      "model_file": "best_classifier.pth",
+      "classes_file": null,
+      "available": true
+    },
+    "best_detected_order_classifier": {
+      "model_file": "best_detected_order_classifier.pth",
+      "classes_file": "detected_order_classes.json",
+      "available": true
+    }
+  },
+  "family": {
+    "best_diptera_family_classifier": {
+      "model_file": "best_diptera_family_classifier.pth",
+      "classes_file": "diptera_family_classes.json",
+      "available": true
+    },
+    "best_hymenoptera_family_classifier": {
+      "model_file": "best_hymenoptera_family_classifier.pth",
+      "classes_file": "hymenoptera_family_classes.json",
+      "available": true
+    },
+    "best_강도래_family_classifier": {
+      "model_file": "best_강도래_family_classifier.pth",
+      "classes_file": "강도래_family_classes.json",
+      "available": true
+    },
+    "best_나비_family_classifier": {
+      "model_file": "best_나비_family_classifier.pth",
+      "classes_file": "나비_family_classes.json",
+      "available": true
+    },
+    "best_날도래_family_classifier": {
+      "model_file": "best_날도래_family_classifier.pth",
+      "classes_file": "날도래_family_classes.json",
+      "available": true
+    },
+    "best_노린재_family_classifier": {
+      "model_file": "best_노린재_family_classifier.pth",
+      "classes_file": "노린재_family_classes.json",
+      "available": true
+    },
+    "best_대벌레_family_classifier": {
+      "model_file": "best_대벌레_family_classifier.pth",
+      "classes_file": "대벌레_family_classes.json",
+      "available": true
+    },
+    "best_딱정벌레_family_classifier": {
+      "model_file": "best_딱정벌레_family_classifier.pth",
+      "classes_file": "딱정벌레_family_classes.json",
+      "available": true
+    },
+    "best_메뚜기_family_classifier": {
+      "model_file": "best_메뚜기_family_classifier.pth",
+      "classes_file": "메뚜기_family_classes.json",
+      "available": true
+    },
+    "best_밑들이_family_classifier": {
+      "model_file": "best_밑들이_family_classifier.pth",
+      "classes_file": "밑들이_family_classes.json",
+      "available": true
+    },
+    "best_바퀴_family_classifier": {
+      "model_file": "best_바퀴_family_classifier.pth",
+      "classes_file": "바퀴_family_classes.json",
+      "available": true
+    },
+    "best_뱀잠자리_family_classifier": {
+      "model_file": "best_뱀잠자리_family_classifier.pth",
+      "classes_file": "뱀잠자리_family_classes.json",
+      "available": true
+    },
+    "best_벌_family_classifier": {
+      "model_file": "best_벌_family_classifier.pth",
+      "classes_file": "벌_family_classes.json",
+      "available": true
+    },
+    "best_사마귀_family_classifier": {
+      "model_file": "best_사마귀_family_classifier.pth",
+      "classes_file": "사마귀_family_classes.json",
+      "available": true
+    },
+    "best_잠자리_family_classifier": {
+      "model_file": "best_잠자리_family_classifier.pth",
+      "classes_file": "뱀잠자리_family_classes.json",
+      "available": true
+    },
+    "best_집게벌레_family_classifier": {
+      "model_file": "best_집게벌레_family_classifier.pth",
+      "classes_file": "집게벌레_family_classes.json",
+      "available": true
+    },
+    "best_파리_family_classifier": {
+      "model_file": "best_파리_family_classifier.pth",
+      "classes_file": "파리_family_classes.json",
+      "available": true
+    },
+    "best_풀잠자리_family_classifier": {
+      "model_file": "best_풀잠자리_family_classifier.pth",
+      "classes_file": "풀잠자리_family_classes.json",
+      "available": true
+    },
+    "best_하루살이_family_classifier": {
+      "model_file": "best_하루살이_family_classifier.pth",
+      "classes_file": "하루살이_family_classes.json",
+      "available": true
+    }
+  },
+  "genus": {
+    "best_bibionidae_genus_classifier": {
+      "model_file": "best_bibionidae_genus_classifier.pth",
+      "classes_file": "bibionidae_genus_classes.json",
+      "available": true
+    },
+    "best_vespidae_genus_classifier": {
+      "model_file": "best_vespidae_genus_classifier.pth",
+      "classes_file": "vespidae_genus_classes.json",
+      "available": true
+    },
+    "best_가뢰_genus_classifier": {
+      "model_file": "best_가뢰_genus_classifier.pth",
+      "classes_file": "가뢰_genus_classes.json",
+      "available": true
+    },
+    "best_가위벌_genus_classifier": {
+      "model_file": "best_가위벌_genus_classifier.pth",
+      "classes_file": "가위벌_genus_classes.json",
+      "available": true
+    },
+    "best_각다귀_genus_classifier": {
+      "model_file": "best_각다귀_genus_classifier.pth",
+      "classes_file": "각다귀_genus_classes.json",
+      "available": true
+    },
+    "best_갈고리나방_genus_classifier": {
+      "model_file": "best_갈고리나방_genus_classifier.pth",
+      "classes_file": "갈고리나방_genus_classes.json",
+      "available": true
+    },
+    "best_갈래하루살이_genus_classifier": {
+      "model_file": "best_갈래하루살이_genus_classifier.pth",
+      "classes_file": "갈래하루살이_genus_classes.json",
+      "available": true
+    },
+    "best_감꼭지나방_genus_classifier": {
+      "model_file": "best_감꼭지나방_genus_classifier.pth",
+      "classes_file": "감꼭지나방_genus_classes.json",
+      "available": true
+    },
+    "best_강도래_genus_classifier": {
+      "model_file": "best_강도래_genus_classifier.pth",
+      "classes_file": "강도래_genus_classes.json",
+      "available": true
+    },
+    "best_강하루살이_genus_classifier": {
+      "model_file": "best_강하루살이_genus_classifier.pth",
+      "classes_file": "강하루살이_genus_classes.json",
+      "available": true
+    },
+    "best_개미_genus_classifier": {
+      "model_file": "best_개미_genus_classifier.pth",
+      "classes_file": "개미_genus_classes.json",
+      "available": true
+    },
+    "best_개미붙이_genus_classifier": {
+      "model_file": "best_개미붙이_genus_classifier.pth",
+      "classes_file": "개미붙이_genus_classes.json",
+      "available": true
+    },
+    "best_거위벌레_genus_classifier": {
+      "model_file": "best_거위벌레_genus_classifier.pth",
+      "classes_file": "거위벌레_genus_classes.json",
+      "available": true
+    },
+    "best_거저리_genus_classifier": {
+      "model_file": "best_거저리_genus_classifier.pth",
+      "classes_file": "거저리_genus_classes.json",
+      "available": true
+    },
+    "best_거품벌레_genus_classifier": {
+      "model_file": "best_거품벌레_genus_classifier.pth",
+      "classes_file": "가시거품벌레_genus_classes.json",
+      "available": true
+    },
+    "best_검정날개버섯파리_genus_classifier": {
+      "model_file": "best_검정날개버섯파리_genus_classifier.pth",
+      "classes_file": "검정날개버섯파리_genus_classes.json",
+      "available": true
+    },
+    "best_검정파리_genus_classifier": {
+      "model_file": "best_검정파리_genus_classifier.pth",
+      "classes_file": "검정파리_genus_classes.json",
+      "available": true
+    },
+    "best_검정풍뎅이_genus_classifier": {
+      "model_file": "best_검정풍뎅이_genus_classifier.pth",
+      "classes_file": "검정풍뎅이_genus_classes.json",
+      "available": true
+    },
+    "best_고치벌_genus_classifier": {
+      "model_file": "best_고치벌_genus_classifier.pth",
+      "classes_file": "고치벌_genus_classes.json",
+      "available": true
+    },
+    "best_곡식좀나방_genus_classifier": {
+      "model_file": "best_곡식좀나방_genus_classifier.pth",
+      "classes_file": "곡식좀나방_genus_classes.json",
+      "available": true
+    },
+    "best_광대노린재_genus_classifier": {
+      "model_file": "best_광대노린재_genus_classifier.pth",
+      "classes_file": "광대노린재_genus_classes.json",
+      "available": true
+    },
+    "best_구멍벌_genus_classifier": {
+      "model_file": "best_구멍벌_genus_classifier.pth",
+      "classes_file": "구멍벌_genus_classes.json",
+      "available": true
+    },
+    "best_굴벌레나방_genus_classifier": {
+      "model_file": "best_굴벌레나방_genus_classifier.pth",
+      "classes_file": "굴벌레나방_genus_classes.json",
+      "available": true
+    },
+    "best_귀뚜라미_genus_classifier": {
+      "model_file": "best_귀뚜라미_genus_classifier.pth",
+      "classes_file": "귀뚜라미_genus_classes.json",
+      "available": true
+    },
+    "best_그물강도래_genus_classifier": {
+      "model_file": "best_그물강도래_genus_classifier.pth",
+      "classes_file": "그물강도래_genus_classes.json",
+      "available": true
+    },
+    "best_금풍뎅이_genus_classifier": {
+      "model_file": "best_금풍뎅이_genus_classifier.pth",
+      "classes_file": "금풍뎅이_genus_classes.json",
+      "available": true
+    },
+    "best_기생파리_genus_classifier": {
+      "model_file": "best_기생파리_genus_classifier.pth",
+      "classes_file": "기생파리_genus_classes.json",
+      "available": true
+    },
+    "best_긴날개멸구_genus_classifier": {
+      "model_file": "best_긴날개멸구_genus_classifier.pth",
+      "classes_file": "긴날개멸구_genus_classes.json",
+      "available": true
+    },
+    "best_긴노린재_genus_classifier": {
+      "model_file": "best_긴노린재_genus_classifier.pth",
+      "classes_file": "긴노린재_genus_classes.json",
+      "available": true
+    },
+    "best_긴수염나방_genus_classifier": {
+      "model_file": "best_긴수염나방_genus_classifier.pth",
+      "classes_file": "긴수염나방_genus_classes.json",
+      "available": true
+    },
+    "best_깔따구_genus_classifier": {
+      "model_file": "best_깔따구_genus_classifier.pth",
+      "classes_file": "깔따구_genus_classes.json",
+      "available": true
+    },
+    "best_꼬마꽃벌_genus_classifier": {
+      "model_file": "best_꼬마꽃벌_genus_classifier.pth",
+      "classes_file": "꼬마꽃벌_genus_classes.json",
+      "available": true
+    },
+    "best_꼬마하루살이_genus_classifier": {
+      "model_file": "best_꼬마하루살이_genus_classifier.pth",
+      "classes_file": "꼬마하루살이_genus_classes.json",
+      "available": true
+    },
+    "best_꼽등이_genus_classifier": {
+      "model_file": "best_꼽등이_genus_classifier.pth",
+      "classes_file": "꼽등이_genus_classes.json",
+      "available": true
+    },
+    "best_꽃노린재_genus_classifier": {
+      "model_file": "best_꽃노린재_genus_classifier.pth",
+      "classes_file": "꽃노린재_genus_classes.json",
+      "available": true
+    },
+    "best_꽃등에_genus_classifier": {
+      "model_file": "best_꽃등에_genus_classifier.pth",
+      "classes_file": "꽃등에_genus_classes.json",
+      "available": true
+    },
+    "best_꽃매미_genus_classifier": {
+      "model_file": "best_꽃매미_genus_classifier.pth",
+      "classes_file": "꽃매미_genus_classes.json",
+      "available": true
+    },
+    "best_꽃무지_genus_classifier": {
+      "model_file": "best_꽃무지_genus_classifier.pth",
+      "classes_file": "꽃무지_genus_classes.json",
+      "available": true
+    },
+    "best_꽃벼룩_genus_classifier": {
+      "model_file": "best_꽃벼룩_genus_classifier.pth",
+      "classes_file": "꽃벼룩_genus_classes.json",
+      "available": true
+    },
+    "best_꿀벌_genus_classifier": {
+      "model_file": "best_꿀벌_genus_classifier.pth",
+      "classes_file": "꿀벌_genus_classes.json",
+      "available": true
+    },
+    "best_나무이_genus_classifier": {
+      "model_file": "best_나무이_genus_classifier.pth",
+      "classes_file": "나무이_genus_classes.json",
+      "available": true
+    },
+    "best_나비날도래_genus_classifier": {
+      "model_file": "best_나비날도래_genus_classifier.pth",
+      "classes_file": "나비날도래_genus_classes.json",
+      "available": true
+    },
+    "best_남방뿔나방_genus_classifier": {
+      "model_file": "best_남방뿔나방_genus_classifier.pth",
+      "classes_file": "남방뿔나방_genus_classes.json",
+      "available": true
+    },
+    "best_납작하루살이_genus_classifier": {
+      "model_file": "best_납작하루살이_genus_classifier.pth",
+      "classes_file": "납작하루살이_genus_classes.json",
+      "available": true
+    },
+    "best_넓적노린재_genus_classifier": {
+      "model_file": "best_넓적노린재_genus_classifier.pth",
+      "classes_file": "넓적노린재_genus_classes.json",
+      "available": true
+    },
+    "best_네발나비_genus_classifier": {
+      "model_file": "best_네발나비_genus_classifier.pth",
+      "classes_file": "네발나비_genus_classes.json",
+      "available": true
+    },
+    "best_노린재_genus_classifier": {
+      "model_file": "best_노린재_genus_classifier.pth",
+      "classes_file": "광대노린재_genus_classes.json",
+      "available": true
+    },
+    "best_누에나방_genus_classifier": {
+      "model_file": "best_누에나방_genus_classifier.pth",
+      "classes_file": "누에나방_genus_classes.json",
+      "available": true
+    },
+    "best_다듬이벌레_genus_classifier": {
+      "model_file": "best_다듬이벌레_genus_classifier.pth",
+      "classes_file": "다듬이벌레_genus_classes.json",
+      "available": true
+    },
+    "best_대모벌_genus_classifier": {
+      "model_file": "best_대모벌_genus_classifier.pth",
+      "classes_file": "대모벌_genus_classes.json",
+      "available": true
+    },
+    "best_대벌레_genus_classifier": {
+      "model_file": "best_대벌레_genus_classifier.pth",
+      "classes_file": "대벌레_genus_classes.json",
+      "available": true
+    },
+    "best_동애등에_genus_classifier": {
+      "model_file": "best_동애등에_genus_classifier.pth",
+      "classes_file": "동애등에_genus_classes.json",
+      "available": true
+    },
+    "best_들파리_genus_classifier": {
+      "model_file": "best_들파리_genus_classifier.pth",
+      "classes_file": "들파리_genus_classes.json",
+      "available": true
+    },
+    "best_등에_genus_classifier": {
+      "model_file": "best_등에_genus_classifier.pth",
+      "classes_file": "꽃등에_genus_classes.json",
+      "available": true
+    },
+    "best_등에잎벌_genus_classifier": {
+      "model_file": "best_등에잎벌_genus_classifier.pth",
+      "classes_file": "등에잎벌_genus_classes.json",
+      "available": true
+    },
+    "best_딱정벌레_genus_classifier": {
+      "model_file": "best_딱정벌레_genus_classifier.pth",
+      "classes_file": "딱정벌레_genus_classes.json",
+      "available": true
+    },
+    "best_땅노린재_genus_classifier": {
+      "model_file": "best_땅노린재_genus_classifier.pth",
+      "classes_file": "땅노린재_genus_classes.json",
+      "available": true
+    },
+    "best_말벌_genus_classifier": {
+      "model_file": "best_말벌_genus_classifier.pth",
+      "classes_file": "말벌_genus_classes.json",
+      "available": true
+    },
+    "best_매미_genus_classifier": {
+      "model_file": "best_매미_genus_classifier.pth",
+      "classes_file": "꽃매미_genus_classes.json",
+      "available": true
+    },
+    "best_매미충_genus_classifier": {
+      "model_file": "best_매미충_genus_classifier.pth",
+      "classes_file": "매미충_genus_classes.json",
+      "available": true
+    },
+    "best_맵시벌_genus_classifier": {
+      "model_file": "best_맵시벌_genus_classifier.pth",
+      "classes_file": "맵시벌_genus_classes.json",
+      "available": true
+    },
+    "best_메뚜기_genus_classifier": {
+      "model_file": "best_메뚜기_genus_classifier.pth",
+      "classes_file": "메뚜기_genus_classes.json",
+      "available": true
+    },
+    "best_멸구_genus_classifier": {
+      "model_file": "best_멸구_genus_classifier.pth",
+      "classes_file": "긴날개멸구_genus_classes.json",
+      "available": true
+    },
+    "best_명나방_genus_classifier": {
+      "model_file": "best_명나방_genus_classifier.pth",
+      "classes_file": "명나방_genus_classes.json",
+      "available": true
+    },
+    "best_명주잠자리_genus_classifier": {
+      "model_file": "best_명주잠자리_genus_classifier.pth",
+      "classes_file": "명주잠자리_genus_classes.json",
+      "available": true
+    },
+    "best_모기_genus_classifier": {
+      "model_file": "best_모기_genus_classifier.pth",
+      "classes_file": "모기_genus_classes.json",
+      "available": true
+    },
+    "best_모메뚜기_genus_classifier": {
+      "model_file": "best_모메뚜기_genus_classifier.pth",
+      "classes_file": "모메뚜기_genus_classes.json",
+      "available": true
+    },
+    "best_무늬의병벌레_genus_classifier": {
+      "model_file": "best_무늬의병벌레_genus_classifier.pth",
+      "classes_file": "무늬의병벌레_genus_classes.json",
+      "available": true
+    },
+    "best_무당벌레_genus_classifier": {
+      "model_file": "best_무당벌레_genus_classifier.pth",
+      "classes_file": "무당벌레_genus_classes.json",
+      "available": true
+    },
+    "best_무당벌레붙이_genus_classifier": {
+      "model_file": "best_무당벌레붙이_genus_classifier.pth",
+      "classes_file": "무당벌레붙이_genus_classes.json",
+      "available": true
+    },
+    "best_물땡땡이_genus_classifier": {
+      "model_file": "best_물땡땡이_genus_classifier.pth",
+      "classes_file": "물땡땡이_genus_classes.json",
+      "available": true
+    },
+    "best_물방개_genus_classifier": {
+      "model_file": "best_물방개_genus_classifier.pth",
+      "classes_file": "물방개_genus_classes.json",
+      "available": true
+    },
+    "best_물벌레_genus_classifier": {
+      "model_file": "best_물벌레_genus_classifier.pth",
+      "classes_file": "물벌레_genus_classes.json",
+      "available": true
+    },
+    "best_물삿갓벌레_genus_classifier": {
+      "model_file": "best_물삿갓벌레_genus_classifier.pth",
+      "classes_file": "물삿갓벌레_genus_classes.json",
+      "available": true
+    },
+    "best_물잠자리_genus_classifier": {
+      "model_file": "best_물잠자리_genus_classifier.pth",
+      "classes_file": "물잠자리_genus_classes.json",
+      "available": true
+    },
+    "best_물장군_genus_classifier": {
+      "model_file": "best_물장군_genus_classifier.pth",
+      "classes_file": "물장군_genus_classes.json",
+      "available": true
+    },
+    "best_물진드기_genus_classifier": {
+      "model_file": "best_물진드기_genus_classifier.pth",
+      "classes_file": "물진드기_genus_classes.json",
+      "available": true
+    },
+    "best_뭉뚝날개나방_genus_classifier": {
+      "model_file": "best_뭉뚝날개나방_genus_classifier.pth",
+      "classes_file": "뭉뚝날개나방_genus_classes.json",
+      "available": true
+    },
+    "best_민강도래_genus_classifier": {
+      "model_file": "best_민강도래_genus_classifier.pth",
+      "classes_file": "민강도래_genus_classes.json",
+      "available": true
+    },
+    "best_민집게벌레_genus_classifier": {
+      "model_file": "best_민집게벌레_genus_classifier.pth",
+      "classes_file": "민집게벌레_genus_classes.json",
+      "available": true
+    },
+    "best_밀깍지벌레_genus_classifier": {
+      "model_file": "best_밀깍지벌레_genus_classifier.pth",
+      "classes_file": "밀깍지벌레_genus_classes.json",
+      "available": true
+    },
+    "best_밑빠진벌레_genus_classifier": {
+      "model_file": "best_밑빠진벌레_genus_classifier.pth",
+      "classes_file": "밑빠진벌레_genus_classes.json",
+      "available": true
+    },
+    "best_바구미_genus_classifier": {
+      "model_file": "best_바구미_genus_classifier.pth",
+      "classes_file": "바구미_genus_classes.json",
+      "available": true
+    },
+    "best_바퀴_genus_classifier": {
+      "model_file": "best_바퀴_genus_classifier.pth",
+      "classes_file": "바퀴_genus_classes.json",
+      "available": true
+    },
+    "best_박각시_genus_classifier": {
+      "model_file": "best_박각시_genus_classifier.pth",
+      "classes_file": "박각시_genus_classes.json",
+      "available": true
+    },
+    "best_박쥐나방_genus_classifier": {
+      "model_file": "best_박쥐나방_genus_classifier.pth",
+      "classes_file": "박쥐나방_genus_classes.json",
+      "available": true
+    },
+    "best_반날개_genus_classifier": {
+      "model_file": "best_반날개_genus_classifier.pth",
+      "classes_file": "반날개_genus_classes.json",
+      "available": true
+    },
+    "best_반딧불이_genus_classifier": {
+      "model_file": "best_반딧불이_genus_classifier.pth",
+      "classes_file": "반딧불이_genus_classes.json",
+      "available": true
+    },
+    "best_밤나방_genus_classifier": {
+      "model_file": "best_밤나방_genus_classifier.pth",
+      "classes_file": "밤나방_genus_classes.json",
+      "available": true
+    },
+    "best_방아벌레_genus_classifier": {
+      "model_file": "best_방아벌레_genus_classifier.pth",
+      "classes_file": "방아벌레_genus_classes.json",
+      "available": true
+    },
+    "best_방울실잠자리_genus_classifier": {
+      "model_file": "best_방울실잠자리_genus_classifier.pth",
+      "classes_file": "방울실잠자리_genus_classes.json",
+      "available": true
+    },
+    "best_방패멸구_genus_classifier": {
+      "model_file": "best_방패멸구_genus_classifier.pth",
+      "classes_file": "방패멸구_genus_classes.json",
+      "available": true
+    },
+    "best_방패벌레_genus_classifier": {
+      "model_file": "best_방패벌레_genus_classifier.pth",
+      "classes_file": "방패벌레_genus_classes.json",
+      "available": true
+    },
+    "best_배벌_genus_classifier": {
+      "model_file": "best_배벌_genus_classifier.pth",
+      "classes_file": "배벌_genus_classes.json",
+      "available": true
+    },
+    "best_뱀잠자리_genus_classifier": {
+      "model_file": "best_뱀잠자리_genus_classifier.pth",
+      "classes_file": "뱀잠자리_genus_classes.json",
+      "available": true
+    },
+    "best_뱀잠자리붙이_genus_classifier": {
+      "model_file": "best_뱀잠자리붙이_genus_classifier.pth",
+      "classes_file": "뱀잠자리붙이_genus_classes.json",
+      "available": true
+    },
+    "best_버섯벌레_genus_classifier": {
+      "model_file": "best_버섯벌레_genus_classifier.pth",
+      "classes_file": "버섯벌레_genus_classes.json",
+      "available": true
+    },
+    "best_벌붙이파리_genus_classifier": {
+      "model_file": "best_벌붙이파리_genus_classifier.pth",
+      "classes_file": "벌붙이파리_genus_classes.json",
+      "available": true
+    },
+    "best_병대벌레_genus_classifier": {
+      "model_file": "best_병대벌레_genus_classifier.pth",
+      "classes_file": "병대벌레_genus_classes.json",
+      "available": true
+    },
+    "best_보날개풀잠자리_genus_classifier": {
+      "model_file": "best_보날개풀잠자리_genus_classifier.pth",
+      "classes_file": "보날개풀잠자리_genus_classes.json",
+      "available": true
+    },
+    "best_부전나비_genus_classifier": {
+      "model_file": "best_부전나비_genus_classifier.pth",
+      "classes_file": "부전나비_genus_classes.json",
+      "available": true
+    },
+    "best_비단벌레_genus_classifier": {
+      "model_file": "best_비단벌레_genus_classifier.pth",
+      "classes_file": "비단벌레_genus_classes.json",
+      "available": true
+    },
+    "best_비행기나방_genus_classifier": {
+      "model_file": "best_비행기나방_genus_classifier.pth",
+      "classes_file": "비행기나방_genus_classes.json",
+      "available": true
+    },
+    "best_뿔나방_genus_classifier": {
+      "model_file": "best_뿔나방_genus_classifier.pth",
+      "classes_file": "남방뿔나방_genus_classes.json",
+      "available": true
+    },
+    "best_뿔노린재_genus_classifier": {
+      "model_file": "best_뿔노린재_genus_classifier.pth",
+      "classes_file": "뿔노린재_genus_classes.json",
+      "available": true
+    },
+    "best_뿔매미_genus_classifier": {
+      "model_file": "best_뿔매미_genus_classifier.pth",
+      "classes_file": "뿔매미_genus_classes.json",
+      "available": true
+    },
+    "best_뿔벌레_genus_classifier": {
+      "model_file": "best_뿔벌레_genus_classifier.pth",
+      "classes_file": "뿔벌레_genus_classes.json",
+      "available": true
+    },
+    "best_뿔잠자리_genus_classifier": {
+      "model_file": "best_뿔잠자리_genus_classifier.pth",
+      "classes_file": "뿔잠자리_genus_classes.json",
+      "available": true
+    },
+    "best_사마귀_genus_classifier": {
+      "model_file": "best_사마귀_genus_classifier.pth",
+      "classes_file": "사마귀_genus_classes.json",
+      "available": true
+    },
+    "best_사마귀붙이_genus_classifier": {
+      "model_file": "best_사마귀붙이_genus_classifier.pth",
+      "classes_file": "사마귀붙이_genus_classes.json",
+      "available": true
+    },
+    "best_사슴벌레_genus_classifier": {
+      "model_file": "best_사슴벌레_genus_classifier.pth",
+      "classes_file": "사슴벌레_genus_classes.json",
+      "available": true
+    },
+    "best_산누에나방_genus_classifier": {
+      "model_file": "best_산누에나방_genus_classifier.pth",
+      "classes_file": "산누에나방_genus_classes.json",
+      "available": true
+    },
+    "best_선녀벌레_genus_classifier": {
+      "model_file": "best_선녀벌레_genus_classifier.pth",
+      "classes_file": "선녀벌레_genus_classes.json",
+      "available": true
+    },
+    "best_소금쟁이_genus_classifier": {
+      "model_file": "best_소금쟁이_genus_classifier.pth",
+      "classes_file": "소금쟁이_genus_classes.json",
+      "available": true
+    },
+    "best_소똥구리_genus_classifier": {
+      "model_file": "best_소똥구리_genus_classifier.pth",
+      "classes_file": "소똥구리_genus_classes.json",
+      "available": true
+    },
+    "best_소바구미_genus_classifier": {
+      "model_file": "best_소바구미_genus_classifier.pth",
+      "classes_file": "소바구미_genus_classes.json",
+      "available": true
+    },
+    "best_솔나방_genus_classifier": {
+      "model_file": "best_솔나방_genus_classifier.pth",
+      "classes_file": "솔나방_genus_classes.json",
+      "available": true
+    },
+    "best_송장벌레_genus_classifier": {
+      "model_file": "best_송장벌레_genus_classifier.pth",
+      "classes_file": "송장벌레_genus_classes.json",
+      "available": true
+    },
+    "best_송장헤엄치게_genus_classifier": {
+      "model_file": "best_송장헤엄치게_genus_classifier.pth",
+      "classes_file": "송장헤엄치게_genus_classes.json",
+      "available": true
+    },
+    "best_수시렁이_genus_classifier": {
+      "model_file": "best_수시렁이_genus_classifier.pth",
+      "classes_file": "수시렁이_genus_classes.json",
+      "available": true
+    },
+    "best_수중다리잎벌_genus_classifier": {
+      "model_file": "best_수중다리잎벌_genus_classifier.pth",
+      "classes_file": "수중다리잎벌_genus_classes.json",
+      "available": true
+    },
+    "best_수중다리잎벌레_genus_classifier": {
+      "model_file": "best_수중다리잎벌레_genus_classifier.pth",
+      "classes_file": "수중다리잎벌레_genus_classes.json",
+      "available": true
+    },
+    "best_쉬파리_genus_classifier": {
+      "model_file": "best_쉬파리_genus_classifier.pth",
+      "classes_file": "쉬파리_genus_classes.json",
+      "available": true
+    },
+    "best_실노린재_genus_classifier": {
+      "model_file": "best_실노린재_genus_classifier.pth",
+      "classes_file": "실노린재_genus_classes.json",
+      "available": true
+    },
+    "best_실잠자리_genus_classifier": {
+      "model_file": "best_실잠자리_genus_classifier.pth",
+      "classes_file": "방울실잠자리_genus_classes.json",
+      "available": true
+    },
+    "best_실파리_genus_classifier": {
+      "model_file": "best_실파리_genus_classifier.pth",
+      "classes_file": "실파리_genus_classes.json",
+      "available": true
+    },
+    "best_심식나방_genus_classifier": {
+      "model_file": "best_심식나방_genus_classifier.pth",
+      "classes_file": "심식나방_genus_classes.json",
+      "available": true
+    },
+    "best_쐐기나방_genus_classifier": {
+      "model_file": "best_쐐기나방_genus_classifier.pth",
+      "classes_file": "쐐기나방_genus_classes.json",
+      "available": true
+    },
+    "best_쐐기노린재_genus_classifier": {
+      "model_file": "best_쐐기노린재_genus_classifier.pth",
+      "classes_file": "쐐기노린재_genus_classes.json",
+      "available": true
+    },
+    "best_알노린재_genus_classifier": {
+      "model_file": "best_알노린재_genus_classifier.pth",
+      "classes_file": "알노린재_genus_classes.json",
+      "available": true
+    },
+    "best_알락나방_genus_classifier": {
+      "model_file": "best_알락나방_genus_classifier.pth",
+      "classes_file": "알락나방_genus_classes.json",
+      "available": true
+    },
+    "best_알락파리_genus_classifier": {
+      "model_file": "best_알락파리_genus_classifier.pth",
+      "classes_file": "알락파리_genus_classes.json",
+      "available": true
+    },
+    "best_알락하루살이_genus_classifier": {
+      "model_file": "best_알락하루살이_genus_classifier.pth",
+      "classes_file": "알락하루살이_genus_classes.json",
+      "available": true
+    },
+    "best_알멸구_genus_classifier": {
+      "model_file": "best_알멸구_genus_classifier.pth",
+      "classes_file": "알멸구_genus_classes.json",
+      "available": true
+    },
+    "best_애기각다귀_genus_classifier": {
+      "model_file": "best_애기각다귀_genus_classifier.pth",
+      "classes_file": "애기각다귀_genus_classes.json",
+      "available": true
+    },
+    "best_어리여치_genus_classifier": {
+      "model_file": "best_어리여치_genus_classifier.pth",
+      "classes_file": "어리여치_genus_classes.json",
+      "available": true
+    },
+    "best_여치_genus_classifier": {
+      "model_file": "best_여치_genus_classifier.pth",
+      "classes_file": "어리여치_genus_classes.json",
+      "available": true
+    },
+    "best_왕바구미_genus_classifier": {
+      "model_file": "best_왕바구미_genus_classifier.pth",
+      "classes_file": "왕바구미_genus_classes.json",
+      "available": true
+    },
+    "best_왕잠자리_genus_classifier": {
+      "model_file": "best_왕잠자리_genus_classifier.pth",
+      "classes_file": "왕잠자리_genus_classes.json",
+      "available": true
+    },
+    "best_우묵날도래_genus_classifier": {
+      "model_file": "best_우묵날도래_genus_classifier.pth",
+      "classes_file": "우묵날도래_genus_classes.json",
+      "available": true
+    },
+    "best_원뿔나방_genus_classifier": {
+      "model_file": "best_원뿔나방_genus_classifier.pth",
+      "classes_file": "원뿔나방_genus_classes.json",
+      "available": true
+    },
+    "best_잎말이나방_genus_classifier": {
+      "model_file": "best_잎말이나방_genus_classifier.pth",
+      "classes_file": "잎말이나방_genus_classes.json",
+      "available": true
+    },
+    "best_잎벌_genus_classifier": {
+      "model_file": "best_잎벌_genus_classifier.pth",
+      "classes_file": "납작잎벌_genus_classes.json",
+      "available": true
+    },
+    "best_잎벌레_genus_classifier": {
+      "model_file": "best_잎벌레_genus_classifier.pth",
+      "classes_file": "수중다리잎벌레_genus_classes.json",
+      "available": true
+    },
+    "best_자나방_genus_classifier": {
+      "model_file": "best_자나방_genus_classifier.pth",
+      "classes_file": "자나방_genus_classes.json",
+      "available": true
+    },
+    "best_잔산잠자리_genus_classifier": {
+      "model_file": "best_잔산잠자리_genus_classifier.pth",
+      "classes_file": "잔산잠자리_genus_classes.json",
+      "available": true
+    },
+    "best_잠자리_genus_classifier": {
+      "model_file": "best_잠자리_genus_classifier.pth",
+      "classes_file": "명주잠자리_genus_classes.json",
+      "available": true
+    },
+    "best_잡초노린재_genus_classifier": {
+      "model_file": "best_잡초노린재_genus_classifier.pth",
+      "classes_file": "잡초노린재_genus_classes.json",
+      "available": true
+    },
+    "best_장구애비_genus_classifier": {
+      "model_file": "best_장구애비_genus_classifier.pth",
+      "classes_file": "장구애비_genus_classes.json",
+      "available": true
+    },
+    "best_장님노린재_genus_classifier": {
+      "model_file": "best_장님노린재_genus_classifier.pth",
+      "classes_file": "장님노린재_genus_classes.json",
+      "available": true
+    },
+    "best_장다리파리_genus_classifier": {
+      "model_file": "best_장다리파리_genus_classifier.pth",
+      "classes_file": "장다리파리_genus_classes.json",
+      "available": true
+    },
+    "best_장삼벌레_genus_classifier": {
+      "model_file": "best_장삼벌레_genus_classifier.pth",
+      "classes_file": "장삼벌레_genus_classes.json",
+      "available": true
+    },
+    "best_장수풍뎅이_genus_classifier": {
+      "model_file": "best_장수풍뎅이_genus_classifier.pth",
+      "classes_file": "장수풍뎅이_genus_classes.json",
+      "available": true
+    },
+    "best_재니등에_genus_classifier": {
+      "model_file": "best_재니등에_genus_classifier.pth",
+      "classes_file": "재니등에_genus_classes.json",
+      "available": true
+    },
+    "best_재주나방_genus_classifier": {
+      "model_file": "best_재주나방_genus_classifier.pth",
+      "classes_file": "재주나방_genus_classes.json",
+      "available": true
+    },
+    "best_제비나방_genus_classifier": {
+      "model_file": "best_제비나방_genus_classifier.pth",
+      "classes_file": "제비나방_genus_classes.json",
+      "available": true
+    },
+    "best_좀머리멸구_genus_classifier": {
+      "model_file": "best_좀머리멸구_genus_classifier.pth",
+      "classes_file": "좀머리멸구_genus_classes.json",
+      "available": true
+    },
+    "best_좀파리매_genus_classifier": {
+      "model_file": "best_좀파리매_genus_classifier.pth",
+      "classes_file": "좀파리매_genus_classes.json",
+      "available": true
+    },
+    "best_주둥이거위벌레_genus_classifier": {
+      "model_file": "best_주둥이거위벌레_genus_classifier.pth",
+      "classes_file": "주둥이거위벌레_genus_classes.json",
+      "available": true
+    },
+    "best_주머니나방_genus_classifier": {
+      "model_file": "best_주머니나방_genus_classifier.pth",
+      "classes_file": "주머니나방_genus_classes.json",
+      "available": true
+    },
+    "best_줄날도래_genus_classifier": {
+      "model_file": "best_줄날도래_genus_classifier.pth",
+      "classes_file": "줄날도래_genus_classes.json",
+      "available": true
+    },
+    "best_진딧물_genus_classifier": {
+      "model_file": "best_진딧물_genus_classifier.pth",
+      "classes_file": "진딧물_genus_classes.json",
+      "available": true
+    },
+    "best_집게벌레_genus_classifier": {
+      "model_file": "best_집게벌레_genus_classifier.pth",
+      "classes_file": "꼬마집게벌레_genus_classes.json",
+      "available": true
+    },
+    "best_집파리_genus_classifier": {
+      "model_file": "best_집파리_genus_classifier.pth",
+      "classes_file": "집파리_genus_classes.json",
+      "available": true
+    },
+    "best_참나무노린재_genus_classifier": {
+      "model_file": "best_참나무노린재_genus_classifier.pth",
+      "classes_file": "참나무노린재_genus_classes.json",
+      "available": true
+    },
+    "best_창나방_genus_classifier": {
+      "model_file": "best_창나방_genus_classifier.pth",
+      "classes_file": "창나방_genus_classes.json",
+      "available": true
+    },
+    "best_창날개뿔나방_genus_classifier": {
+      "model_file": "best_창날개뿔나방_genus_classifier.pth",
+      "classes_file": "창날개뿔나방_genus_classes.json",
+      "available": true
+    },
+    "best_창주둥이바구미_genus_classifier": {
+      "model_file": "best_창주둥이바구미_genus_classifier.pth",
+      "classes_file": "창주둥이바구미_genus_classes.json",
+      "available": true
+    },
+    "best_채다리날도래_genus_classifier": {
+      "model_file": "best_채다리날도래_genus_classifier.pth",
+      "classes_file": "채다리날도래_genus_classes.json",
+      "available": true
+    },
+    "best_청동잠자리_genus_classifier": {
+      "model_file": "best_청동잠자리_genus_classifier.pth",
+      "classes_file": "청동잠자리_genus_classes.json",
+      "available": true
+    },
+    "best_청벌_genus_classifier": {
+      "model_file": "best_청벌_genus_classifier.pth",
+      "classes_file": "청벌_genus_classes.json",
+      "available": true
+    },
+    "best_청실잠자리_genus_classifier": {
+      "model_file": "best_청실잠자리_genus_classifier.pth",
+      "classes_file": "청실잠자리_genus_classes.json",
+      "available": true
+    },
+    "best_초록파리_genus_classifier": {
+      "model_file": "best_초록파리_genus_classifier.pth",
+      "classes_file": "초록파리_genus_classes.json",
+      "available": true
+    },
+    "best_측범잠자리_genus_classifier": {
+      "model_file": "best_측범잠자리_genus_classifier.pth",
+      "classes_file": "측범잠자리_genus_classes.json",
+      "available": true
+    },
+    "best_침노린재_genus_classifier": {
+      "model_file": "best_침노린재_genus_classifier.pth",
+      "classes_file": "침노린재_genus_classes.json",
+      "available": true
+    },
+    "best_큰날개매미충_genus_classifier": {
+      "model_file": "best_큰날개매미충_genus_classifier.pth",
+      "classes_file": "큰날개매미충_genus_classes.json",
+      "available": true
+    },
+    "best_큰날개파리_genus_classifier": {
+      "model_file": "best_큰날개파리_genus_classifier.pth",
+      "classes_file": "큰날개파리_genus_classes.json",
+      "available": true
+    },
+    "best_큰원뿔나방_genus_classifier": {
+      "model_file": "best_큰원뿔나방_genus_classifier.pth",
+      "classes_file": "큰원뿔나방_genus_classes.json",
+      "available": true
+    },
+    "best_태극나방_genus_classifier": {
+      "model_file": "best_태극나방_genus_classifier.pth",
+      "classes_file": "태극나방_genus_classes.json",
+      "available": true
+    },
+    "best_털귀뚜라미_genus_classifier": {
+      "model_file": "best_털귀뚜라미_genus_classifier.pth",
+      "classes_file": "털귀뚜라미_genus_classes.json",
+      "available": true
+    },
+    "best_털날개나방_genus_classifier": {
+      "model_file": "best_털날개나방_genus_classifier.pth",
+      "classes_file": "털날개나방_genus_classes.json",
+      "available": true
+    },
+    "best_털파리_genus_classifier": {
+      "model_file": "best_털파리_genus_classifier.pth",
+      "classes_file": "털파리_genus_classes.json",
+      "available": true
+    },
+    "best_파리매_genus_classifier": {
+      "model_file": "best_파리매_genus_classifier.pth",
+      "classes_file": "밑들이파리매_genus_classes.json",
+      "available": true
+    },
+    "best_판날개뿔나방_genus_classifier": {
+      "model_file": "best_판날개뿔나방_genus_classifier.pth",
+      "classes_file": "판날개뿔나방_genus_classes.json",
+      "available": true
+    },
+    "best_팔랑나비_genus_classifier": {
+      "model_file": "best_팔랑나비_genus_classifier.pth",
+      "classes_file": "팔랑나비_genus_classes.json",
+      "available": true
+    },
+    "best_표본벌레_genus_classifier": {
+      "model_file": "best_표본벌레_genus_classifier.pth",
+      "classes_file": "표본벌레_genus_classes.json",
+      "available": true
+    },
+    "best_풀명나방_genus_classifier": {
+      "model_file": "best_풀명나방_genus_classifier.pth",
+      "classes_file": "풀명나방_genus_classes.json",
+      "available": true
+    },
+    "best_풀잠자리_genus_classifier": {
+      "model_file": "best_풀잠자리_genus_classifier.pth",
+      "classes_file": "보날개풀잠자리_genus_classes.json",
+      "available": true
+    },
+    "best_풍뎅이_genus_classifier": {
+      "model_file": "best_풍뎅이_genus_classifier.pth",
+      "classes_file": "검정풍뎅이_genus_classes.json",
+      "available": true
+    },
+    "best_풍뎅이붙이_genus_classifier": {
+      "model_file": "best_풍뎅이붙이_genus_classifier.pth",
+      "classes_file": "풍뎅이붙이_genus_classes.json",
+      "available": true
+    },
+    "best_하늘소_genus_classifier": {
+      "model_file": "best_하늘소_genus_classifier.pth",
+      "classes_file": "하늘소_genus_classes.json",
+      "available": true
+    },
+    "best_하늘소붙이_genus_classifier": {
+      "model_file": "best_하늘소붙이_genus_classifier.pth",
+      "classes_file": "하늘소붙이_genus_classes.json",
+      "available": true
+    },
+    "best_허리노린재_genus_classifier": {
+      "model_file": "best_허리노린재_genus_classifier.pth",
+      "classes_file": "허리노린재_genus_classes.json",
+      "available": true
+    },
+    "best_호랑나비_genus_classifier": {
+      "model_file": "best_호랑나비_genus_classifier.pth",
+      "classes_file": "호랑나비_genus_classes.json",
+      "available": true
+    },
+    "best_호리허리노린재_genus_classifier": {
+      "model_file": "best_호리허리노린재_genus_classifier.pth",
+      "classes_file": "호리허리노린재_genus_classes.json",
+      "available": true
+    },
+    "best_혹나방_genus_classifier": {
+      "model_file": "best_혹나방_genus_classifier.pth",
+      "classes_file": "혹나방_genus_classes.json",
+      "available": true
+    },
+    "best_혹벌_genus_classifier": {
+      "model_file": "best_혹벌_genus_classifier.pth",
+      "classes_file": "혹벌_genus_classes.json",
+      "available": true
+    },
+    "best_혹파리_genus_classifier": {
+      "model_file": "best_혹파리_genus_classifier.pth",
+      "classes_file": "혹파리_genus_classes.json",
+      "available": true
+    },
+    "best_홍반디_genus_classifier": {
+      "model_file": "best_홍반디_genus_classifier.pth",
+      "classes_file": "홍반디_genus_classes.json",
+      "available": true
+    },
+    "best_흰나비_genus_classifier": {
+      "model_file": "best_흰나비_genus_classifier.pth",
+      "classes_file": "흰나비_genus_classes.json",
+      "available": true
+    }
+  },
+  "species": {
+    "best_abraxas_species_classifier": {
+      "model_file": "best_abraxas_species_classifier.pth",
+      "classes_file": "abraxas_species_classes.json",
+      "available": true
+    },
+    "best_abrostola_species_classifier": {
+      "model_file": "best_abrostola_species_classifier.pth",
+      "classes_file": "abrostola_species_classes.json",
+      "available": true
+    },
+    "best_acalolepta_species_classifier": {
+      "model_file": "best_acalolepta_species_classifier.pth",
+      "classes_file": "acalolepta_species_classes.json",
+      "available": true
+    },
+    "best_acanthosoma_species_classifier": {
+      "model_file": "best_acanthosoma_species_classifier.pth",
+      "classes_file": "acanthosoma_species_classes.json",
+      "available": true
+    },
+    "best_acentrella_species_classifier": {
+      "model_file": "best_acentrella_species_classifier.pth",
+      "classes_file": "acentrella_species_classes.json",
+      "available": true
+    },
+    "best_acleris_species_classifier": {
+      "model_file": "best_acleris_species_classifier.pth",
+      "classes_file": "acleris_species_classes.json",
+      "available": true
+    },
+    "best_acontia_species_classifier": {
+      "model_file": "best_acontia_species_classifier.pth",
+      "classes_file": "acontia_species_classes.json",
+      "available": true
+    },
+    "best_acoptolabrus_species_classifier": {
+      "model_file": "best_acoptolabrus_species_classifier.pth",
+      "classes_file": "acoptolabrus_species_classes.json",
+      "available": true
+    },
+    "best_acosmeryx_species_classifier": {
+      "model_file": "best_acosmeryx_species_classifier.pth",
+      "classes_file": "acosmeryx_species_classes.json",
+      "available": true
+    },
+    "best_acrodontis_species_classifier": {
+      "model_file": "best_acrodontis_species_classifier.pth",
+      "classes_file": "acrodontis_species_classes.json",
+      "available": true
+    },
+    "best_acronicta_species_classifier": {
+      "model_file": "best_acronicta_species_classifier.pth",
+      "classes_file": "acronicta_species_classes.json",
+      "available": true
+    },
+    "best_actias_species_classifier": {
+      "model_file": "best_actias_species_classifier.pth",
+      "classes_file": "actias_species_classes.json",
+      "available": true
+    },
+    "best_adela_species_classifier": {
+      "model_file": "best_adela_species_classifier.pth",
+      "classes_file": "adela_species_classes.json",
+      "available": true
+    },
+    "best_adelphocoris_species_classifier": {
+      "model_file": "best_adelphocoris_species_classifier.pth",
+      "classes_file": "adelphocoris_species_classes.json",
+      "available": true
+    },
+    "best_adomerus_species_classifier": {
+      "model_file": "best_adomerus_species_classifier.pth",
+      "classes_file": "adomerus_species_classes.json",
+      "available": true
+    },
+    "best_adoretus_species_classifier": {
+      "model_file": "best_adoretus_species_classifier.pth",
+      "classes_file": "adoretus_species_classes.json",
+      "available": true
+    },
+    "best_adoxophyes_species_classifier": {
+      "model_file": "best_adoxophyes_species_classifier.pth",
+      "classes_file": "adoxophyes_species_classes.json",
+      "available": true
+    },
+    "best_aemene_species_classifier": {
+      "model_file": "best_aemene_species_classifier.pth",
+      "classes_file": "aemene_species_classes.json",
+      "available": true
+    },
+    "best_aeschnophlebia_species_classifier": {
+      "model_file": "best_aeschnophlebia_species_classifier.pth",
+      "classes_file": "aeschnophlebia_species_classes.json",
+      "available": true
+    },
+    "best_aeshna_species_classifier": {
+      "model_file": "best_aeshna_species_classifier.pth",
+      "classes_file": "aeshna_species_classes.json",
+      "available": true
+    },
+    "best_agabus_species_classifier": {
+      "model_file": "best_agabus_species_classifier.pth",
+      "classes_file": "agabus_species_classes.json",
+      "available": true
+    },
+    "best_agathia_species_classifier": {
+      "model_file": "best_agathia_species_classifier.pth",
+      "classes_file": "agathia_species_classes.json",
+      "available": true
+    },
+    "best_agonopterix_species_classifier": {
+      "model_file": "best_agonopterix_species_classifier.pth",
+      "classes_file": "agonopterix_species_classes.json",
+      "available": true
+    },
+    "best_agonum_species_classifier": {
+      "model_file": "best_agonum_species_classifier.pth",
+      "classes_file": "agonum_species_classes.json",
+      "available": true
+    },
+    "best_agrilus_species_classifier": {
+      "model_file": "best_agrilus_species_classifier.pth",
+      "classes_file": "agrilus_species_classes.json",
+      "available": true
+    },
+    "best_agrotera_species_classifier": {
+      "model_file": "best_agrotera_species_classifier.pth",
+      "classes_file": "agrotera_species_classes.json",
+      "available": true
+    },
+    "best_agrotis_species_classifier": {
+      "model_file": "best_agrotis_species_classifier.pth",
+      "classes_file": "agrotis_species_classes.json",
+      "available": true
+    },
+    "best_agrypnus_species_classifier": {
+      "model_file": "best_agrypnus_species_classifier.pth",
+      "classes_file": "agrypnus_species_classes.json",
+      "available": true
+    },
+    "best_ahlbergia_species_classifier": {
+      "model_file": "best_ahlbergia_species_classifier.pth",
+      "classes_file": "ahlbergia_species_classes.json",
+      "available": true
+    },
+    "best_alcis_species_classifier": {
+      "model_file": "best_alcis_species_classifier.pth",
+      "classes_file": "alcis_species_classes.json",
+      "available": true
+    },
+    "best_aleochara_species_classifier": {
+      "model_file": "best_aleochara_species_classifier.pth",
+      "classes_file": "aleochara_species_classes.json",
+      "available": true
+    },
+    "best_allodonta_species_classifier": {
+      "model_file": "best_allodonta_species_classifier.pth",
+      "classes_file": "allodonta_species_classes.json",
+      "available": true
+    },
+    "best_alloeotomus_species_classifier": {
+      "model_file": "best_alloeotomus_species_classifier.pth",
+      "classes_file": "alloeotomus_species_classes.json",
+      "available": true
+    },
+    "best_altica_species_classifier": {
+      "model_file": "best_altica_species_classifier.pth",
+      "classes_file": "altica_species_classes.json",
+      "available": true
+    },
+    "best_amara_species_classifier": {
+      "model_file": "best_amara_species_classifier.pth",
+      "classes_file": "amara_species_classes.json",
+      "available": true
+    },
+    "best_amarysius_species_classifier": {
+      "model_file": "best_amarysius_species_classifier.pth",
+      "classes_file": "amarysius_species_classes.json",
+      "available": true
+    },
+    "best_amata_species_classifier": {
+      "model_file": "best_amata_species_classifier.pth",
+      "classes_file": "amata_species_classes.json",
+      "available": true
+    },
+    "best_ambulyx_species_classifier": {
+      "model_file": "best_ambulyx_species_classifier.pth",
+      "classes_file": "ambulyx_species_classes.json",
+      "available": true
+    },
+    "best_amegilla_species_classifier": {
+      "model_file": "best_amegilla_species_classifier.pth",
+      "classes_file": "amegilla_species_classes.json",
+      "available": true
+    },
+    "best_ammophila_species_classifier": {
+      "model_file": "best_ammophila_species_classifier.pth",
+      "classes_file": "ammophila_species_classes.json",
+      "available": true
+    },
+    "best_ampedus_species_classifier": {
+      "model_file": "best_ampedus_species_classifier.pth",
+      "classes_file": "ampedus_species_classes.json",
+      "available": true
+    },
+    "best_amphipyra_species_classifier": {
+      "model_file": "best_amphipyra_species_classifier.pth",
+      "classes_file": "amphipyra_species_classes.json",
+      "available": true
+    },
+    "best_anacampsis_species_classifier": {
+      "model_file": "best_anacampsis_species_classifier.pth",
+      "classes_file": "anacampsis_species_classes.json",
+      "available": true
+    },
+    "best_anadevidia_species_classifier": {
+      "model_file": "best_anadevidia_species_classifier.pth",
+      "classes_file": "anadevidia_species_classes.json",
+      "available": true
+    },
+    "best_analthes_species_classifier": {
+      "model_file": "best_analthes_species_classifier.pth",
+      "classes_file": "analthes_species_classes.json",
+      "available": true
+    },
+    "best_anania_species_classifier": {
+      "model_file": "best_anania_species_classifier.pth",
+      "classes_file": "anania_species_classes.json",
+      "available": true
+    },
+    "best_anapodisma_species_classifier": {
+      "model_file": "best_anapodisma_species_classifier.pth",
+      "classes_file": "anapodisma_species_classes.json",
+      "available": true
+    },
+    "best_anastrangalia_species_classifier": {
+      "model_file": "best_anastrangalia_species_classifier.pth",
+      "classes_file": "anastrangalia_species_classes.json",
+      "available": true
+    },
+    "best_anax_species_classifier": {
+      "model_file": "best_anax_species_classifier.pth",
+      "classes_file": "anax_species_classes.json",
+      "available": true
+    },
+    "best_ancylis_species_classifier": {
+      "model_file": "best_ancylis_species_classifier.pth",
+      "classes_file": "ancylis_species_classes.json",
+      "available": true
+    },
+    "best_andricus_species_classifier": {
+      "model_file": "best_andricus_species_classifier.pth",
+      "classes_file": "andricus_species_classes.json",
+      "available": true
+    },
+    "best_anechura_species_classifier": {
+      "model_file": "best_anechura_species_classifier.pth",
+      "classes_file": "anechura_species_classes.json",
+      "available": true
+    },
+    "best_anisodactylus_species_classifier": {
+      "model_file": "best_anisodactylus_species_classifier.pth",
+      "classes_file": "anisodactylus_species_classes.json",
+      "available": true
+    },
+    "best_anisolabis_species_classifier": {
+      "model_file": "best_anisolabis_species_classifier.pth",
+      "classes_file": "anisolabis_species_classes.json",
+      "available": true
+    },
+    "best_anisops_species_classifier": {
+      "model_file": "best_anisops_species_classifier.pth",
+      "classes_file": "anisops_species_classes.json",
+      "available": true
+    },
+    "best_anomala_species_classifier": {
+      "model_file": "best_anomala_species_classifier.pth",
+      "classes_file": "anomala_species_classes.json",
+      "available": true
+    },
+    "best_anopheles_species_classifier": {
+      "model_file": "best_anopheles_species_classifier.pth",
+      "classes_file": "anopheles_species_classes.json",
+      "available": true
+    },
+    "best_anoplophora_species_classifier": {
+      "model_file": "best_anoplophora_species_classifier.pth",
+      "classes_file": "anoplophora_species_classes.json",
+      "available": true
+    },
+    "best_anorthoa_species_classifier": {
+      "model_file": "best_anorthoa_species_classifier.pth",
+      "classes_file": "anorthoa_species_classes.json",
+      "available": true
+    },
+    "best_anterhynchium_species_classifier": {
+      "model_file": "best_anterhynchium_species_classifier.pth",
+      "classes_file": "anterhynchium_species_classes.json",
+      "available": true
+    },
+    "best_anthaxia_species_classifier": {
+      "model_file": "best_anthaxia_species_classifier.pth",
+      "classes_file": "anthaxia_species_classes.json",
+      "available": true
+    },
+    "best_antheraea_species_classifier": {
+      "model_file": "best_antheraea_species_classifier.pth",
+      "classes_file": "antheraea_species_classes.json",
+      "available": true
+    },
+    "best_anthomyia_species_classifier": {
+      "model_file": "best_anthomyia_species_classifier.pth",
+      "classes_file": "anthomyia_species_classes.json",
+      "available": true
+    },
+    "best_anthrenus_species_classifier": {
+      "model_file": "best_anthrenus_species_classifier.pth",
+      "classes_file": "anthrenus_species_classes.json",
+      "available": true
+    },
+    "best_antigius_species_classifier": {
+      "model_file": "best_antigius_species_classifier.pth",
+      "classes_file": "antigius_species_classes.json",
+      "available": true
+    },
+    "best_apatura_species_classifier": {
+      "model_file": "best_apatura_species_classifier.pth",
+      "classes_file": "apatura_species_classes.json",
+      "available": true
+    },
+    "best_aphis_species_classifier": {
+      "model_file": "best_aphis_species_classifier.pth",
+      "classes_file": "aphis_species_classes.json",
+      "available": true
+    },
+    "best_aphodius_species_classifier": {
+      "model_file": "best_aphodius_species_classifier.pth",
+      "classes_file": "aphodius_species_classes.json",
+      "available": true
+    },
+    "best_aphrophora_species_classifier": {
+      "model_file": "best_aphrophora_species_classifier.pth",
+      "classes_file": "aphrophora_species_classes.json",
+      "available": true
+    },
+    "best_apis_species_classifier": {
+      "model_file": "best_apis_species_classifier.pth",
+      "classes_file": "apis_species_classes.json",
+      "available": true
+    },
+    "best_apoderus_species_classifier": {
+      "model_file": "best_apoderus_species_classifier.pth",
+      "classes_file": "apoderus_species_classes.json",
+      "available": true
+    },
+    "best_apolygus_species_classifier": {
+      "model_file": "best_apolygus_species_classifier.pth",
+      "classes_file": "apolygus_species_classes.json",
+      "available": true
+    },
+    "best_appasus_species_classifier": {
+      "model_file": "best_appasus_species_classifier.pth",
+      "classes_file": "appasus_species_classes.json",
+      "available": true
+    },
+    "best_aquarius_species_classifier": {
+      "model_file": "best_aquarius_species_classifier.pth",
+      "classes_file": "aquarius_species_classes.json",
+      "available": true
+    },
+    "best_araeopteron_species_classifier": {
+      "model_file": "best_araeopteron_species_classifier.pth",
+      "classes_file": "araeopteron_species_classes.json",
+      "available": true
+    },
+    "best_araschnia_species_classifier": {
+      "model_file": "best_araschnia_species_classifier.pth",
+      "classes_file": "araschnia_species_classes.json",
+      "available": true
+    },
+    "best_archips_species_classifier": {
+      "model_file": "best_archips_species_classifier.pth",
+      "classes_file": "archips_species_classes.json",
+      "available": true
+    },
+    "best_arctornis_species_classifier": {
+      "model_file": "best_arctornis_species_classifier.pth",
+      "classes_file": "arctornis_species_classes.json",
+      "available": true
+    },
+    "best_arge_species_classifier": {
+      "model_file": "best_arge_species_classifier.pth",
+      "classes_file": "arge_species_classes.json",
+      "available": true
+    },
+    "best_argopistes_species_classifier": {
+      "model_file": "best_argopistes_species_classifier.pth",
+      "classes_file": "argopistes_species_classes.json",
+      "available": true
+    },
+    "best_argopus_species_classifier": {
+      "model_file": "best_argopus_species_classifier.pth",
+      "classes_file": "argopus_species_classes.json",
+      "available": true
+    },
+    "best_argynnis_species_classifier": {
+      "model_file": "best_argynnis_species_classifier.pth",
+      "classes_file": "argynnis_species_classes.json",
+      "available": true
+    },
+    "best_arma_species_classifier": {
+      "model_file": "best_arma_species_classifier.pth",
+      "classes_file": "arma_species_classes.json",
+      "available": true
+    },
+    "best_arocatus_species_classifier": {
+      "model_file": "best_arocatus_species_classifier.pth",
+      "classes_file": "arocatus_species_classes.json",
+      "available": true
+    },
+    "best_arytrura_species_classifier": {
+      "model_file": "best_arytrura_species_classifier.pth",
+      "classes_file": "arytrura_species_classes.json",
+      "available": true
+    },
+    "best_ascotis_species_classifier": {
+      "model_file": "best_ascotis_species_classifier.pth",
+      "classes_file": "ascotis_species_classes.json",
+      "available": true
+    },
+    "best_asiopodabrus_species_classifier": {
+      "model_file": "best_asiopodabrus_species_classifier.pth",
+      "classes_file": "asiopodabrus_species_classes.json",
+      "available": true
+    },
+    "best_aspidimorpha_species_classifier": {
+      "model_file": "best_aspidimorpha_species_classifier.pth",
+      "classes_file": "aspidimorpha_species_classes.json",
+      "available": true
+    },
+    "best_assara_species_classifier": {
+      "model_file": "best_assara_species_classifier.pth",
+      "classes_file": "assara_species_classes.json",
+      "available": true
+    },
+    "best_asthena_species_classifier": {
+      "model_file": "best_asthena_species_classifier.pth",
+      "classes_file": "asthena_species_classes.json",
+      "available": true
+    },
+    "best_athalia_species_classifier": {
+      "model_file": "best_athalia_species_classifier.pth",
+      "classes_file": "athalia_species_classes.json",
+      "available": true
+    },
+    "best_athetis_species_classifier": {
+      "model_file": "best_athetis_species_classifier.pth",
+      "classes_file": "athetis_species_classes.json",
+      "available": true
+    },
+    "best_aulacophora_species_classifier": {
+      "model_file": "best_aulacophora_species_classifier.pth",
+      "classes_file": "aulacophora_species_classes.json",
+      "available": true
+    },
+    "best_aulonocarabus_species_classifier": {
+      "model_file": "best_aulonocarabus_species_classifier.pth",
+      "classes_file": "aulonocarabus_species_classes.json",
+      "available": true
+    },
+    "best_auzata_species_classifier": {
+      "model_file": "best_auzata_species_classifier.pth",
+      "classes_file": "auzata_species_classes.json",
+      "available": true
+    },
+    "best_aventiola_species_classifier": {
+      "model_file": "best_aventiola_species_classifier.pth",
+      "classes_file": "aventiola_species_classes.json",
+      "available": true
+    },
+    "best_bactrocera_species_classifier": {
+      "model_file": "best_bactrocera_species_classifier.pth",
+      "classes_file": "bactrocera_species_classes.json",
+      "available": true
+    },
+    "best_baetis_species_classifier": {
+      "model_file": "best_baetis_species_classifier.pth",
+      "classes_file": "baetis_species_classes.json",
+      "available": true
+    },
+    "best_balataea_species_classifier": {
+      "model_file": "best_balataea_species_classifier.pth",
+      "classes_file": "balataea_species_classes.json",
+      "available": true
+    },
+    "best_barsine_species_classifier": {
+      "model_file": "best_barsine_species_classifier.pth",
+      "classes_file": "barsine_species_classes.json",
+      "available": true
+    },
+    "best_belosticta_species_classifier": {
+      "model_file": "best_belosticta_species_classifier.pth",
+      "classes_file": "belosticta_species_classes.json",
+      "available": true
+    },
+    "best_bembidion_species_classifier": {
+      "model_file": "best_bembidion_species_classifier.pth",
+      "classes_file": "bembidion_species_classes.json",
+      "available": true
+    },
+    "best_berosus_species_classifier": {
+      "model_file": "best_berosus_species_classifier.pth",
+      "classes_file": "berosus_species_classes.json",
+      "available": true
+    },
+    "best_bibio_species_classifier": {
+      "model_file": "best_bibio_species_classifier.pth",
+      "classes_file": "bibio_species_classes.json",
+      "available": true
+    },
+    "best_biston_species_classifier": {
+      "model_file": "best_biston_species_classifier.pth",
+      "classes_file": "biston_species_classes.json",
+      "available": true
+    },
+    "best_bizia_species_classifier": {
+      "model_file": "best_bizia_species_classifier.pth",
+      "classes_file": "bizia_species_classes.json",
+      "available": true
+    },
+    "best_blattella_species_classifier": {
+      "model_file": "best_blattella_species_classifier.pth",
+      "classes_file": "blattella_species_classes.json",
+      "available": true
+    },
+    "best_blitopertha_species_classifier": {
+      "model_file": "best_blitopertha_species_classifier.pth",
+      "classes_file": "blitopertha_species_classes.json",
+      "available": true
+    },
+    "best_bombus_species_classifier": {
+      "model_file": "best_bombus_species_classifier.pth",
+      "classes_file": "bombus_species_classes.json",
+      "available": true
+    },
+    "best_bombylius_species_classifier": {
+      "model_file": "best_bombylius_species_classifier.pth",
+      "classes_file": "bombylius_species_classes.json",
+      "available": true
+    },
+    "best_bombyx_species_classifier": {
+      "model_file": "best_bombyx_species_classifier.pth",
+      "classes_file": "bombyx_species_classes.json",
+      "available": true
+    },
+    "best_botyodes_species_classifier": {
+      "model_file": "best_botyodes_species_classifier.pth",
+      "classes_file": "botyodes_species_classes.json",
+      "available": true
+    },
+    "best_bradina_species_classifier": {
+      "model_file": "best_bradina_species_classifier.pth",
+      "classes_file": "bradina_species_classes.json",
+      "available": true
+    },
+    "best_brenthis_species_classifier": {
+      "model_file": "best_brenthis_species_classifier.pth",
+      "classes_file": "brenthis_species_classes.json",
+      "available": true
+    },
+    "best_cabera_species_classifier": {
+      "model_file": "best_cabera_species_classifier.pth",
+      "classes_file": "cabera_species_classes.json",
+      "available": true
+    },
+    "best_caligula_species_classifier": {
+      "model_file": "best_caligula_species_classifier.pth",
+      "classes_file": "caligula_species_classes.json",
+      "available": true
+    },
+    "best_callabraxas_species_classifier": {
+      "model_file": "best_callabraxas_species_classifier.pth",
+      "classes_file": "callabraxas_species_classes.json",
+      "available": true
+    },
+    "best_calliphora_species_classifier": {
+      "model_file": "best_calliphora_species_classifier.pth",
+      "classes_file": "calliphora_species_classes.json",
+      "available": true
+    },
+    "best_calliteara_species_classifier": {
+      "model_file": "best_calliteara_species_classifier.pth",
+      "classes_file": "calliteara_species_classes.json",
+      "available": true
+    },
+    "best_callopistria_species_classifier": {
+      "model_file": "best_callopistria_species_classifier.pth",
+      "classes_file": "callopistria_species_classes.json",
+      "available": true
+    },
+    "best_calosoma_species_classifier": {
+      "model_file": "best_calosoma_species_classifier.pth",
+      "classes_file": "calosoma_species_classes.json",
+      "available": true
+    },
+    "best_calvia_species_classifier": {
+      "model_file": "best_calvia_species_classifier.pth",
+      "classes_file": "calvia_species_classes.json",
+      "available": true
+    },
+    "best_calyptra_species_classifier": {
+      "model_file": "best_calyptra_species_classifier.pth",
+      "classes_file": "calyptra_species_classes.json",
+      "available": true
+    },
+    "best_campiglossa_species_classifier": {
+      "model_file": "best_campiglossa_species_classifier.pth",
+      "classes_file": "campiglossa_species_classes.json",
+      "available": true
+    },
+    "best_camponotus_species_classifier": {
+      "model_file": "best_camponotus_species_classifier.pth",
+      "classes_file": "camponotus_species_classes.json",
+      "available": true
+    },
+    "best_cantharis_species_classifier": {
+      "model_file": "best_cantharis_species_classifier.pth",
+      "classes_file": "cantharis_species_classes.json",
+      "available": true
+    },
+    "best_capsus_species_classifier": {
+      "model_file": "best_capsus_species_classifier.pth",
+      "classes_file": "capsus_species_classes.json",
+      "available": true
+    },
+    "best_carabus_species_classifier": {
+      "model_file": "best_carabus_species_classifier.pth",
+      "classes_file": "aulonocarabus_species_classes.json",
+      "available": true
+    },
+    "best_carbula_species_classifier": {
+      "model_file": "best_carbula_species_classifier.pth",
+      "classes_file": "carbula_species_classes.json",
+      "available": true
+    },
+    "best_carcilia_species_classifier": {
+      "model_file": "best_carcilia_species_classifier.pth",
+      "classes_file": "carcilia_species_classes.json",
+      "available": true
+    },
+    "best_cardipennis_species_classifier": {
+      "model_file": "best_cardipennis_species_classifier.pth",
+      "classes_file": "cardipennis_species_classes.json",
+      "available": true
+    },
+    "best_cassida_species_classifier": {
+      "model_file": "best_cassida_species_classifier.pth",
+      "classes_file": "cassida_species_classes.json",
+      "available": true
+    },
+    "best_castanopsides_species_classifier": {
+      "model_file": "best_castanopsides_species_classifier.pth",
+      "classes_file": "castanopsides_species_classes.json",
+      "available": true
+    },
+    "best_catocala_species_classifier": {
+      "model_file": "best_catocala_species_classifier.pth",
+      "classes_file": "catocala_species_classes.json",
+      "available": true
+    },
+    "best_celastrina_species_classifier": {
+      "model_file": "best_celastrina_species_classifier.pth",
+      "classes_file": "celastrina_species_classes.json",
+      "available": true
+    },
+    "best_ceratina_species_classifier": {
+      "model_file": "best_ceratina_species_classifier.pth",
+      "classes_file": "ceratina_species_classes.json",
+      "available": true
+    },
+    "best_ceratovacuna_species_classifier": {
+      "model_file": "best_ceratovacuna_species_classifier.pth",
+      "classes_file": "ceratovacuna_species_classes.json",
+      "available": true
+    },
+    "best_ceriagrion_species_classifier": {
+      "model_file": "best_ceriagrion_species_classifier.pth",
+      "classes_file": "ceriagrion_species_classes.json",
+      "available": true
+    },
+    "best_ceroplastes_species_classifier": {
+      "model_file": "best_ceroplastes_species_classifier.pth",
+      "classes_file": "ceroplastes_species_classes.json",
+      "available": true
+    },
+    "best_chabula_species_classifier": {
+      "model_file": "best_chabula_species_classifier.pth",
+      "classes_file": "chabula_species_classes.json",
+      "available": true
+    },
+    "best_chalcosyrphus_species_classifier": {
+      "model_file": "best_chalcosyrphus_species_classifier.pth",
+      "classes_file": "chalcosyrphus_species_classes.json",
+      "available": true
+    },
+    "best_cheumatopsyche_species_classifier": {
+      "model_file": "best_cheumatopsyche_species_classifier.pth",
+      "classes_file": "cheumatopsyche_species_classes.json",
+      "available": true
+    },
+    "best_chiasmia_species_classifier": {
+      "model_file": "best_chiasmia_species_classifier.pth",
+      "classes_file": "chiasmia_species_classes.json",
+      "available": true
+    },
+    "best_chilocoris_species_classifier": {
+      "model_file": "best_chilocoris_species_classifier.pth",
+      "classes_file": "chilocoris_species_classes.json",
+      "available": true
+    },
+    "best_chilocorus_species_classifier": {
+      "model_file": "best_chilocorus_species_classifier.pth",
+      "classes_file": "chilocorus_species_classes.json",
+      "available": true
+    },
+    "best_chilo_species_classifier": {
+      "model_file": "best_chilo_species_classifier.pth",
+      "classes_file": "chilo_species_classes.json",
+      "available": true
+    },
+    "best_chironomus_species_classifier": {
+      "model_file": "best_chironomus_species_classifier.pth",
+      "classes_file": "chironomus_species_classes.json",
+      "available": true
+    },
+    "best_chlaenius_species_classifier": {
+      "model_file": "best_chlaenius_species_classifier.pth",
+      "classes_file": "chlaenius_species_classes.json",
+      "available": true
+    },
+    "best_chloridolum_species_classifier": {
+      "model_file": "best_chloridolum_species_classifier.pth",
+      "classes_file": "chloridolum_species_classes.json",
+      "available": true
+    },
+    "best_chlorissa_species_classifier": {
+      "model_file": "best_chlorissa_species_classifier.pth",
+      "classes_file": "chlorissa_species_classes.json",
+      "available": true
+    },
+    "best_chlorophorus_species_classifier": {
+      "model_file": "best_chlorophorus_species_classifier.pth",
+      "classes_file": "chlorophorus_species_classes.json",
+      "available": true
+    },
+    "best_choerades_species_classifier": {
+      "model_file": "best_choerades_species_classifier.pth",
+      "classes_file": "choerades_species_classes.json",
+      "available": true
+    },
+    "best_choristoneura_species_classifier": {
+      "model_file": "best_choristoneura_species_classifier.pth",
+      "classes_file": "choristoneura_species_classes.json",
+      "available": true
+    },
+    "best_chorsia_species_classifier": {
+      "model_file": "best_chorsia_species_classifier.pth",
+      "classes_file": "chorsia_species_classes.json",
+      "available": true
+    },
+    "best_chorthippus_species_classifier": {
+      "model_file": "best_chorthippus_species_classifier.pth",
+      "classes_file": "chorthippus_species_classes.json",
+      "available": true
+    },
+    "best_chrysis_species_classifier": {
+      "model_file": "best_chrysis_species_classifier.pth",
+      "classes_file": "chrysis_species_classes.json",
+      "available": true
+    },
+    "best_chrysolina_species_classifier": {
+      "model_file": "best_chrysolina_species_classifier.pth",
+      "classes_file": "chrysolina_species_classes.json",
+      "available": true
+    },
+    "best_chrysomela_species_classifier": {
+      "model_file": "best_chrysomela_species_classifier.pth",
+      "classes_file": "chrysomela_species_classes.json",
+      "available": true
+    },
+    "best_chrysomya_species_classifier": {
+      "model_file": "best_chrysomya_species_classifier.pth",
+      "classes_file": "chrysomya_species_classes.json",
+      "available": true
+    },
+    "best_chrysopa_species_classifier": {
+      "model_file": "best_chrysopa_species_classifier.pth",
+      "classes_file": "chrysopa_species_classes.json",
+      "available": true
+    },
+    "best_chrysoperla_species_classifier": {
+      "model_file": "best_chrysoperla_species_classifier.pth",
+      "classes_file": "chrysoperla_species_classes.json",
+      "available": true
+    },
+    "best_chrysorithrum_species_classifier": {
+      "model_file": "best_chrysorithrum_species_classifier.pth",
+      "classes_file": "chrysorithrum_species_classes.json",
+      "available": true
+    },
+    "best_chrysoteuchia_species_classifier": {
+      "model_file": "best_chrysoteuchia_species_classifier.pth",
+      "classes_file": "chrysoteuchia_species_classes.json",
+      "available": true
+    },
+    "best_chrysotoxum_species_classifier": {
+      "model_file": "best_chrysotoxum_species_classifier.pth",
+      "classes_file": "chrysotoxum_species_classes.json",
+      "available": true
+    },
+    "best_cicindela_species_classifier": {
+      "model_file": "best_cicindela_species_classifier.pth",
+      "classes_file": "cicindela_species_classes.json",
+      "available": true
+    },
+    "best_cincticostella_species_classifier": {
+      "model_file": "best_cincticostella_species_classifier.pth",
+      "classes_file": "cincticostella_species_classes.json",
+      "available": true
+    },
+    "best_circobotys_species_classifier": {
+      "model_file": "best_circobotys_species_classifier.pth",
+      "classes_file": "circobotys_species_classes.json",
+      "available": true
+    },
+    "best_clanis_species_classifier": {
+      "model_file": "best_clanis_species_classifier.pth",
+      "classes_file": "clanis_species_classes.json",
+      "available": true
+    },
+    "best_cleora_species_classifier": {
+      "model_file": "best_cleora_species_classifier.pth",
+      "classes_file": "cleora_species_classes.json",
+      "available": true
+    },
+    "best_clepsis_species_classifier": {
+      "model_file": "best_clepsis_species_classifier.pth",
+      "classes_file": "clepsis_species_classes.json",
+      "available": true
+    },
+    "best_cletus_species_classifier": {
+      "model_file": "best_cletus_species_classifier.pth",
+      "classes_file": "cletus_species_classes.json",
+      "available": true
+    },
+    "best_clostera_species_classifier": {
+      "model_file": "best_clostera_species_classifier.pth",
+      "classes_file": "clostera_species_classes.json",
+      "available": true
+    },
+    "best_cnaphalocrocis_species_classifier": {
+      "model_file": "best_cnaphalocrocis_species_classifier.pth",
+      "classes_file": "cnaphalocrocis_species_classes.json",
+      "available": true
+    },
+    "best_coccinella_species_classifier": {
+      "model_file": "best_coccinella_species_classifier.pth",
+      "classes_file": "coccinella_species_classes.json",
+      "available": true
+    },
+    "best_coelioxys_species_classifier": {
+      "model_file": "best_coelioxys_species_classifier.pth",
+      "classes_file": "coelioxys_species_classes.json",
+      "available": true
+    },
+    "best_coenagrion_species_classifier": {
+      "model_file": "best_coenagrion_species_classifier.pth",
+      "classes_file": "coenagrion_species_classes.json",
+      "available": true
+    },
+    "best_coenonympha_species_classifier": {
+      "model_file": "best_coenonympha_species_classifier.pth",
+      "classes_file": "coenonympha_species_classes.json",
+      "available": true
+    },
+    "best_collita_species_classifier": {
+      "model_file": "best_collita_species_classifier.pth",
+      "classes_file": "collita_species_classes.json",
+      "available": true
+    },
+    "best_comibaena_species_classifier": {
+      "model_file": "best_comibaena_species_classifier.pth",
+      "classes_file": "comibaena_species_classes.json",
+      "available": true
+    },
+    "best_conistra_species_classifier": {
+      "model_file": "best_conistra_species_classifier.pth",
+      "classes_file": "conistra_species_classes.json",
+      "available": true
+    },
+    "best_conocephalus_species_classifier": {
+      "model_file": "best_conocephalus_species_classifier.pth",
+      "classes_file": "conocephalus_species_classes.json",
+      "available": true
+    },
+    "best_conogethes_species_classifier": {
+      "model_file": "best_conogethes_species_classifier.pth",
+      "classes_file": "conogethes_species_classes.json",
+      "available": true
+    },
+    "best_conops_species_classifier": {
+      "model_file": "best_conops_species_classifier.pth",
+      "classes_file": "conops_species_classes.json",
+      "available": true
+    },
+    "best_copera_species_classifier": {
+      "model_file": "best_copera_species_classifier.pth",
+      "classes_file": "copera_species_classes.json",
+      "available": true
+    },
+    "best_copris_species_classifier": {
+      "model_file": "best_copris_species_classifier.pth",
+      "classes_file": "copris_species_classes.json",
+      "available": true
+    },
+    "best_coptolabrus_species_classifier": {
+      "model_file": "best_coptolabrus_species_classifier.pth",
+      "classes_file": "acoptolabrus_species_classes.json",
+      "available": true
+    },
+    "best_coptosoma_species_classifier": {
+      "model_file": "best_coptosoma_species_classifier.pth",
+      "classes_file": "coptosoma_species_classes.json",
+      "available": true
+    },
+    "best_corgatha_species_classifier": {
+      "model_file": "best_corgatha_species_classifier.pth",
+      "classes_file": "corgatha_species_classes.json",
+      "available": true
+    },
+    "best_corymica_species_classifier": {
+      "model_file": "best_corymica_species_classifier.pth",
+      "classes_file": "corymica_species_classes.json",
+      "available": true
+    },
+    "best_corythucha_species_classifier": {
+      "model_file": "best_corythucha_species_classifier.pth",
+      "classes_file": "corythucha_species_classes.json",
+      "available": true
+    },
+    "best_cosmia_species_classifier": {
+      "model_file": "best_cosmia_species_classifier.pth",
+      "classes_file": "cosmia_species_classes.json",
+      "available": true
+    },
+    "best_cosmopterix_species_classifier": {
+      "model_file": "best_cosmopterix_species_classifier.pth",
+      "classes_file": "cosmopterix_species_classes.json",
+      "available": true
+    },
+    "best_cossus_species_classifier": {
+      "model_file": "best_cossus_species_classifier.pth",
+      "classes_file": "cossus_species_classes.json",
+      "available": true
+    },
+    "best_cotachena_species_classifier": {
+      "model_file": "best_cotachena_species_classifier.pth",
+      "classes_file": "cotachena_species_classes.json",
+      "available": true
+    },
+    "best_cranionycta_species_classifier": {
+      "model_file": "best_cranionycta_species_classifier.pth",
+      "classes_file": "cranionycta_species_classes.json",
+      "available": true
+    },
+    "best_crematogaster_species_classifier": {
+      "model_file": "best_crematogaster_species_classifier.pth",
+      "classes_file": "crematogaster_species_classes.json",
+      "available": true
+    },
+    "best_cryptaspasma_species_classifier": {
+      "model_file": "best_cryptaspasma_species_classifier.pth",
+      "classes_file": "cryptaspasma_species_classes.json",
+      "available": true
+    },
+    "best_ctenoplusia_species_classifier": {
+      "model_file": "best_ctenoplusia_species_classifier.pth",
+      "classes_file": "ctenoplusia_species_classes.json",
+      "available": true
+    },
+    "best_cucullia_species_classifier": {
+      "model_file": "best_cucullia_species_classifier.pth",
+      "classes_file": "cucullia_species_classes.json",
+      "available": true
+    },
+    "best_culex_species_classifier": {
+      "model_file": "best_culex_species_classifier.pth",
+      "classes_file": "culex_species_classes.json",
+      "available": true
+    },
+    "best_curculio_species_classifier": {
+      "model_file": "best_curculio_species_classifier.pth",
+      "classes_file": "curculio_species_classes.json",
+      "available": true
+    },
+    "best_cyana_species_classifier": {
+      "model_file": "best_cyana_species_classifier.pth",
+      "classes_file": "cyana_species_classes.json",
+      "available": true
+    },
+    "best_cybister_species_classifier": {
+      "model_file": "best_cybister_species_classifier.pth",
+      "classes_file": "cybister_species_classes.json",
+      "available": true
+    },
+    "best_cydia_species_classifier": {
+      "model_file": "best_cydia_species_classifier.pth",
+      "classes_file": "cydia_species_classes.json",
+      "available": true
+    },
+    "best_cylindromyia_species_classifier": {
+      "model_file": "best_cylindromyia_species_classifier.pth",
+      "classes_file": "cylindromyia_species_classes.json",
+      "available": true
+    },
+    "best_cystidia_species_classifier": {
+      "model_file": "best_cystidia_species_classifier.pth",
+      "classes_file": "cystidia_species_classes.json",
+      "available": true
+    },
+    "best_dactylispa_species_classifier": {
+      "model_file": "best_dactylispa_species_classifier.pth",
+      "classes_file": "dactylispa_species_classes.json",
+      "available": true
+    },
+    "best_deilephila_species_classifier": {
+      "model_file": "best_deilephila_species_classifier.pth",
+      "classes_file": "deilephila_species_classes.json",
+      "available": true
+    },
+    "best_demonax_species_classifier": {
+      "model_file": "best_demonax_species_classifier.pth",
+      "classes_file": "demonax_species_classes.json",
+      "available": true
+    },
+    "best_dendrolimus_species_classifier": {
+      "model_file": "best_dendrolimus_species_classifier.pth",
+      "classes_file": "dendrolimus_species_classes.json",
+      "available": true
+    },
+    "best_deraeocoris_species_classifier": {
+      "model_file": "best_deraeocoris_species_classifier.pth",
+      "classes_file": "deraeocoris_species_classes.json",
+      "available": true
+    },
+    "best_dianemobius_species_classifier": {
+      "model_file": "best_dianemobius_species_classifier.pth",
+      "classes_file": "dianemobius_species_classes.json",
+      "available": true
+    },
+    "best_diarsia_species_classifier": {
+      "model_file": "best_diarsia_species_classifier.pth",
+      "classes_file": "diarsia_species_classes.json",
+      "available": true
+    },
+    "best_dichomeris_species_classifier": {
+      "model_file": "best_dichomeris_species_classifier.pth",
+      "classes_file": "dichomeris_species_classes.json",
+      "available": true
+    },
+    "best_didea_species_classifier": {
+      "model_file": "best_didea_species_classifier.pth",
+      "classes_file": "didea_species_classes.json",
+      "available": true
+    },
+    "best_dideoides_species_classifier": {
+      "model_file": "best_dideoides_species_classifier.pth",
+      "classes_file": "dideoides_species_classes.json",
+      "available": true
+    },
+    "best_dimorphopterus_species_classifier": {
+      "model_file": "best_dimorphopterus_species_classifier.pth",
+      "classes_file": "dimorphopterus_species_classes.json",
+      "available": true
+    },
+    "best_dioryctria_species_classifier": {
+      "model_file": "best_dioryctria_species_classifier.pth",
+      "classes_file": "dioryctria_species_classes.json",
+      "available": true
+    },
+    "best_discoelius_species_classifier": {
+      "model_file": "best_discoelius_species_classifier.pth",
+      "classes_file": "discoelius_species_classes.json",
+      "available": true
+    },
+    "best_ditrigona_species_classifier": {
+      "model_file": "best_ditrigona_species_classifier.pth",
+      "classes_file": "ditrigona_species_classes.json",
+      "available": true
+    },
+    "best_dolbina_species_classifier": {
+      "model_file": "best_dolbina_species_classifier.pth",
+      "classes_file": "dolbina_species_classes.json",
+      "available": true
+    },
+    "best_dolerus_species_classifier": {
+      "model_file": "best_dolerus_species_classifier.pth",
+      "classes_file": "dolerus_species_classes.json",
+      "available": true
+    },
+    "best_donacia_species_classifier": {
+      "model_file": "best_donacia_species_classifier.pth",
+      "classes_file": "donacia_species_classes.json",
+      "available": true
+    },
+    "best_dorcus_species_classifier": {
+      "model_file": "best_dorcus_species_classifier.pth",
+      "classes_file": "dorcus_species_classes.json",
+      "available": true
+    },
+    "best_dorytomus_species_classifier": {
+      "model_file": "best_dorytomus_species_classifier.pth",
+      "classes_file": "dorytomus_species_classes.json",
+      "available": true
+    },
+    "best_drabescus_species_classifier": {
+      "model_file": "best_drabescus_species_classifier.pth",
+      "classes_file": "drabescus_species_classes.json",
+      "available": true
+    },
+    "best_drunella_species_classifier": {
+      "model_file": "best_drunella_species_classifier.pth",
+      "classes_file": "drunella_species_classes.json",
+      "available": true
+    },
+    "best_dryophilocoris_species_classifier": {
+      "model_file": "best_dryophilocoris_species_classifier.pth",
+      "classes_file": "dryophilocoris_species_classes.json",
+      "available": true
+    },
+    "best_duliophyle_species_classifier": {
+      "model_file": "best_duliophyle_species_classifier.pth",
+      "classes_file": "duliophyle_species_classes.json",
+      "available": true
+    },
+    "best_dysaethria_species_classifier": {
+      "model_file": "best_dysaethria_species_classifier.pth",
+      "classes_file": "dysaethria_species_classes.json",
+      "available": true
+    },
+    "best_dysgonia_species_classifier": {
+      "model_file": "best_dysgonia_species_classifier.pth",
+      "classes_file": "dysgonia_species_classes.json",
+      "available": true
+    },
+    "best_dysmilichia_species_classifier": {
+      "model_file": "best_dysmilichia_species_classifier.pth",
+      "classes_file": "dysmilichia_species_classes.json",
+      "available": true
+    },
+    "best_earias_species_classifier": {
+      "model_file": "best_earias_species_classifier.pth",
+      "classes_file": "earias_species_classes.json",
+      "available": true
+    },
+    "best_ecdyonurus_species_classifier": {
+      "model_file": "best_ecdyonurus_species_classifier.pth",
+      "classes_file": "ecdyonurus_species_classes.json",
+      "available": true
+    },
+    "best_ecliptopera_species_classifier": {
+      "model_file": "best_ecliptopera_species_classifier.pth",
+      "classes_file": "ecliptopera_species_classes.json",
+      "available": true
+    },
+    "best_ectropis_species_classifier": {
+      "model_file": "best_ectropis_species_classifier.pth",
+      "classes_file": "ectropis_species_classes.json",
+      "available": true
+    },
+    "best_edessena_species_classifier": {
+      "model_file": "best_edessena_species_classifier.pth",
+      "classes_file": "edessena_species_classes.json",
+      "available": true
+    },
+    "best_eilicrinia_species_classifier": {
+      "model_file": "best_eilicrinia_species_classifier.pth",
+      "classes_file": "eilicrinia_species_classes.json",
+      "available": true
+    },
+    "best_elasmostethus_species_classifier": {
+      "model_file": "best_elasmostethus_species_classifier.pth",
+      "classes_file": "elasmostethus_species_classes.json",
+      "available": true
+    },
+    "best_elasmucha_species_classifier": {
+      "model_file": "best_elasmucha_species_classifier.pth",
+      "classes_file": "elasmucha_species_classes.json",
+      "available": true
+    },
+    "best_elophila_species_classifier": {
+      "model_file": "best_elophila_species_classifier.pth",
+      "classes_file": "elophila_species_classes.json",
+      "available": true
+    },
+    "best_empis_species_classifier": {
+      "model_file": "best_empis_species_classifier.pth",
+      "classes_file": "empis_species_classes.json",
+      "available": true
+    },
+    "best_endoclyta_species_classifier": {
+      "model_file": "best_endoclyta_species_classifier.pth",
+      "classes_file": "endoclyta_species_classes.json",
+      "available": true
+    },
+    "best_endothenia_species_classifier": {
+      "model_file": "best_endothenia_species_classifier.pth",
+      "classes_file": "endothenia_species_classes.json",
+      "available": true
+    },
+    "best_endotricha_species_classifier": {
+      "model_file": "best_endotricha_species_classifier.pth",
+      "classes_file": "endotricha_species_classes.json",
+      "available": true
+    },
+    "best_enispa_species_classifier": {
+      "model_file": "best_enispa_species_classifier.pth",
+      "classes_file": "enispa_species_classes.json",
+      "available": true
+    },
+    "best_enochrus_species_classifier": {
+      "model_file": "best_enochrus_species_classifier.pth",
+      "classes_file": "enochrus_species_classes.json",
+      "available": true
+    },
+    "best_epacromius_species_classifier": {
+      "model_file": "best_epacromius_species_classifier.pth",
+      "classes_file": "epacromius_species_classes.json",
+      "available": true
+    },
+    "best_epeorus_species_classifier": {
+      "model_file": "best_epeorus_species_classifier.pth",
+      "classes_file": "epeorus_species_classes.json",
+      "available": true
+    },
+    "best_epiblema_species_classifier": {
+      "model_file": "best_epiblema_species_classifier.pth",
+      "classes_file": "epiblema_species_classes.json",
+      "available": true
+    },
+    "best_epicauta_species_classifier": {
+      "model_file": "best_epicauta_species_classifier.pth",
+      "classes_file": "epicauta_species_classes.json",
+      "available": true
+    },
+    "best_epilachna_species_classifier": {
+      "model_file": "best_epilachna_species_classifier.pth",
+      "classes_file": "epilachna_species_classes.json",
+      "available": true
+    },
+    "best_epinotia_species_classifier": {
+      "model_file": "best_epinotia_species_classifier.pth",
+      "classes_file": "epinotia_species_classes.json",
+      "available": true
+    },
+    "best_episcapha_species_classifier": {
+      "model_file": "best_episcapha_species_classifier.pth",
+      "classes_file": "episcapha_species_classes.json",
+      "available": true
+    },
+    "best_ercheia_species_classifier": {
+      "model_file": "best_ercheia_species_classifier.pth",
+      "classes_file": "ercheia_species_classes.json",
+      "available": true
+    },
+    "best_eristalinus_species_classifier": {
+      "model_file": "best_eristalinus_species_classifier.pth",
+      "classes_file": "eristalinus_species_classes.json",
+      "available": true
+    },
+    "best_eristalis_species_classifier": {
+      "model_file": "best_eristalis_species_classifier.pth",
+      "classes_file": "eristalis_species_classes.json",
+      "available": true
+    },
+    "best_erythroplusia_species_classifier": {
+      "model_file": "best_erythroplusia_species_classifier.pth",
+      "classes_file": "erythroplusia_species_classes.json",
+      "available": true
+    },
+    "best_euborellia_species_classifier": {
+      "model_file": "best_euborellia_species_classifier.pth",
+      "classes_file": "euborellia_species_classes.json",
+      "available": true
+    },
+    "best_eucarabus_species_classifier": {
+      "model_file": "best_eucarabus_species_classifier.pth",
+      "classes_file": "eucarabus_species_classes.json",
+      "available": true
+    },
+    "best_eucarta_species_classifier": {
+      "model_file": "best_eucarta_species_classifier.pth",
+      "classes_file": "eucarta_species_classes.json",
+      "available": true
+    },
+    "best_eucera_species_classifier": {
+      "model_file": "best_eucera_species_classifier.pth",
+      "classes_file": "eucera_species_classes.json",
+      "available": true
+    },
+    "best_eudocima_species_classifier": {
+      "model_file": "best_eudocima_species_classifier.pth",
+      "classes_file": "eudocima_species_classes.json",
+      "available": true
+    },
+    "best_euhampsonia_species_classifier": {
+      "model_file": "best_euhampsonia_species_classifier.pth",
+      "classes_file": "euhampsonia_species_classes.json",
+      "available": true
+    },
+    "best_eumenes_species_classifier": {
+      "model_file": "best_eumenes_species_classifier.pth",
+      "classes_file": "eumenes_species_classes.json",
+      "available": true
+    },
+    "best_eumeta_species_classifier": {
+      "model_file": "best_eumeta_species_classifier.pth",
+      "classes_file": "eumeta_species_classes.json",
+      "available": true
+    },
+    "best_euodynerus_species_classifier": {
+      "model_file": "best_euodynerus_species_classifier.pth",
+      "classes_file": "euodynerus_species_classes.json",
+      "available": true
+    },
+    "best_eupeodes_species_classifier": {
+      "model_file": "best_eupeodes_species_classifier.pth",
+      "classes_file": "eupeodes_species_classes.json",
+      "available": true
+    },
+    "best_eurema_species_classifier": {
+      "model_file": "best_eurema_species_classifier.pth",
+      "classes_file": "eurema_species_classes.json",
+      "available": true
+    },
+    "best_euricania_species_classifier": {
+      "model_file": "best_euricania_species_classifier.pth",
+      "classes_file": "euricania_species_classes.json",
+      "available": true
+    },
+    "best_eurrhyparodes_species_classifier": {
+      "model_file": "best_eurrhyparodes_species_classifier.pth",
+      "classes_file": "eurrhyparodes_species_classes.json",
+      "available": true
+    },
+    "best_eurydema_species_classifier": {
+      "model_file": "best_eurydema_species_classifier.pth",
+      "classes_file": "eurydema_species_classes.json",
+      "available": true
+    },
+    "best_eurystylus_species_classifier": {
+      "model_file": "best_eurystylus_species_classifier.pth",
+      "classes_file": "eurystylus_species_classes.json",
+      "available": true
+    },
+    "best_eustroma_species_classifier": {
+      "model_file": "best_eustroma_species_classifier.pth",
+      "classes_file": "eustroma_species_classes.json",
+      "available": true
+    },
+    "best_eutelia_species_classifier": {
+      "model_file": "best_eutelia_species_classifier.pth",
+      "classes_file": "eutelia_species_classes.json",
+      "available": true
+    },
+    "best_eutolmus_species_classifier": {
+      "model_file": "best_eutolmus_species_classifier.pth",
+      "classes_file": "eutolmus_species_classes.json",
+      "available": true
+    },
+    "best_exocentrus_species_classifier": {
+      "model_file": "best_exocentrus_species_classifier.pth",
+      "classes_file": "exocentrus_species_classes.json",
+      "available": true
+    },
+    "best_eysarcoris_species_classifier": {
+      "model_file": "best_eysarcoris_species_classifier.pth",
+      "classes_file": "eysarcoris_species_classes.json",
+      "available": true
+    },
+    "best_favonius_species_classifier": {
+      "model_file": "best_favonius_species_classifier.pth",
+      "classes_file": "favonius_species_classes.json",
+      "available": true
+    },
+    "best_formica_species_classifier": {
+      "model_file": "best_formica_species_classifier.pth",
+      "classes_file": "formica_species_classes.json",
+      "available": true
+    },
+    "best_furcula_species_classifier": {
+      "model_file": "best_furcula_species_classifier.pth",
+      "classes_file": "furcula_species_classes.json",
+      "available": true
+    },
+    "best_galerucella_species_classifier": {
+      "model_file": "best_galerucella_species_classifier.pth",
+      "classes_file": "galerucella_species_classes.json",
+      "available": true
+    },
+    "best_gallerucida_species_classifier": {
+      "model_file": "best_gallerucida_species_classifier.pth",
+      "classes_file": "gallerucida_species_classes.json",
+      "available": true
+    },
+    "best_gampsocleis_species_classifier": {
+      "model_file": "best_gampsocleis_species_classifier.pth",
+      "classes_file": "gampsocleis_species_classes.json",
+      "available": true
+    },
+    "best_gandaritis_species_classifier": {
+      "model_file": "best_gandaritis_species_classifier.pth",
+      "classes_file": "gandaritis_species_classes.json",
+      "available": true
+    },
+    "best_gargara_species_classifier": {
+      "model_file": "best_gargara_species_classifier.pth",
+      "classes_file": "gargara_species_classes.json",
+      "available": true
+    },
+    "best_gastropacha_species_classifier": {
+      "model_file": "best_gastropacha_species_classifier.pth",
+      "classes_file": "gastropacha_species_classes.json",
+      "available": true
+    },
+    "best_geocoris_species_classifier": {
+      "model_file": "best_geocoris_species_classifier.pth",
+      "classes_file": "geocoris_species_classes.json",
+      "available": true
+    },
+    "best_geometra_species_classifier": {
+      "model_file": "best_geometra_species_classifier.pth",
+      "classes_file": "geometra_species_classes.json",
+      "available": true
+    },
+    "best_gergithus_species_classifier": {
+      "model_file": "best_gergithus_species_classifier.pth",
+      "classes_file": "gergithus_species_classes.json",
+      "available": true
+    },
+    "best_gerris_species_classifier": {
+      "model_file": "best_gerris_species_classifier.pth",
+      "classes_file": "gerris_species_classes.json",
+      "available": true
+    },
+    "best_ghoria_species_classifier": {
+      "model_file": "best_ghoria_species_classifier.pth",
+      "classes_file": "ghoria_species_classes.json",
+      "available": true
+    },
+    "best_glaucocharis_species_classifier": {
+      "model_file": "best_glaucocharis_species_classifier.pth",
+      "classes_file": "glaucocharis_species_classes.json",
+      "available": true
+    },
+    "best_glischrochilus_species_classifier": {
+      "model_file": "best_glischrochilus_species_classifier.pth",
+      "classes_file": "glischrochilus_species_classes.json",
+      "available": true
+    },
+    "best_glyphodes_species_classifier": {
+      "model_file": "best_glyphodes_species_classifier.pth",
+      "classes_file": "glyphodes_species_classes.json",
+      "available": true
+    },
+    "best_gnorismoneura_species_classifier": {
+      "model_file": "best_gnorismoneura_species_classifier.pth",
+      "classes_file": "gnorismoneura_species_classes.json",
+      "available": true
+    },
+    "best_gonepteryx_species_classifier": {
+      "model_file": "best_gonepteryx_species_classifier.pth",
+      "classes_file": "gonepteryx_species_classes.json",
+      "available": true
+    },
+    "best_goniorhynchus_species_classifier": {
+      "model_file": "best_goniorhynchus_species_classifier.pth",
+      "classes_file": "goniorhynchus_species_classes.json",
+      "available": true
+    },
+    "best_gonocephalum_species_classifier": {
+      "model_file": "best_gonocephalum_species_classifier.pth",
+      "classes_file": "gonocephalum_species_classes.json",
+      "available": true
+    },
+    "best_grapholita_species_classifier": {
+      "model_file": "best_grapholita_species_classifier.pth",
+      "classes_file": "grapholita_species_classes.json",
+      "available": true
+    },
+    "best_habrosyne_species_classifier": {
+      "model_file": "best_habrosyne_species_classifier.pth",
+      "classes_file": "habrosyne_species_classes.json",
+      "available": true
+    },
+    "best_haematoloecha_species_classifier": {
+      "model_file": "best_haematoloecha_species_classifier.pth",
+      "classes_file": "haematoloecha_species_classes.json",
+      "available": true
+    },
+    "best_harmonia_species_classifier": {
+      "model_file": "best_harmonia_species_classifier.pth",
+      "classes_file": "harmonia_species_classes.json",
+      "available": true
+    },
+    "best_harpalus_species_classifier": {
+      "model_file": "best_harpalus_species_classifier.pth",
+      "classes_file": "harpalus_species_classes.json",
+      "available": true
+    },
+    "best_hedina_species_classifier": {
+      "model_file": "best_hedina_species_classifier.pth",
+      "classes_file": "hedina_species_classes.json",
+      "available": true
+    },
+    "best_helcystogramma_species_classifier": {
+      "model_file": "best_helcystogramma_species_classifier.pth",
+      "classes_file": "helcystogramma_species_classes.json",
+      "available": true
+    },
+    "best_helicoverpa_species_classifier": {
+      "model_file": "best_helicoverpa_species_classifier.pth",
+      "classes_file": "helicoverpa_species_classes.json",
+      "available": true
+    },
+    "best_hellinsia_species_classifier": {
+      "model_file": "best_hellinsia_species_classifier.pth",
+      "classes_file": "hellinsia_species_classes.json",
+      "available": true
+    },
+    "best_helochares_species_classifier": {
+      "model_file": "best_helochares_species_classifier.pth",
+      "classes_file": "helochares_species_classes.json",
+      "available": true
+    },
+    "best_hemaris_species_classifier": {
+      "model_file": "best_hemaris_species_classifier.pth",
+      "classes_file": "hemaris_species_classes.json",
+      "available": true
+    },
+    "best_hemerobius_species_classifier": {
+      "model_file": "best_hemerobius_species_classifier.pth",
+      "classes_file": "hemerobius_species_classes.json",
+      "available": true
+    },
+    "best_hemipyxis_species_classifier": {
+      "model_file": "best_hemipyxis_species_classifier.pth",
+      "classes_file": "hemipyxis_species_classes.json",
+      "available": true
+    },
+    "best_hemistola_species_classifier": {
+      "model_file": "best_hemistola_species_classifier.pth",
+      "classes_file": "hemistola_species_classes.json",
+      "available": true
+    },
+    "best_hemithea_species_classifier": {
+      "model_file": "best_hemithea_species_classifier.pth",
+      "classes_file": "hemithea_species_classes.json",
+      "available": true
+    },
+    "best_henosepilachna_species_classifier": {
+      "model_file": "best_henosepilachna_species_classifier.pth",
+      "classes_file": "henosepilachna_species_classes.json",
+      "available": true
+    },
+    "best_heptagenia_species_classifier": {
+      "model_file": "best_heptagenia_species_classifier.pth",
+      "classes_file": "heptagenia_species_classes.json",
+      "available": true
+    },
+    "best_herminia_species_classifier": {
+      "model_file": "best_herminia_species_classifier.pth",
+      "classes_file": "herminia_species_classes.json",
+      "available": true
+    },
+    "best_hermonassa_species_classifier": {
+      "model_file": "best_hermonassa_species_classifier.pth",
+      "classes_file": "hermonassa_species_classes.json",
+      "available": true
+    },
+    "best_herpetogramma_species_classifier": {
+      "model_file": "best_herpetogramma_species_classifier.pth",
+      "classes_file": "herpetogramma_species_classes.json",
+      "available": true
+    },
+    "best_hesperocorixa_species_classifier": {
+      "model_file": "best_hesperocorixa_species_classifier.pth",
+      "classes_file": "hesperocorixa_species_classes.json",
+      "available": true
+    },
+    "best_hestina_species_classifier": {
+      "model_file": "best_hestina_species_classifier.pth",
+      "classes_file": "hestina_species_classes.json",
+      "available": true
+    },
+    "best_heterarmia_species_classifier": {
+      "model_file": "best_heterarmia_species_classifier.pth",
+      "classes_file": "heterarmia_species_classes.json",
+      "available": true
+    },
+    "best_heterolocha_species_classifier": {
+      "model_file": "best_heterolocha_species_classifier.pth",
+      "classes_file": "heterolocha_species_classes.json",
+      "available": true
+    },
+    "best_hierodula_species_classifier": {
+      "model_file": "best_hierodula_species_classifier.pth",
+      "classes_file": "hierodula_species_classes.json",
+      "available": true
+    },
+    "best_hippodamia_species_classifier": {
+      "model_file": "best_hippodamia_species_classifier.pth",
+      "classes_file": "hippodamia_species_classes.json",
+      "available": true
+    },
+    "best_holotrichia_species_classifier": {
+      "model_file": "best_holotrichia_species_classifier.pth",
+      "classes_file": "holotrichia_species_classes.json",
+      "available": true
+    },
+    "best_homalogonia_species_classifier": {
+      "model_file": "best_homalogonia_species_classifier.pth",
+      "classes_file": "homalogonia_species_classes.json",
+      "available": true
+    },
+    "best_homoeocerus_species_classifier": {
+      "model_file": "best_homoeocerus_species_classifier.pth",
+      "classes_file": "homoeocerus_species_classes.json",
+      "available": true
+    },
+    "best_homoneura_species_classifier": {
+      "model_file": "best_homoneura_species_classifier.pth",
+      "classes_file": "homoneura_species_classes.json",
+      "available": true
+    },
+    "best_homonopsis_species_classifier": {
+      "model_file": "best_homonopsis_species_classifier.pth",
+      "classes_file": "homonopsis_species_classes.json",
+      "available": true
+    },
+    "best_horisme_species_classifier": {
+      "model_file": "best_horisme_species_classifier.pth",
+      "classes_file": "horisme_species_classes.json",
+      "available": true
+    },
+    "best_horridipamera_species_classifier": {
+      "model_file": "best_horridipamera_species_classifier.pth",
+      "classes_file": "horridipamera_species_classes.json",
+      "available": true
+    },
+    "best_hydaticus_species_classifier": {
+      "model_file": "best_hydaticus_species_classifier.pth",
+      "classes_file": "hydaticus_species_classes.json",
+      "available": true
+    },
+    "best_hydatophylax_species_classifier": {
+      "model_file": "best_hydatophylax_species_classifier.pth",
+      "classes_file": "hydatophylax_species_classes.json",
+      "available": true
+    },
+    "best_hydrillodes_species_classifier": {
+      "model_file": "best_hydrillodes_species_classifier.pth",
+      "classes_file": "hydrillodes_species_classes.json",
+      "available": true
+    },
+    "best_hydrochara_species_classifier": {
+      "model_file": "best_hydrochara_species_classifier.pth",
+      "classes_file": "hydrochara_species_classes.json",
+      "available": true
+    },
+    "best_hydrophilus_species_classifier": {
+      "model_file": "best_hydrophilus_species_classifier.pth",
+      "classes_file": "hydrophilus_species_classes.json",
+      "available": true
+    },
+    "best_hydropsyche_species_classifier": {
+      "model_file": "best_hydropsyche_species_classifier.pth",
+      "classes_file": "hydropsyche_species_classes.json",
+      "available": true
+    },
+    "best_hygia_species_classifier": {
+      "model_file": "best_hygia_species_classifier.pth",
+      "classes_file": "hygia_species_classes.json",
+      "available": true
+    },
+    "best_hylobius_species_classifier": {
+      "model_file": "best_hylobius_species_classifier.pth",
+      "classes_file": "hylobius_species_classes.json",
+      "available": true
+    },
+    "best_hypena_species_classifier": {
+      "model_file": "best_hypena_species_classifier.pth",
+      "classes_file": "hypena_species_classes.json",
+      "available": true
+    },
+    "best_hypomecis_species_classifier": {
+      "model_file": "best_hypomecis_species_classifier.pth",
+      "classes_file": "hypomecis_species_classes.json",
+      "available": true
+    },
+    "best_hypsopygia_species_classifier": {
+      "model_file": "best_hypsopygia_species_classifier.pth",
+      "classes_file": "hypsopygia_species_classes.json",
+      "available": true
+    },
+    "best_iambia_species_classifier": {
+      "model_file": "best_iambia_species_classifier.pth",
+      "classes_file": "iambia_species_classes.json",
+      "available": true
+    },
+    "best_idaea_species_classifier": {
+      "model_file": "best_idaea_species_classifier.pth",
+      "classes_file": "idaea_species_classes.json",
+      "available": true
+    },
+    "best_idiocerus_species_classifier": {
+      "model_file": "best_idiocerus_species_classifier.pth",
+      "classes_file": "idiocerus_species_classes.json",
+      "available": true
+    },
+    "best_idiotephria_species_classifier": {
+      "model_file": "best_idiotephria_species_classifier.pth",
+      "classes_file": "idiotephria_species_classes.json",
+      "available": true
+    },
+    "best_ilema_species_classifier": {
+      "model_file": "best_ilema_species_classifier.pth",
+      "classes_file": "ilema_species_classes.json",
+      "available": true
+    },
+    "best_illiberis_species_classifier": {
+      "model_file": "best_illiberis_species_classifier.pth",
+      "classes_file": "illiberis_species_classes.json",
+      "available": true
+    },
+    "best_ischnura_species_classifier": {
+      "model_file": "best_ischnura_species_classifier.pth",
+      "classes_file": "ischnura_species_classes.json",
+      "available": true
+    },
+    "best_jankowskia_species_classifier": {
+      "model_file": "best_jankowskia_species_classifier.pth",
+      "classes_file": "jankowskia_species_classes.json",
+      "available": true
+    },
+    "best_japonica_species_classifier": {
+      "model_file": "best_japonica_species_classifier.pth",
+      "classes_file": "japonica_species_classes.json",
+      "available": true
+    },
+    "best_jodis_species_classifier": {
+      "model_file": "best_jodis_species_classifier.pth",
+      "classes_file": "jodis_species_classes.json",
+      "available": true
+    },
+    "best_kamimuria_species_classifier": {
+      "model_file": "best_kamimuria_species_classifier.pth",
+      "classes_file": "kamimuria_species_classes.json",
+      "available": true
+    },
+    "best_kentrochrysalis_species_classifier": {
+      "model_file": "best_kentrochrysalis_species_classifier.pth",
+      "classes_file": "kentrochrysalis_species_classes.json",
+      "available": true
+    },
+    "best_kirinia_species_classifier": {
+      "model_file": "best_kirinia_species_classifier.pth",
+      "classes_file": "kirinia_species_classes.json",
+      "available": true
+    },
+    "best_labdia_species_classifier": {
+      "model_file": "best_labdia_species_classifier.pth",
+      "classes_file": "labdia_species_classes.json",
+      "available": true
+    },
+    "best_laccobius_species_classifier": {
+      "model_file": "best_laccobius_species_classifier.pth",
+      "classes_file": "laccobius_species_classes.json",
+      "available": true
+    },
+    "best_lagria_species_classifier": {
+      "model_file": "best_lagria_species_classifier.pth",
+      "classes_file": "lagria_species_classes.json",
+      "available": true
+    },
+    "best_lamoria_species_classifier": {
+      "model_file": "best_lamoria_species_classifier.pth",
+      "classes_file": "lamoria_species_classes.json",
+      "available": true
+    },
+    "best_laphria_species_classifier": {
+      "model_file": "best_laphria_species_classifier.pth",
+      "classes_file": "laphria_species_classes.json",
+      "available": true
+    },
+    "best_lasioglossum_species_classifier": {
+      "model_file": "best_lasioglossum_species_classifier.pth",
+      "classes_file": "lasioglossum_species_classes.json",
+      "available": true
+    },
+    "best_lasius_species_classifier": {
+      "model_file": "best_lasius_species_classifier.pth",
+      "classes_file": "lasius_species_classes.json",
+      "available": true
+    },
+    "best_lema_species_classifier": {
+      "model_file": "best_lema_species_classifier.pth",
+      "classes_file": "epiblema_species_classes.json",
+      "available": true
+    },
+    "best_lemyra_species_classifier": {
+      "model_file": "best_lemyra_species_classifier.pth",
+      "classes_file": "lemyra_species_classes.json",
+      "available": true
+    },
+    "best_lepidepistomodes_species_classifier": {
+      "model_file": "best_lepidepistomodes_species_classifier.pth",
+      "classes_file": "lepidepistomodes_species_classes.json",
+      "available": true
+    },
+    "best_leptidea_species_classifier": {
+      "model_file": "best_leptidea_species_classifier.pth",
+      "classes_file": "leptidea_species_classes.json",
+      "available": true
+    },
+    "best_leptura_species_classifier": {
+      "model_file": "best_leptura_species_classifier.pth",
+      "classes_file": "leptura_species_classes.json",
+      "available": true
+    },
+    "best_lestes_species_classifier": {
+      "model_file": "best_lestes_species_classifier.pth",
+      "classes_file": "lestes_species_classes.json",
+      "available": true
+    },
+    "best_lethe_species_classifier": {
+      "model_file": "best_lethe_species_classifier.pth",
+      "classes_file": "lethe_species_classes.json",
+      "available": true
+    },
+    "best_leucoma_species_classifier": {
+      "model_file": "best_leucoma_species_classifier.pth",
+      "classes_file": "leucoma_species_classes.json",
+      "available": true
+    },
+    "best_libellula_species_classifier": {
+      "model_file": "best_libellula_species_classifier.pth",
+      "classes_file": "libellula_species_classes.json",
+      "available": true
+    },
+    "best_lilioceris_species_classifier": {
+      "model_file": "best_lilioceris_species_classifier.pth",
+      "classes_file": "lilioceris_species_classes.json",
+      "available": true
+    },
+    "best_limenitis_species_classifier": {
+      "model_file": "best_limenitis_species_classifier.pth",
+      "classes_file": "limenitis_species_classes.json",
+      "available": true
+    },
+    "best_lixus_species_classifier": {
+      "model_file": "best_lixus_species_classifier.pth",
+      "classes_file": "lixus_species_classes.json",
+      "available": true
+    },
+    "best_lobesia_species_classifier": {
+      "model_file": "best_lobesia_species_classifier.pth",
+      "classes_file": "lobesia_species_classes.json",
+      "available": true
+    },
+    "best_lobogonodes_species_classifier": {
+      "model_file": "best_lobogonodes_species_classifier.pth",
+      "classes_file": "lobogonodes_species_classes.json",
+      "available": true
+    },
+    "best_lomographa_species_classifier": {
+      "model_file": "best_lomographa_species_classifier.pth",
+      "classes_file": "lomographa_species_classes.json",
+      "available": true
+    },
+    "best_lophomilia_species_classifier": {
+      "model_file": "best_lophomilia_species_classifier.pth",
+      "classes_file": "lophomilia_species_classes.json",
+      "available": true
+    },
+    "best_lophontosia_species_classifier": {
+      "model_file": "best_lophontosia_species_classifier.pth",
+      "classes_file": "lophontosia_species_classes.json",
+      "available": true
+    },
+    "best_lopinga_species_classifier": {
+      "model_file": "best_lopinga_species_classifier.pth",
+      "classes_file": "lopinga_species_classes.json",
+      "available": true
+    },
+    "best_loxoblemmus_species_classifier": {
+      "model_file": "best_loxoblemmus_species_classifier.pth",
+      "classes_file": "loxoblemmus_species_classes.json",
+      "available": true
+    },
+    "best_lucilia_species_classifier": {
+      "model_file": "best_lucilia_species_classifier.pth",
+      "classes_file": "lucilia_species_classes.json",
+      "available": true
+    },
+    "best_luciola_species_classifier": {
+      "model_file": "best_luciola_species_classifier.pth",
+      "classes_file": "luciola_species_classes.json",
+      "available": true
+    },
+    "best_lycaena_species_classifier": {
+      "model_file": "best_lycaena_species_classifier.pth",
+      "classes_file": "lycaena_species_classes.json",
+      "available": true
+    },
+    "best_lycocerus_species_classifier": {
+      "model_file": "best_lycocerus_species_classifier.pth",
+      "classes_file": "lycocerus_species_classes.json",
+      "available": true
+    },
+    "best_lycostomus_species_classifier": {
+      "model_file": "best_lycostomus_species_classifier.pth",
+      "classes_file": "lycostomus_species_classes.json",
+      "available": true
+    },
+    "best_lygaeus_species_classifier": {
+      "model_file": "best_lygaeus_species_classifier.pth",
+      "classes_file": "lygaeus_species_classes.json",
+      "available": true
+    },
+    "best_lygephila_species_classifier": {
+      "model_file": "best_lygephila_species_classifier.pth",
+      "classes_file": "lygephila_species_classes.json",
+      "available": true
+    },
+    "best_lymantria_species_classifier": {
+      "model_file": "best_lymantria_species_classifier.pth",
+      "classes_file": "lymantria_species_classes.json",
+      "available": true
+    },
+    "best_macaria_species_classifier": {
+      "model_file": "best_macaria_species_classifier.pth",
+      "classes_file": "macaria_species_classes.json",
+      "available": true
+    },
+    "best_macdunnoughia_species_classifier": {
+      "model_file": "best_macdunnoughia_species_classifier.pth",
+      "classes_file": "macdunnoughia_species_classes.json",
+      "available": true
+    },
+    "best_macroglossum_species_classifier": {
+      "model_file": "best_macroglossum_species_classifier.pth",
+      "classes_file": "macroglossum_species_classes.json",
+      "available": true
+    },
+    "best_macromia_species_classifier": {
+      "model_file": "best_macromia_species_classifier.pth",
+      "classes_file": "macromia_species_classes.json",
+      "available": true
+    },
+    "best_macrophya_species_classifier": {
+      "model_file": "best_macrophya_species_classifier.pth",
+      "classes_file": "macrophya_species_classes.json",
+      "available": true
+    },
+    "best_maiestas_species_classifier": {
+      "model_file": "best_maiestas_species_classifier.pth",
+      "classes_file": "maiestas_species_classes.json",
+      "available": true
+    },
+    "best_maladera_species_classifier": {
+      "model_file": "best_maladera_species_classifier.pth",
+      "classes_file": "maladera_species_classes.json",
+      "available": true
+    },
+    "best_maliattha_species_classifier": {
+      "model_file": "best_maliattha_species_classifier.pth",
+      "classes_file": "maliattha_species_classes.json",
+      "available": true
+    },
+    "best_mallota_species_classifier": {
+      "model_file": "best_mallota_species_classifier.pth",
+      "classes_file": "mallota_species_classes.json",
+      "available": true
+    },
+    "best_manulea_species_classifier": {
+      "model_file": "best_manulea_species_classifier.pth",
+      "classes_file": "manulea_species_classes.json",
+      "available": true
+    },
+    "best_marumba_species_classifier": {
+      "model_file": "best_marumba_species_classifier.pth",
+      "classes_file": "marumba_species_classes.json",
+      "available": true
+    },
+    "best_maxates_species_classifier": {
+      "model_file": "best_maxates_species_classifier.pth",
+      "classes_file": "maxates_species_classes.json",
+      "available": true
+    },
+    "best_mecodina_species_classifier": {
+      "model_file": "best_mecodina_species_classifier.pth",
+      "classes_file": "mecodina_species_classes.json",
+      "available": true
+    },
+    "best_mecyna_species_classifier": {
+      "model_file": "best_mecyna_species_classifier.pth",
+      "classes_file": "mecyna_species_classes.json",
+      "available": true
+    },
+    "best_megacampsomeris_species_classifier": {
+      "model_file": "best_megacampsomeris_species_classifier.pth",
+      "classes_file": "megacampsomeris_species_classes.json",
+      "available": true
+    },
+    "best_megachile_species_classifier": {
+      "model_file": "best_megachile_species_classifier.pth",
+      "classes_file": "megachile_species_classes.json",
+      "available": true
+    },
+    "best_meganola_species_classifier": {
+      "model_file": "best_meganola_species_classifier.pth",
+      "classes_file": "meganola_species_classes.json",
+      "available": true
+    },
+    "best_megarhyssa_species_classifier": {
+      "model_file": "best_megarhyssa_species_classifier.pth",
+      "classes_file": "megarhyssa_species_classes.json",
+      "available": true
+    },
+    "best_megaulacobothrus_species_classifier": {
+      "model_file": "best_megaulacobothrus_species_classifier.pth",
+      "classes_file": "megaulacobothrus_species_classes.json",
+      "available": true
+    },
+    "best_meimuna_species_classifier": {
+      "model_file": "best_meimuna_species_classifier.pth",
+      "classes_file": "meimuna_species_classes.json",
+      "available": true
+    },
+    "best_melanargia_species_classifier": {
+      "model_file": "best_melanargia_species_classifier.pth",
+      "classes_file": "melanargia_species_classes.json",
+      "available": true
+    },
+    "best_melanotus_species_classifier": {
+      "model_file": "best_melanotus_species_classifier.pth",
+      "classes_file": "melanotus_species_classes.json",
+      "available": true
+    },
+    "best_meleonoma_species_classifier": {
+      "model_file": "best_meleonoma_species_classifier.pth",
+      "classes_file": "meleonoma_species_classes.json",
+      "available": true
+    },
+    "best_meloe_species_classifier": {
+      "model_file": "best_meloe_species_classifier.pth",
+      "classes_file": "meloe_species_classes.json",
+      "available": true
+    },
+    "best_menida_species_classifier": {
+      "model_file": "best_menida_species_classifier.pth",
+      "classes_file": "menida_species_classes.json",
+      "available": true
+    },
+    "best_mesembrius_species_classifier": {
+      "model_file": "best_mesembrius_species_classifier.pth",
+      "classes_file": "mesembrius_species_classes.json",
+      "available": true
+    },
+    "best_mesophleps_species_classifier": {
+      "model_file": "best_mesophleps_species_classifier.pth",
+      "classes_file": "mesophleps_species_classes.json",
+      "available": true
+    },
+    "best_mesosa_species_classifier": {
+      "model_file": "best_mesosa_species_classifier.pth",
+      "classes_file": "mesosa_species_classes.json",
+      "available": true
+    },
+    "best_mezira_species_classifier": {
+      "model_file": "best_mezira_species_classifier.pth",
+      "classes_file": "mezira_species_classes.json",
+      "available": true
+    },
+    "best_micromelalopha_species_classifier": {
+      "model_file": "best_micromelalopha_species_classifier.pth",
+      "classes_file": "micromelalopha_species_classes.json",
+      "available": true
+    },
+    "best_micromus_species_classifier": {
+      "model_file": "best_micromus_species_classifier.pth",
+      "classes_file": "micromus_species_classes.json",
+      "available": true
+    },
+    "best_micronecta_species_classifier": {
+      "model_file": "best_micronecta_species_classifier.pth",
+      "classes_file": "micronecta_species_classes.json",
+      "available": true
+    },
+    "best_mileewa_species_classifier": {
+      "model_file": "best_mileewa_species_classifier.pth",
+      "classes_file": "mileewa_species_classes.json",
+      "available": true
+    },
+    "best_miltochrista_species_classifier": {
+      "model_file": "best_miltochrista_species_classifier.pth",
+      "classes_file": "miltochrista_species_classes.json",
+      "available": true
+    },
+    "best_mimathyma_species_classifier": {
+      "model_file": "best_mimathyma_species_classifier.pth",
+      "classes_file": "mimathyma_species_classes.json",
+      "available": true
+    },
+    "best_mimela_species_classifier": {
+      "model_file": "best_mimela_species_classifier.pth",
+      "classes_file": "mimela_species_classes.json",
+      "available": true
+    },
+    "best_minettia_species_classifier": {
+      "model_file": "best_minettia_species_classifier.pth",
+      "classes_file": "minettia_species_classes.json",
+      "available": true
+    },
+    "best_mniotype_species_classifier": {
+      "model_file": "best_mniotype_species_classifier.pth",
+      "classes_file": "mniotype_species_classes.json",
+      "available": true
+    },
+    "best_mocis_species_classifier": {
+      "model_file": "best_mocis_species_classifier.pth",
+      "classes_file": "mocis_species_classes.json",
+      "available": true
+    },
+    "best_moma_species_classifier": {
+      "model_file": "best_moma_species_classifier.pth",
+      "classes_file": "moma_species_classes.json",
+      "available": true
+    },
+    "best_monochamus_species_classifier": {
+      "model_file": "best_monochamus_species_classifier.pth",
+      "classes_file": "monochamus_species_classes.json",
+      "available": true
+    },
+    "best_monolepta_species_classifier": {
+      "model_file": "best_monolepta_species_classifier.pth",
+      "classes_file": "monolepta_species_classes.json",
+      "available": true
+    },
+    "best_muscina_species_classifier": {
+      "model_file": "best_muscina_species_classifier.pth",
+      "classes_file": "muscina_species_classes.json",
+      "available": true
+    },
+    "best_mycalesis_species_classifier": {
+      "model_file": "best_mycalesis_species_classifier.pth",
+      "classes_file": "mycalesis_species_classes.json",
+      "available": true
+    },
+    "best_mythimna_species_classifier": {
+      "model_file": "best_mythimna_species_classifier.pth",
+      "classes_file": "mythimna_species_classes.json",
+      "available": true
+    },
+    "best_myzus_species_classifier": {
+      "model_file": "best_myzus_species_classifier.pth",
+      "classes_file": "myzus_species_classes.json",
+      "available": true
+    },
+    "best_nabis_species_classifier": {
+      "model_file": "best_nabis_species_classifier.pth",
+      "classes_file": "nabis_species_classes.json",
+      "available": true
+    },
+    "best_nacerdes_species_classifier": {
+      "model_file": "best_nacerdes_species_classifier.pth",
+      "classes_file": "nacerdes_species_classes.json",
+      "available": true
+    },
+    "best_nacoleia_species_classifier": {
+      "model_file": "best_nacoleia_species_classifier.pth",
+      "classes_file": "nacoleia_species_classes.json",
+      "available": true
+    },
+    "best_narosoideus_species_classifier": {
+      "model_file": "best_narosoideus_species_classifier.pth",
+      "classes_file": "narosoideus_species_classes.json",
+      "available": true
+    },
+    "best_nebria_species_classifier": {
+      "model_file": "best_nebria_species_classifier.pth",
+      "classes_file": "nebria_species_classes.json",
+      "available": true
+    },
+    "best_necrodes_species_classifier": {
+      "model_file": "best_necrodes_species_classifier.pth",
+      "classes_file": "necrodes_species_classes.json",
+      "available": true
+    },
+    "best_necrophila_species_classifier": {
+      "model_file": "best_necrophila_species_classifier.pth",
+      "classes_file": "necrophila_species_classes.json",
+      "available": true
+    },
+    "best_nematopogon_species_classifier": {
+      "model_file": "best_nematopogon_species_classifier.pth",
+      "classes_file": "nematopogon_species_classes.json",
+      "available": true
+    },
+    "best_nemophora_species_classifier": {
+      "model_file": "best_nemophora_species_classifier.pth",
+      "classes_file": "nemophora_species_classes.json",
+      "available": true
+    },
+    "best_nemoura_species_classifier": {
+      "model_file": "best_nemoura_species_classifier.pth",
+      "classes_file": "nemoura_species_classes.json",
+      "available": true
+    },
+    "best_neoanathamna_species_classifier": {
+      "model_file": "best_neoanathamna_species_classifier.pth",
+      "classes_file": "neoanathamna_species_classes.json",
+      "available": true
+    },
+    "best_neocalyptis_species_classifier": {
+      "model_file": "best_neocalyptis_species_classifier.pth",
+      "classes_file": "neocalyptis_species_classes.json",
+      "available": true
+    },
+    "best_neochauliodes_species_classifier": {
+      "model_file": "best_neochauliodes_species_classifier.pth",
+      "classes_file": "neochauliodes_species_classes.json",
+      "available": true
+    },
+    "best_neoitamus_species_classifier": {
+      "model_file": "best_neoitamus_species_classifier.pth",
+      "classes_file": "neoitamus_species_classes.json",
+      "available": true
+    },
+    "best_nephrotoma_species_classifier": {
+      "model_file": "best_nephrotoma_species_classifier.pth",
+      "classes_file": "nephrotoma_species_classes.json",
+      "available": true
+    },
+    "best_neptis_species_classifier": {
+      "model_file": "best_neptis_species_classifier.pth",
+      "classes_file": "neptis_species_classes.json",
+      "available": true
+    },
+    "best_nezara_species_classifier": {
+      "model_file": "best_nezara_species_classifier.pth",
+      "classes_file": "nezara_species_classes.json",
+      "available": true
+    },
+    "best_nicrophorus_species_classifier": {
+      "model_file": "best_nicrophorus_species_classifier.pth",
+      "classes_file": "nicrophorus_species_classes.json",
+      "available": true
+    },
+    "best_nihonogomphus_species_classifier": {
+      "model_file": "best_nihonogomphus_species_classifier.pth",
+      "classes_file": "nihonogomphus_species_classes.json",
+      "available": true
+    },
+    "best_ninodes_species_classifier": {
+      "model_file": "best_ninodes_species_classifier.pth",
+      "classes_file": "ninodes_species_classes.json",
+      "available": true
+    },
+    "best_nokona_species_classifier": {
+      "model_file": "best_nokona_species_classifier.pth",
+      "classes_file": "nokona_species_classes.json",
+      "available": true
+    },
+    "best_nola_species_classifier": {
+      "model_file": "best_nola_species_classifier.pth",
+      "classes_file": "meganola_species_classes.json",
+      "available": true
+    },
+    "best_nomada_species_classifier": {
+      "model_file": "best_nomada_species_classifier.pth",
+      "classes_file": "nomada_species_classes.json",
+      "available": true
+    },
+    "best_nordstromia_species_classifier": {
+      "model_file": "best_nordstromia_species_classifier.pth",
+      "classes_file": "nordstromia_species_classes.json",
+      "available": true
+    },
+    "best_notocelia_species_classifier": {
+      "model_file": "best_notocelia_species_classifier.pth",
+      "classes_file": "notocelia_species_classes.json",
+      "available": true
+    },
+    "best_numenes_species_classifier": {
+      "model_file": "best_numenes_species_classifier.pth",
+      "classes_file": "numenes_species_classes.json",
+      "available": true
+    },
+    "best_nylanderia_species_classifier": {
+      "model_file": "best_nylanderia_species_classifier.pth",
+      "classes_file": "nylanderia_species_classes.json",
+      "available": true
+    },
+    "best_nysius_species_classifier": {
+      "model_file": "best_nysius_species_classifier.pth",
+      "classes_file": "nysius_species_classes.json",
+      "available": true
+    },
+    "best_oberea_species_classifier": {
+      "model_file": "best_oberea_species_classifier.pth",
+      "classes_file": "oberea_species_classes.json",
+      "available": true
+    },
+    "best_ochlerotatus_species_classifier": {
+      "model_file": "best_ochlerotatus_species_classifier.pth",
+      "classes_file": "ochlerotatus_species_classes.json",
+      "available": true
+    },
+    "best_ochlodes_species_classifier": {
+      "model_file": "best_ochlodes_species_classifier.pth",
+      "classes_file": "ochlodes_species_classes.json",
+      "available": true
+    },
+    "best_ocypus_species_classifier": {
+      "model_file": "best_ocypus_species_classifier.pth",
+      "classes_file": "aulacocypus_species_classes.json",
+      "available": true
+    },
+    "best_odites_species_classifier": {
+      "model_file": "best_odites_species_classifier.pth",
+      "classes_file": "odites_species_classes.json",
+      "available": true
+    },
+    "best_odontomyia_species_classifier": {
+      "model_file": "best_odontomyia_species_classifier.pth",
+      "classes_file": "odontomyia_species_classes.json",
+      "available": true
+    },
+    "best_oecanthus_species_classifier": {
+      "model_file": "best_oecanthus_species_classifier.pth",
+      "classes_file": "oecanthus_species_classes.json",
+      "available": true
+    },
+    "best_oedemera_species_classifier": {
+      "model_file": "best_oedemera_species_classifier.pth",
+      "classes_file": "oedemera_species_classes.json",
+      "available": true
+    },
+    "best_ognevia_species_classifier": {
+      "model_file": "best_ognevia_species_classifier.pth",
+      "classes_file": "ognevia_species_classes.json",
+      "available": true
+    },
+    "best_olenecamptus_species_classifier": {
+      "model_file": "best_olenecamptus_species_classifier.pth",
+      "classes_file": "olenecamptus_species_classes.json",
+      "available": true
+    },
+    "best_olethreutes_species_classifier": {
+      "model_file": "best_olethreutes_species_classifier.pth",
+      "classes_file": "olethreutes_species_classes.json",
+      "available": true
+    },
+    "best_omiodes_species_classifier": {
+      "model_file": "best_omiodes_species_classifier.pth",
+      "classes_file": "omiodes_species_classes.json",
+      "available": true
+    },
+    "best_oncocephalus_species_classifier": {
+      "model_file": "best_oncocephalus_species_classifier.pth",
+      "classes_file": "oncocephalus_species_classes.json",
+      "available": true
+    },
+    "best_onthophagus_species_classifier": {
+      "model_file": "best_onthophagus_species_classifier.pth",
+      "classes_file": "onthophagus_species_classes.json",
+      "available": true
+    },
+    "best_operophtera_species_classifier": {
+      "model_file": "best_operophtera_species_classifier.pth",
+      "classes_file": "operophtera_species_classes.json",
+      "available": true
+    },
+    "best_ophion_species_classifier": {
+      "model_file": "best_ophion_species_classifier.pth",
+      "classes_file": "ophion_species_classes.json",
+      "available": true
+    },
+    "best_opilo_species_classifier": {
+      "model_file": "best_opilo_species_classifier.pth",
+      "classes_file": "opilo_species_classes.json",
+      "available": true
+    },
+    "best_opogona_species_classifier": {
+      "model_file": "best_opogona_species_classifier.pth",
+      "classes_file": "opogona_species_classes.json",
+      "available": true
+    },
+    "best_oraesia_species_classifier": {
+      "model_file": "best_oraesia_species_classifier.pth",
+      "classes_file": "oraesia_species_classes.json",
+      "available": true
+    },
+    "best_oreta_species_classifier": {
+      "model_file": "best_oreta_species_classifier.pth",
+      "classes_file": "oreta_species_classes.json",
+      "available": true
+    },
+    "best_orientabia_species_classifier": {
+      "model_file": "best_orientabia_species_classifier.pth",
+      "classes_file": "orientabia_species_classes.json",
+      "available": true
+    },
+    "best_orthaga_species_classifier": {
+      "model_file": "best_orthaga_species_classifier.pth",
+      "classes_file": "orthaga_species_classes.json",
+      "available": true
+    },
+    "best_orthetrum_species_classifier": {
+      "model_file": "best_orthetrum_species_classifier.pth",
+      "classes_file": "orthetrum_species_classes.json",
+      "available": true
+    },
+    "best_orthocabera_species_classifier": {
+      "model_file": "best_orthocabera_species_classifier.pth",
+      "classes_file": "orthocabera_species_classes.json",
+      "available": true
+    },
+    "best_orthogonia_species_classifier": {
+      "model_file": "best_orthogonia_species_classifier.pth",
+      "classes_file": "orthogonia_species_classes.json",
+      "available": true
+    },
+    "best_orthosia_species_classifier": {
+      "model_file": "best_orthosia_species_classifier.pth",
+      "classes_file": "orthosia_species_classes.json",
+      "available": true
+    },
+    "best_orthotylus_species_classifier": {
+      "model_file": "best_orthotylus_species_classifier.pth",
+      "classes_file": "orthotylus_species_classes.json",
+      "available": true
+    },
+    "best_oruza_species_classifier": {
+      "model_file": "best_oruza_species_classifier.pth",
+      "classes_file": "oruza_species_classes.json",
+      "available": true
+    },
+    "best_ostrinia_species_classifier": {
+      "model_file": "best_ostrinia_species_classifier.pth",
+      "classes_file": "ostrinia_species_classes.json",
+      "available": true
+    },
+    "best_ourapteryx_species_classifier": {
+      "model_file": "best_ourapteryx_species_classifier.pth",
+      "classes_file": "ourapteryx_species_classes.json",
+      "available": true
+    },
+    "best_oxya_species_classifier": {
+      "model_file": "best_oxya_species_classifier.pth",
+      "classes_file": "oxya_species_classes.json",
+      "available": true
+    },
+    "best_ozarba_species_classifier": {
+      "model_file": "best_ozarba_species_classifier.pth",
+      "classes_file": "ozarba_species_classes.json",
+      "available": true
+    },
+    "best_paederus_species_classifier": {
+      "model_file": "best_paederus_species_classifier.pth",
+      "classes_file": "paederus_species_classes.json",
+      "available": true
+    },
+    "best_pagyda_species_classifier": {
+      "model_file": "best_pagyda_species_classifier.pth",
+      "classes_file": "pagyda_species_classes.json",
+      "available": true
+    },
+    "best_paliga_species_classifier": {
+      "model_file": "best_paliga_species_classifier.pth",
+      "classes_file": "paliga_species_classes.json",
+      "available": true
+    },
+    "best_palpita_species_classifier": {
+      "model_file": "best_palpita_species_classifier.pth",
+      "classes_file": "palpita_species_classes.json",
+      "available": true
+    },
+    "best_panaorus_species_classifier": {
+      "model_file": "best_panaorus_species_classifier.pth",
+      "classes_file": "panaorus_species_classes.json",
+      "available": true
+    },
+    "best_pandemis_species_classifier": {
+      "model_file": "best_pandemis_species_classifier.pth",
+      "classes_file": "pandemis_species_classes.json",
+      "available": true
+    },
+    "best_pangrapta_species_classifier": {
+      "model_file": "best_pangrapta_species_classifier.pth",
+      "classes_file": "pangrapta_species_classes.json",
+      "available": true
+    },
+    "best_papilio_species_classifier": {
+      "model_file": "best_papilio_species_classifier.pth",
+      "classes_file": "papilio_species_classes.json",
+      "available": true
+    },
+    "best_paracercion_species_classifier": {
+      "model_file": "best_paracercion_species_classifier.pth",
+      "classes_file": "paracercion_species_classes.json",
+      "available": true
+    },
+    "best_paracolax_species_classifier": {
+      "model_file": "best_paracolax_species_classifier.pth",
+      "classes_file": "paracolax_species_classes.json",
+      "available": true
+    },
+    "best_paragabara_species_classifier": {
+      "model_file": "best_paragabara_species_classifier.pth",
+      "classes_file": "paragabara_species_classes.json",
+      "available": true
+    },
+    "best_paragus_species_classifier": {
+      "model_file": "best_paragus_species_classifier.pth",
+      "classes_file": "paragus_species_classes.json",
+      "available": true
+    },
+    "best_parallelia_species_classifier": {
+      "model_file": "best_parallelia_species_classifier.pth",
+      "classes_file": "parallelia_species_classes.json",
+      "available": true
+    },
+    "best_parapolybia_species_classifier": {
+      "model_file": "best_parapolybia_species_classifier.pth",
+      "classes_file": "parapolybia_species_classes.json",
+      "available": true
+    },
+    "best_parasa_species_classifier": {
+      "model_file": "best_parasa_species_classifier.pth",
+      "classes_file": "parasa_species_classes.json",
+      "available": true
+    },
+    "best_paratachycines_species_classifier": {
+      "model_file": "best_paratachycines_species_classifier.pth",
+      "classes_file": "paratachycines_species_classes.json",
+      "available": true
+    },
+    "best_paratlanticus_species_classifier": {
+      "model_file": "best_paratlanticus_species_classifier.pth",
+      "classes_file": "paratlanticus_species_classes.json",
+      "available": true
+    },
+    "best_parena_species_classifier": {
+      "model_file": "best_parena_species_classifier.pth",
+      "classes_file": "parena_species_classes.json",
+      "available": true
+    },
+    "best_paridea_species_classifier": {
+      "model_file": "best_paridea_species_classifier.pth",
+      "classes_file": "paridea_species_classes.json",
+      "available": true
+    },
+    "best_parnassius_species_classifier": {
+      "model_file": "best_parnassius_species_classifier.pth",
+      "classes_file": "parnassius_species_classes.json",
+      "available": true
+    },
+    "best_paroplapoderus_species_classifier": {
+      "model_file": "best_paroplapoderus_species_classifier.pth",
+      "classes_file": "paroplapoderus_species_classes.json",
+      "available": true
+    },
+    "best_patania_species_classifier": {
+      "model_file": "best_patania_species_classifier.pth",
+      "classes_file": "patania_species_classes.json",
+      "available": true
+    },
+    "best_pelopidas_species_classifier": {
+      "model_file": "best_pelopidas_species_classifier.pth",
+      "classes_file": "pelopidas_species_classes.json",
+      "available": true
+    },
+    "best_pelosia_species_classifier": {
+      "model_file": "best_pelosia_species_classifier.pth",
+      "classes_file": "pelosia_species_classes.json",
+      "available": true
+    },
+    "best_peltodytes_species_classifier": {
+      "model_file": "best_peltodytes_species_classifier.pth",
+      "classes_file": "peltodytes_species_classes.json",
+      "available": true
+    },
+    "best_pentatoma_species_classifier": {
+      "model_file": "best_pentatoma_species_classifier.pth",
+      "classes_file": "pentatoma_species_classes.json",
+      "available": true
+    },
+    "best_peridea_species_classifier": {
+      "model_file": "best_peridea_species_classifier.pth",
+      "classes_file": "peridea_species_classes.json",
+      "available": true
+    },
+    "best_phalera_species_classifier": {
+      "model_file": "best_phalera_species_classifier.pth",
+      "classes_file": "phalera_species_classes.json",
+      "available": true
+    },
+    "best_phaneroptera_species_classifier": {
+      "model_file": "best_phaneroptera_species_classifier.pth",
+      "classes_file": "phaneroptera_species_classes.json",
+      "available": true
+    },
+    "best_phelotrupes_species_classifier": {
+      "model_file": "best_phelotrupes_species_classifier.pth",
+      "classes_file": "phelotrupes_species_classes.json",
+      "available": true
+    },
+    "best_pheropsophus_species_classifier": {
+      "model_file": "best_pheropsophus_species_classifier.pth",
+      "classes_file": "pheropsophus_species_classes.json",
+      "available": true
+    },
+    "best_phigalia_species_classifier": {
+      "model_file": "best_phigalia_species_classifier.pth",
+      "classes_file": "phigalia_species_classes.json",
+      "available": true
+    },
+    "best_philophylla_species_classifier": {
+      "model_file": "best_philophylla_species_classifier.pth",
+      "classes_file": "philophylla_species_classes.json",
+      "available": true
+    },
+    "best_phthonandria_species_classifier": {
+      "model_file": "best_phthonandria_species_classifier.pth",
+      "classes_file": "phthonandria_species_classes.json",
+      "available": true
+    },
+    "best_phthonosema_species_classifier": {
+      "model_file": "best_phthonosema_species_classifier.pth",
+      "classes_file": "phthonosema_species_classes.json",
+      "available": true
+    },
+    "best_phyllotreta_species_classifier": {
+      "model_file": "best_phyllotreta_species_classifier.pth",
+      "classes_file": "phyllotreta_species_classes.json",
+      "available": true
+    },
+    "best_pidonia_species_classifier": {
+      "model_file": "best_pidonia_species_classifier.pth",
+      "classes_file": "pidonia_species_classes.json",
+      "available": true
+    },
+    "best_pieris_species_classifier": {
+      "model_file": "best_pieris_species_classifier.pth",
+      "classes_file": "pieris_species_classes.json",
+      "available": true
+    },
+    "best_piletocera_species_classifier": {
+      "model_file": "best_piletocera_species_classifier.pth",
+      "classes_file": "piletocera_species_classes.json",
+      "available": true
+    },
+    "best_pimelocerus_species_classifier": {
+      "model_file": "best_pimelocerus_species_classifier.pth",
+      "classes_file": "pimelocerus_species_classes.json",
+      "available": true
+    },
+    "best_plagiognathus_species_classifier": {
+      "model_file": "best_plagiognathus_species_classifier.pth",
+      "classes_file": "plagiognathus_species_classes.json",
+      "available": true
+    },
+    "best_plagiosterna_species_classifier": {
+      "model_file": "best_plagiosterna_species_classifier.pth",
+      "classes_file": "plagiosterna_species_classes.json",
+      "available": true
+    },
+    "best_plagodis_species_classifier": {
+      "model_file": "best_plagodis_species_classifier.pth",
+      "classes_file": "plagodis_species_classes.json",
+      "available": true
+    },
+    "best_platydracus_species_classifier": {
+      "model_file": "best_platydracus_species_classifier.pth",
+      "classes_file": "platydracus_species_classes.json",
+      "available": true
+    },
+    "best_plebejus_species_classifier": {
+      "model_file": "best_plebejus_species_classifier.pth",
+      "classes_file": "plebejus_species_classes.json",
+      "available": true
+    },
+    "best_plecia_species_classifier": {
+      "model_file": "best_plecia_species_classifier.pth",
+      "classes_file": "plecia_species_classes.json",
+      "available": true
+    },
+    "best_plesiophthalmus_species_classifier": {
+      "model_file": "best_plesiophthalmus_species_classifier.pth",
+      "classes_file": "plesiophthalmus_species_classes.json",
+      "available": true
+    },
+    "best_plinachtus_species_classifier": {
+      "model_file": "best_plinachtus_species_classifier.pth",
+      "classes_file": "plinachtus_species_classes.json",
+      "available": true
+    },
+    "best_pochazia_species_classifier": {
+      "model_file": "best_pochazia_species_classifier.pth",
+      "classes_file": "pochazia_species_classes.json",
+      "available": true
+    },
+    "best_poecilocoris_species_classifier": {
+      "model_file": "best_poecilocoris_species_classifier.pth",
+      "classes_file": "poecilocoris_species_classes.json",
+      "available": true
+    },
+    "best_polionemobius_species_classifier": {
+      "model_file": "best_polionemobius_species_classifier.pth",
+      "classes_file": "polionemobius_species_classes.json",
+      "available": true
+    },
+    "best_polistes_species_classifier": {
+      "model_file": "best_polistes_species_classifier.pth",
+      "classes_file": "polistes_species_classes.json",
+      "available": true
+    },
+    "best_polygonia_species_classifier": {
+      "model_file": "best_polygonia_species_classifier.pth",
+      "classes_file": "polygonia_species_classes.json",
+      "available": true
+    },
+    "best_polymerus_species_classifier": {
+      "model_file": "best_polymerus_species_classifier.pth",
+      "classes_file": "polymerus_species_classes.json",
+      "available": true
+    },
+    "best_popillia_species_classifier": {
+      "model_file": "best_popillia_species_classifier.pth",
+      "classes_file": "popillia_species_classes.json",
+      "available": true
+    },
+    "best_potamanthus_species_classifier": {
+      "model_file": "best_potamanthus_species_classifier.pth",
+      "classes_file": "potamanthus_species_classes.json",
+      "available": true
+    },
+    "best_problepsis_species_classifier": {
+      "model_file": "best_problepsis_species_classifier.pth",
+      "classes_file": "problepsis_species_classes.json",
+      "available": true
+    },
+    "best_procloeon_species_classifier": {
+      "model_file": "best_procloeon_species_classifier.pth",
+      "classes_file": "procloeon_species_classes.json",
+      "available": true
+    },
+    "best_promalactis_species_classifier": {
+      "model_file": "best_promalactis_species_classifier.pth",
+      "classes_file": "promalactis_species_classes.json",
+      "available": true
+    },
+    "best_propylea_species_classifier": {
+      "model_file": "best_propylea_species_classifier.pth",
+      "classes_file": "propylea_species_classes.json",
+      "available": true
+    },
+    "best_prosopocoilus_species_classifier": {
+      "model_file": "best_prosopocoilus_species_classifier.pth",
+      "classes_file": "prosopocoilus_species_classes.json",
+      "available": true
+    },
+    "best_prostemma_species_classifier": {
+      "model_file": "best_prostemma_species_classifier.pth",
+      "classes_file": "prostemma_species_classes.json",
+      "available": true
+    },
+    "best_protaetia_species_classifier": {
+      "model_file": "best_protaetia_species_classifier.pth",
+      "classes_file": "protaetia_species_classes.json",
+      "available": true
+    },
+    "best_protodeltote_species_classifier": {
+      "model_file": "best_protodeltote_species_classifier.pth",
+      "classes_file": "protodeltote_species_classes.json",
+      "available": true
+    },
+    "best_prumna_species_classifier": {
+      "model_file": "best_prumna_species_classifier.pth",
+      "classes_file": "prumna_species_classes.json",
+      "available": true
+    },
+    "best_pseudocneorhinus_species_classifier": {
+      "model_file": "best_pseudocneorhinus_species_classifier.pth",
+      "classes_file": "pseudocneorhinus_species_classes.json",
+      "available": true
+    },
+    "best_pseudoips_species_classifier": {
+      "model_file": "best_pseudoips_species_classifier.pth",
+      "classes_file": "pseudoips_species_classes.json",
+      "available": true
+    },
+    "best_psychoda_species_classifier": {
+      "model_file": "best_psychoda_species_classifier.pth",
+      "classes_file": "psychoda_species_classes.json",
+      "available": true
+    },
+    "best_pterolophia_species_classifier": {
+      "model_file": "best_pterolophia_species_classifier.pth",
+      "classes_file": "pterolophia_species_classes.json",
+      "available": true
+    },
+    "best_purpuricenus_species_classifier": {
+      "model_file": "best_purpuricenus_species_classifier.pth",
+      "classes_file": "purpuricenus_species_classes.json",
+      "available": true
+    },
+    "best_pycnarmon_species_classifier": {
+      "model_file": "best_pycnarmon_species_classifier.pth",
+      "classes_file": "pycnarmon_species_classes.json",
+      "available": true
+    },
+    "best_pyralis_species_classifier": {
+      "model_file": "best_pyralis_species_classifier.pth",
+      "classes_file": "pyralis_species_classes.json",
+      "available": true
+    },
+    "best_pyrausta_species_classifier": {
+      "model_file": "best_pyrausta_species_classifier.pth",
+      "classes_file": "pyrausta_species_classes.json",
+      "available": true
+    },
+    "best_pyrgus_species_classifier": {
+      "model_file": "best_pyrgus_species_classifier.pth",
+      "classes_file": "pyrgus_species_classes.json",
+      "available": true
+    },
+    "best_pyrrhalta_species_classifier": {
+      "model_file": "best_pyrrhalta_species_classifier.pth",
+      "classes_file": "pyrrhalta_species_classes.json",
+      "available": true
+    },
+    "best_rabdophaga_species_classifier": {
+      "model_file": "best_rabdophaga_species_classifier.pth",
+      "classes_file": "rabdophaga_species_classes.json",
+      "available": true
+    },
+    "best_ramulus_species_classifier": {
+      "model_file": "best_ramulus_species_classifier.pth",
+      "classes_file": "ramulus_species_classes.json",
+      "available": true
+    },
+    "best_ranatra_species_classifier": {
+      "model_file": "best_ranatra_species_classifier.pth",
+      "classes_file": "ranatra_species_classes.json",
+      "available": true
+    },
+    "best_rapala_species_classifier": {
+      "model_file": "best_rapala_species_classifier.pth",
+      "classes_file": "rapala_species_classes.json",
+      "available": true
+    },
+    "best_rhaphuma_species_classifier": {
+      "model_file": "best_rhaphuma_species_classifier.pth",
+      "classes_file": "rhaphuma_species_classes.json",
+      "available": true
+    },
+    "best_rheumaptera_species_classifier": {
+      "model_file": "best_rheumaptera_species_classifier.pth",
+      "classes_file": "rheumaptera_species_classes.json",
+      "available": true
+    },
+    "best_rhodinia_species_classifier": {
+      "model_file": "best_rhodinia_species_classifier.pth",
+      "classes_file": "rhodinia_species_classes.json",
+      "available": true
+    },
+    "best_rhodoneura_species_classifier": {
+      "model_file": "best_rhodoneura_species_classifier.pth",
+      "classes_file": "rhodoneura_species_classes.json",
+      "available": true
+    },
+    "best_rhopalomyia_species_classifier": {
+      "model_file": "best_rhopalomyia_species_classifier.pth",
+      "classes_file": "rhopalomyia_species_classes.json",
+      "available": true
+    },
+    "best_rhopalus_species_classifier": {
+      "model_file": "best_rhopalus_species_classifier.pth",
+      "classes_file": "rhopalus_species_classes.json",
+      "available": true
+    },
+    "best_rhyparioides_species_classifier": {
+      "model_file": "best_rhyparioides_species_classifier.pth",
+      "classes_file": "rhyparioides_species_classes.json",
+      "available": true
+    },
+    "best_ricania_species_classifier": {
+      "model_file": "best_ricania_species_classifier.pth",
+      "classes_file": "euricania_species_classes.json",
+      "available": true
+    },
+    "best_rivellia_species_classifier": {
+      "model_file": "best_rivellia_species_classifier.pth",
+      "classes_file": "rivellia_species_classes.json",
+      "available": true
+    },
+    "best_rivula_species_classifier": {
+      "model_file": "best_rivula_species_classifier.pth",
+      "classes_file": "rivula_species_classes.json",
+      "available": true
+    },
+    "best_rubiconia_species_classifier": {
+      "model_file": "best_rubiconia_species_classifier.pth",
+      "classes_file": "rubiconia_species_classes.json",
+      "available": true
+    },
+    "best_rusicada_species_classifier": {
+      "model_file": "best_rusicada_species_classifier.pth",
+      "classes_file": "rusicada_species_classes.json",
+      "available": true
+    },
+    "best_ruspolia_species_classifier": {
+      "model_file": "best_ruspolia_species_classifier.pth",
+      "classes_file": "ruspolia_species_classes.json",
+      "available": true
+    },
+    "best_saliciphaga_species_classifier": {
+      "model_file": "best_saliciphaga_species_classifier.pth",
+      "classes_file": "saliciphaga_species_classes.json",
+      "available": true
+    },
+    "best_saperda_species_classifier": {
+      "model_file": "best_saperda_species_classifier.pth",
+      "classes_file": "saperda_species_classes.json",
+      "available": true
+    },
+    "best_sarbanissa_species_classifier": {
+      "model_file": "best_sarbanissa_species_classifier.pth",
+      "classes_file": "sarbanissa_species_classes.json",
+      "available": true
+    },
+    "best_sarcophaga_species_classifier": {
+      "model_file": "best_sarcophaga_species_classifier.pth",
+      "classes_file": "sarcophaga_species_classes.json",
+      "available": true
+    },
+    "best_satyrium_species_classifier": {
+      "model_file": "best_satyrium_species_classifier.pth",
+      "classes_file": "satyrium_species_classes.json",
+      "available": true
+    },
+    "best_scaeva_species_classifier": {
+      "model_file": "best_scaeva_species_classifier.pth",
+      "classes_file": "scaeva_species_classes.json",
+      "available": true
+    },
+    "best_scarites_species_classifier": {
+      "model_file": "best_scarites_species_classifier.pth",
+      "classes_file": "scarites_species_classes.json",
+      "available": true
+    },
+    "best_sceliphron_species_classifier": {
+      "model_file": "best_sceliphron_species_classifier.pth",
+      "classes_file": "sceliphron_species_classes.json",
+      "available": true
+    },
+    "best_schrankia_species_classifier": {
+      "model_file": "best_schrankia_species_classifier.pth",
+      "classes_file": "schrankia_species_classes.json",
+      "available": true
+    },
+    "best_scolia_species_classifier": {
+      "model_file": "best_scolia_species_classifier.pth",
+      "classes_file": "scolia_species_classes.json",
+      "available": true
+    },
+    "best_scopula_species_classifier": {
+      "model_file": "best_scopula_species_classifier.pth",
+      "classes_file": "scopula_species_classes.json",
+      "available": true
+    },
+    "best_scotinophara_species_classifier": {
+      "model_file": "best_scotinophara_species_classifier.pth",
+      "classes_file": "scotinophara_species_classes.json",
+      "available": true
+    },
+    "best_scythropiodes_species_classifier": {
+      "model_file": "best_scythropiodes_species_classifier.pth",
+      "classes_file": "scythropiodes_species_classes.json",
+      "available": true
+    },
+    "best_selatosomus_species_classifier": {
+      "model_file": "best_selatosomus_species_classifier.pth",
+      "classes_file": "selatosomus_species_classes.json",
+      "available": true
+    },
+    "best_sepedon_species_classifier": {
+      "model_file": "best_sepedon_species_classifier.pth",
+      "classes_file": "sepedon_species_classes.json",
+      "available": true
+    },
+    "best_sigara_species_classifier": {
+      "model_file": "best_sigara_species_classifier.pth",
+      "classes_file": "sigara_species_classes.json",
+      "available": true
+    },
+    "best_siglophora_species_classifier": {
+      "model_file": "best_siglophora_species_classifier.pth",
+      "classes_file": "siglophora_species_classes.json",
+      "available": true
+    },
+    "best_silpha_species_classifier": {
+      "model_file": "best_silpha_species_classifier.pth",
+      "classes_file": "silpha_species_classes.json",
+      "available": true
+    },
+    "best_simplicia_species_classifier": {
+      "model_file": "best_simplicia_species_classifier.pth",
+      "classes_file": "simplicia_species_classes.json",
+      "available": true
+    },
+    "best_sineugraphe_species_classifier": {
+      "model_file": "best_sineugraphe_species_classifier.pth",
+      "classes_file": "sineugraphe_species_classes.json",
+      "available": true
+    },
+    "best_sitobion_species_classifier": {
+      "model_file": "best_sitobion_species_classifier.pth",
+      "classes_file": "sitobion_species_classes.json",
+      "available": true
+    },
+    "best_sitochroa_species_classifier": {
+      "model_file": "best_sitochroa_species_classifier.pth",
+      "classes_file": "sitochroa_species_classes.json",
+      "available": true
+    },
+    "best_smaragdina_species_classifier": {
+      "model_file": "best_smaragdina_species_classifier.pth",
+      "classes_file": "smaragdina_species_classes.json",
+      "available": true
+    },
+    "best_smerinthus_species_classifier": {
+      "model_file": "best_smerinthus_species_classifier.pth",
+      "classes_file": "smerinthus_species_classes.json",
+      "available": true
+    },
+    "best_sophrops_species_classifier": {
+      "model_file": "best_sophrops_species_classifier.pth",
+      "classes_file": "sophrops_species_classes.json",
+      "available": true
+    },
+    "best_sophta_species_classifier": {
+      "model_file": "best_sophta_species_classifier.pth",
+      "classes_file": "sophta_species_classes.json",
+      "available": true
+    },
+    "best_spatalia_species_classifier": {
+      "model_file": "best_spatalia_species_classifier.pth",
+      "classes_file": "spatalia_species_classes.json",
+      "available": true
+    },
+    "best_sphex_species_classifier": {
+      "model_file": "best_sphex_species_classifier.pth",
+      "classes_file": "sphex_species_classes.json",
+      "available": true
+    },
+    "best_sphinx_species_classifier": {
+      "model_file": "best_sphinx_species_classifier.pth",
+      "classes_file": "sphinx_species_classes.json",
+      "available": true
+    },
+    "best_sphragifera_species_classifier": {
+      "model_file": "best_sphragifera_species_classifier.pth",
+      "classes_file": "sphragifera_species_classes.json",
+      "available": true
+    },
+    "best_spilarctia_species_classifier": {
+      "model_file": "best_spilarctia_species_classifier.pth",
+      "classes_file": "spilarctia_species_classes.json",
+      "available": true
+    },
+    "best_spilosoma_species_classifier": {
+      "model_file": "best_spilosoma_species_classifier.pth",
+      "classes_file": "spilosoma_species_classes.json",
+      "available": true
+    },
+    "best_spirama_species_classifier": {
+      "model_file": "best_spirama_species_classifier.pth",
+      "classes_file": "spirama_species_classes.json",
+      "available": true
+    },
+    "best_spodoptera_species_classifier": {
+      "model_file": "best_spodoptera_species_classifier.pth",
+      "classes_file": "spodoptera_species_classes.json",
+      "available": true
+    },
+    "best_stathmopoda_species_classifier": {
+      "model_file": "best_stathmopoda_species_classifier.pth",
+      "classes_file": "stathmopoda_species_classes.json",
+      "available": true
+    },
+    "best_stauropus_species_classifier": {
+      "model_file": "best_stauropus_species_classifier.pth",
+      "classes_file": "stauropus_species_classes.json",
+      "available": true
+    },
+    "best_stemmatophora_species_classifier": {
+      "model_file": "best_stemmatophora_species_classifier.pth",
+      "classes_file": "stemmatophora_species_classes.json",
+      "available": true
+    },
+    "best_stenodema_species_classifier": {
+      "model_file": "best_stenodema_species_classifier.pth",
+      "classes_file": "stenodema_species_classes.json",
+      "available": true
+    },
+    "best_stenoloba_species_classifier": {
+      "model_file": "best_stenoloba_species_classifier.pth",
+      "classes_file": "stenoloba_species_classes.json",
+      "available": true
+    },
+    "best_stenotus_species_classifier": {
+      "model_file": "best_stenotus_species_classifier.pth",
+      "classes_file": "stenotus_species_classes.json",
+      "available": true
+    },
+    "best_stericta_species_classifier": {
+      "model_file": "best_stericta_species_classifier.pth",
+      "classes_file": "stericta_species_classes.json",
+      "available": true
+    },
+    "best_stethophyma_species_classifier": {
+      "model_file": "best_stethophyma_species_classifier.pth",
+      "classes_file": "stethophyma_species_classes.json",
+      "available": true
+    },
+    "best_stictoleptura_species_classifier": {
+      "model_file": "best_stictoleptura_species_classifier.pth",
+      "classes_file": "stictoleptura_species_classes.json",
+      "available": true
+    },
+    "best_stictopleurus_species_classifier": {
+      "model_file": "best_stictopleurus_species_classifier.pth",
+      "classes_file": "stictopleurus_species_classes.json",
+      "available": true
+    },
+    "best_stigmatophora_species_classifier": {
+      "model_file": "best_stigmatophora_species_classifier.pth",
+      "classes_file": "stigmatophora_species_classes.json",
+      "available": true
+    },
+    "best_striglina_species_classifier": {
+      "model_file": "best_striglina_species_classifier.pth",
+      "classes_file": "striglina_species_classes.json",
+      "available": true
+    },
+    "best_syllepte_species_classifier": {
+      "model_file": "best_syllepte_species_classifier.pth",
+      "classes_file": "syllepte_species_classes.json",
+      "available": true
+    },
+    "best_sympetrum_species_classifier": {
+      "model_file": "best_sympetrum_species_classifier.pth",
+      "classes_file": "sympetrum_species_classes.json",
+      "available": true
+    },
+    "best_synanthedon_species_classifier": {
+      "model_file": "best_synanthedon_species_classifier.pth",
+      "classes_file": "synanthedon_species_classes.json",
+      "available": true
+    },
+    "best_syntypistis_species_classifier": {
+      "model_file": "best_syntypistis_species_classifier.pth",
+      "classes_file": "syntypistis_species_classes.json",
+      "available": true
+    },
+    "best_sypnoides_species_classifier": {
+      "model_file": "best_sypnoides_species_classifier.pth",
+      "classes_file": "sypnoides_species_classes.json",
+      "available": true
+    },
+    "best_syrphus_species_classifier": {
+      "model_file": "best_syrphus_species_classifier.pth",
+      "classes_file": "chalcosyrphus_species_classes.json",
+      "available": true
+    },
+    "best_systropus_species_classifier": {
+      "model_file": "best_systropus_species_classifier.pth",
+      "classes_file": "systropus_species_classes.json",
+      "available": true
+    },
+    "best_tabanus_species_classifier": {
+      "model_file": "best_tabanus_species_classifier.pth",
+      "classes_file": "tabanus_species_classes.json",
+      "available": true
+    },
+    "best_tachina_species_classifier": {
+      "model_file": "best_tachina_species_classifier.pth",
+      "classes_file": "tachina_species_classes.json",
+      "available": true
+    },
+    "best_tachycines_species_classifier": {
+      "model_file": "best_tachycines_species_classifier.pth",
+      "classes_file": "paratachycines_species_classes.json",
+      "available": true
+    },
+    "best_tachyura_species_classifier": {
+      "model_file": "best_tachyura_species_classifier.pth",
+      "classes_file": "tachyura_species_classes.json",
+      "available": true
+    },
+    "best_teliphasa_species_classifier": {
+      "model_file": "best_teliphasa_species_classifier.pth",
+      "classes_file": "teliphasa_species_classes.json",
+      "available": true
+    },
+    "best_telorta_species_classifier": {
+      "model_file": "best_telorta_species_classifier.pth",
+      "classes_file": "telorta_species_classes.json",
+      "available": true
+    },
+    "best_tenodera_species_classifier": {
+      "model_file": "best_tenodera_species_classifier.pth",
+      "classes_file": "tenodera_species_classes.json",
+      "available": true
+    },
+    "best_tenthredo_species_classifier": {
+      "model_file": "best_tenthredo_species_classifier.pth",
+      "classes_file": "tenthredo_species_classes.json",
+      "available": true
+    },
+    "best_termioptycha_species_classifier": {
+      "model_file": "best_termioptycha_species_classifier.pth",
+      "classes_file": "termioptycha_species_classes.json",
+      "available": true
+    },
+    "best_tethea_species_classifier": {
+      "model_file": "best_tethea_species_classifier.pth",
+      "classes_file": "tethea_species_classes.json",
+      "available": true
+    },
+    "best_tetrix_species_classifier": {
+      "model_file": "best_tetrix_species_classifier.pth",
+      "classes_file": "tetrix_species_classes.json",
+      "available": true
+    },
+    "best_tettigonia_species_classifier": {
+      "model_file": "best_tettigonia_species_classifier.pth",
+      "classes_file": "tettigonia_species_classes.json",
+      "available": true
+    },
+    "best_thanatophilus_species_classifier": {
+      "model_file": "best_thanatophilus_species_classifier.pth",
+      "classes_file": "thanatophilus_species_classes.json",
+      "available": true
+    },
+    "best_theretra_species_classifier": {
+      "model_file": "best_theretra_species_classifier.pth",
+      "classes_file": "theretra_species_classes.json",
+      "available": true
+    },
+    "best_thinopteryx_species_classifier": {
+      "model_file": "best_thinopteryx_species_classifier.pth",
+      "classes_file": "thinopteryx_species_classes.json",
+      "available": true
+    },
+    "best_thlaspida_species_classifier": {
+      "model_file": "best_thlaspida_species_classifier.pth",
+      "classes_file": "thlaspida_species_classes.json",
+      "available": true
+    },
+    "best_thymelicus_species_classifier": {
+      "model_file": "best_thymelicus_species_classifier.pth",
+      "classes_file": "thymelicus_species_classes.json",
+      "available": true
+    },
+    "best_thyreus_species_classifier": {
+      "model_file": "best_thyreus_species_classifier.pth",
+      "classes_file": "thyreus_species_classes.json",
+      "available": true
+    },
+    "best_timandra_species_classifier": {
+      "model_file": "best_timandra_species_classifier.pth",
+      "classes_file": "timandra_species_classes.json",
+      "available": true
+    },
+    "best_tipula_species_classifier": {
+      "model_file": "best_tipula_species_classifier.pth",
+      "classes_file": "tipula_species_classes.json",
+      "available": true
+    },
+    "best_trachea_species_classifier": {
+      "model_file": "best_trachea_species_classifier.pth",
+      "classes_file": "trachea_species_classes.json",
+      "available": true
+    },
+    "best_trachys_species_classifier": {
+      "model_file": "best_trachys_species_classifier.pth",
+      "classes_file": "trachys_species_classes.json",
+      "available": true
+    },
+    "best_trigomphus_species_classifier": {
+      "model_file": "best_trigomphus_species_classifier.pth",
+      "classes_file": "trigomphus_species_classes.json",
+      "available": true
+    },
+    "best_tropidothorax_species_classifier": {
+      "model_file": "best_tropidothorax_species_classifier.pth",
+      "classes_file": "tropidothorax_species_classes.json",
+      "available": true
+    },
+    "best_trupanea_species_classifier": {
+      "model_file": "best_trupanea_species_classifier.pth",
+      "classes_file": "trupanea_species_classes.json",
+      "available": true
+    },
+    "best_tyspanodes_species_classifier": {
+      "model_file": "best_tyspanodes_species_classifier.pth",
+      "classes_file": "tyspanodes_species_classes.json",
+      "available": true
+    },
+    "best_udea_species_classifier": {
+      "model_file": "best_udea_species_classifier.pth",
+      "classes_file": "udea_species_classes.json",
+      "available": true
+    },
+    "best_uloma_species_classifier": {
+      "model_file": "best_uloma_species_classifier.pth",
+      "classes_file": "uloma_species_classes.json",
+      "available": true
+    },
+    "best_uroleucon_species_classifier": {
+      "model_file": "best_uroleucon_species_classifier.pth",
+      "classes_file": "uroleucon_species_classes.json",
+      "available": true
+    },
+    "best_urostylis_species_classifier": {
+      "model_file": "best_urostylis_species_classifier.pth",
+      "classes_file": "urostylis_species_classes.json",
+      "available": true
+    },
+    "best_vanessa_species_classifier": {
+      "model_file": "best_vanessa_species_classifier.pth",
+      "classes_file": "vanessa_species_classes.json",
+      "available": true
+    },
+    "best_vekunta_species_classifier": {
+      "model_file": "best_vekunta_species_classifier.pth",
+      "classes_file": "vekunta_species_classes.json",
+      "available": true
+    },
+    "best_velarifictorus_species_classifier": {
+      "model_file": "best_velarifictorus_species_classifier.pth",
+      "classes_file": "velarifictorus_species_classes.json",
+      "available": true
+    },
+    "best_vespa_species_classifier": {
+      "model_file": "best_vespa_species_classifier.pth",
+      "classes_file": "vespa_species_classes.json",
+      "available": true
+    },
+    "best_vespula_species_classifier": {
+      "model_file": "best_vespula_species_classifier.pth",
+      "classes_file": "dolichovespula_species_classes.json",
+      "available": true
+    },
+    "best_volucella_species_classifier": {
+      "model_file": "best_volucella_species_classifier.pth",
+      "classes_file": "volucella_species_classes.json",
+      "available": true
+    },
+    "best_xanthorhoe_species_classifier": {
+      "model_file": "best_xanthorhoe_species_classifier.pth",
+      "classes_file": "xanthorhoe_species_classes.json",
+      "available": true
+    },
+    "best_xerodes_species_classifier": {
+      "model_file": "best_xerodes_species_classifier.pth",
+      "classes_file": "xerodes_species_classes.json",
+      "available": true
+    },
+    "best_xestia_species_classifier": {
+      "model_file": "best_xestia_species_classifier.pth",
+      "classes_file": "xestia_species_classes.json",
+      "available": true
+    },
+    "best_xylena_species_classifier": {
+      "model_file": "best_xylena_species_classifier.pth",
+      "classes_file": "xylena_species_classes.json",
+      "available": true
+    },
+    "best_xylota_species_classifier": {
+      "model_file": "best_xylota_species_classifier.pth",
+      "classes_file": "xylota_species_classes.json",
+      "available": true
+    },
+    "best_xylotrechus_species_classifier": {
+      "model_file": "best_xylotrechus_species_classifier.pth",
+      "classes_file": "xylotrechus_species_classes.json",
+      "available": true
+    },
+    "best_yponomeuta_species_classifier": {
+      "model_file": "best_yponomeuta_species_classifier.pth",
+      "classes_file": "yponomeuta_species_classes.json",
+      "available": true
+    },
+    "best_ypthima_species_classifier": {
+      "model_file": "best_ypthima_species_classifier.pth",
+      "classes_file": "ypthima_species_classes.json",
+      "available": true
+    },
+    "best_zanclognatha_species_classifier": {
+      "model_file": "best_zanclognatha_species_classifier.pth",
+      "classes_file": "zanclognatha_species_classes.json",
+      "available": true
+    },
+    "best_zeugophora_species_classifier": {
+      "model_file": "best_zeugophora_species_classifier.pth",
+      "classes_file": "zeugophora_species_classes.json",
+      "available": true
+    },
+    "best_zoraida_species_classifier": {
+      "model_file": "best_zoraida_species_classifier.pth",
+      "classes_file": "zoraida_species_classes.json",
+      "available": true
+    },
+    "best_zubovskya_species_classifier": {
+      "model_file": "best_zubovskya_species_classifier.pth",
+      "classes_file": "zubovskya_species_classes.json",
+      "available": true
+    }
+  }
+}

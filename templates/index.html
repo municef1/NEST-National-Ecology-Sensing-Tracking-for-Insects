@@ -1,0 +1,1532 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>NEST 곤충생태지도</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='animations.css') }}">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      background: #FFFFFF;
+      color: #1F2937;
+      line-height: 1.6;
+      padding-bottom: 80px; /* 하단 네비게이션 공간 */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* 상단 헤더 - 위치 선택 */
+    .top-header {
+      background: linear-gradient(135deg, #3182F6 0%, #4285F4 100%);
+      padding: 12px 16px;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .app-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .app-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #34A8C7 0%, #8BC34A 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .app-title-text {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* 정보 배너 */
+    .info-banner {
+      background: #F3F4F6;
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .info-banner.hidden {
+      display: none;
+    }
+
+    .info-text {
+      font-size: 13px;
+      color: #4B5563;
+      line-height: 1.5;
+      flex: 1;
+      padding-right: 8px;
+    }
+
+    .info-close {
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #6B7280;
+      cursor: pointer;
+      padding: 4px;
+      line-height: 1;
+    }
+
+
+    /* 메인 콘텐츠 영역 (탐지/분류 결과) */
+    .main-content {
+      margin: 0;
+      padding: 0 16px;
+      max-width: 100%;
+    }
+    
+    .content-card {
+      max-width: 100%;
+      margin: 0;
+    }
+
+    .content-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .upload-area {
+      border: 2px dashed #3182F6;
+      border-radius: 16px;
+      padding: 60px 20px;
+      text-align: center;
+      background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .upload-area:hover {
+      background: linear-gradient(135deg, #E8F0FE 0%, #DBEAFE 100%);
+      border-color: #4285F4;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(49, 130, 246, 0.15);
+    }
+
+    .upload-area.has-image {
+      padding: 0;
+      border: 2px solid #3182F6;
+      background: white;
+      min-height: auto;
+    }
+
+    #uploadPlaceholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .upload-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #3182F6 0%, #4285F4 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      margin: 0 auto 20px;
+      font-size: 40px;
+      box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .upload-area:hover .upload-icon {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 6px 16px rgba(49, 130, 246, 0.4);
+    }
+
+    .upload-text {
+      color: #6B7280;
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .image-container {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+
+    .canvas-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+    }
+
+    .bbox {
+      position: absolute;
+      border: 2.5px solid #3182F6;
+      background: rgba(49, 130, 246, 0.1);
+      cursor: move;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      touch-action: none;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .bbox.selected {
+      border-color: #EF4444;
+      background: rgba(239, 68, 68, 0.15);
+      z-index: 10;
+      box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+    }
+
+    .bbox-label {
+      position: absolute;
+      top: -24px;
+      left: 0;
+      background: linear-gradient(135deg, #3182F6 0%, #4285F4 100%);
+      color: white;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 6px;
+      pointer-events: none;
+    }
+
+    .resize-handle {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: #3182F6;
+      border: 2.5px solid white;
+      border-radius: 50%;
+      cursor: nwse-resize;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      touch-action: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .resize-handle.nw { top: -5px; left: -5px; cursor: nw-resize; }
+    .resize-handle.ne { top: -5px; right: -5px; cursor: ne-resize; }
+    .resize-handle.sw { bottom: -5px; left: -5px; cursor: sw-resize; }
+    .resize-handle.se { bottom: -5px; right: -5px; cursor: se-resize; }
+
+    .bbox.selected .resize-handle {
+      background: #EF4444;
+    }
+
+    /* 결과 표시 */
+    .detection-info {
+      background: linear-gradient(135deg, #E8F0FE 0%, #DBEAFE 100%);
+      border: 1.5px solid #3182F6;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .detection-count {
+      font-size: 16px;
+      font-weight: 700;
+      color: #3182F6;
+      margin-bottom: 12px;
+    }
+
+    .detection-item {
+      padding: 12px;
+      background: white;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      margin-top: 12px;
+      text-align: center;
+    }
+    
+    .btn span {
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3182F6 0%, #4285F4 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      background-color: white;
+      color: #374151;
+      border: 1.5px solid #E5E7EB;
+    }
+
+    /* 하단 네비게이션 */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid #E5E7EB;
+      padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+      z-index: 9999;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px 24px;
+      color: #6B7280;
+      font-size: 11px;
+      transition: color 0.2s ease;
+    }
+
+    .nav-item.active {
+      color: #3182F6;
+    }
+
+    .nav-icon {
+      font-size: 24px;
+    }
+
+    /* 플로팅 액션 버튼 */
+    .fab {
+      position: fixed;
+      bottom: 90px;
+      right: 16px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3182F6 0%, #4285F4 100%);
+      color: white;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(49, 130, 246, 0.4);
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+
+    .fab:active {
+      transform: scale(0.95);
+    }
+
+    /* Flash Messages */
+    .flash {
+      background: #f0f0f0;
+      padding: 12px 16px;
+      margin: 16px;
+      border-radius: 8px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .flash.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .flash.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    /* 숨김 처리 */
+    #imageInput {
+      display: none;
+    }
+
+    /* 업로드 버튼 스타일 */
+    .upload-btn {
+      width: 100%;
+      padding: 20px;
+      border-radius: 16px;
+      border: none;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+    }
+
+    .upload-btn:active {
+      transform: scale(0.98);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    }
+
+    .camera-btn {
+      background: linear-gradient(135deg, #3182F6 0%, #4285F4 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
+    }
+
+    .camera-btn:active {
+      box-shadow: 0 2px 8px rgba(49, 130, 246, 0.4);
+    }
+
+    .gallery-btn {
+      background: white;
+      color: #1F2937;
+      border: 2px solid #E5E7EB;
+    }
+
+    .gallery-btn:active {
+      background: #F9FAFB;
+    }
+
+    .upload-btn-icon {
+      font-size: 32px;
+      flex-shrink: 0;
+    }
+
+    .upload-btn-text {
+      flex: 1;
+    }
+
+    /* 로딩 스피너 스타일 */
+    .loading-spinner-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .loading-spinner-overlay.active {
+      display: flex;
+    }
+
+    .loading-spinner-content {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: fadeInScale 0.3s ease-out;
+    }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid #E5E7EB;
+      border-top: 4px solid #3182F6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1F2937;
+      text-align: center;
+    }
+
+    .loading-subtext {
+      font-size: 13px;
+      color: #6B7280;
+      text-align: center;
+      max-width: 250px;
+    }
+
+    /* 데스크톱 대응 */
+    @media (min-width: 768px) {
+      body {
+        max-width: 768px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 상단 헤더 -->
+  <div class="top-header">
+    <div class="app-title">
+      <div class="app-icon">🐛</div>
+      <span class="app-title-text">NEST</span>
+    </div>
+  </div>
+
+  <!-- 정보 배너 -->
+  <div class="info-banner" id="infoBanner">
+    <div class="info-text">지역을 선택하면 지역별 해충 경보 및 현장 가이드를 받을 수 있습니다.</div>
+    <button class="info-close" onclick="closeBanner()">×</button>
+  </div>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for msg in messages %}
+        <div class="flash {% if '완료' in msg or '성공' in msg %}success{% elif '오류' in msg or '실패' in msg %}error{% endif %}">{{ msg }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- 메인 콘텐츠 -->
+  <div class="main-content">
+    <div class="content-card">
+      {% if detection %}
+        <div style="margin-bottom: 16px;">
+          <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 12px;">{% if detection.detailed_info %}분석 완료{% elif detection.risk_assessment %}위험도 평가 완료{% elif detection.classifications %}분류 완료{% else %}탐지 결과{% endif %}</h3>
+        </div>
+        
+        <div class="upload-area has-image">
+          <div class="image-container" id="imageContainer">
+            <img id="originalImage" src="{{ url_for('uploaded_file', filename=detection.original_image) }}" alt="Original Image" />
+            {% if detection and not detection.classifications %}
+            <div id="bboxContainer" class="canvas-overlay"></div>
+            {% endif %}
+          </div>
+        </div>
+
+        {% if detection and not detection.classifications %}
+        <div id="bboxControls" style="margin-top: 12px; display: flex; gap: 8px;">
+          <button type="button" class="btn btn-secondary" onclick="saveBoundingBoxes()" style="flex: 1; margin: 0;">저장</button>
+          <button type="button" class="btn btn-secondary" onclick="resetBoundingBoxes()" style="flex: 1; margin: 0;">초기화</button>
+        </div>
+        {% endif %}
+
+        <div class="detection-info" style="text-align: center; margin: 0 -16px; padding: 0 16px;">
+          {% if detection.detailed_info %}
+            {% for info in detection.detailed_info %}
+              {% set cls_result = detection.classifications[loop.index0] if detection.classifications and loop.index0 < detection.classifications|length else none %}
+              {% set insect_idx = loop.index0 %}
+              {% if cls_result and cls_result.hierarchical_result and cls_result.hierarchical_result.species_candidates and cls_result.hierarchical_result.species_candidates|length > 1 %}
+                <div style="margin: 12px 0; padding: 12px; background: white; border-radius: 8px;">
+                  <div style="color: #495057; font-size: 12px; margin-bottom: 8px; font-weight: 600; text-align: center;">종 후보 선택:</div>
+                  <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;">
+                  {% for candidate in cls_result.hierarchical_result.species_candidates[:3] %}
+                    {% set is_selected = (cls_result.hierarchical_result.selected_species == candidate.name) if cls_result.hierarchical_result.get('selected_species') else (loop.index == 1) %}
+                    <div onclick="selectCandidateTab({{ insect_idx }}, '{{ candidate.name }}', this)" class="candidate-tab" data-insect-index="{{ insect_idx }}" data-species="{{ candidate.name }}" style="flex: 1; min-width: 100px; padding: 8px 12px; background: {% if is_selected %}#3182F6{% else %}white{% endif %}; color: {% if is_selected %}white{% else %}#1F2937{% endif %}; border-radius: 8px; border: 2px solid {% if is_selected %}#3182F6{% else %}#E5E7EB{% endif %}; cursor: pointer; text-align: center; font-size: 12px;">
+                      <div style="font-weight: {% if is_selected %}600{% else %}500{% endif %}; margin-bottom: 2px;">{{ candidate.name }}</div>
+                      <div style="font-size: 10px; opacity: 0.8;">{{ "%.1f"|format(candidate.confidence * 100) }}%</div>
+                    </div>
+                  {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            
+            <div style="margin-top: 12px;">
+              {% for info in detection.detailed_info %}
+                <div class="detection-item" style="padding: 24px; background: white; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-left: -16px; margin-right: -16px; padding-left: 20px; padding-right: 20px; border: 1px solid #E5E7EB;">
+                  <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 3px solid #3182F6;">
+                    <strong style="color: #1F2937; font-size: 24px; font-weight: 800; letter-spacing: -0.5px; line-height: 1.3; width: 100%; text-align: left;">{{ info.korean_name or info.species_name }}</strong>
+                    {% if info.scientific_name %}
+                    <span style="color: #6B7280; font-size: 15px; font-style: italic; letter-spacing: -0.2px; font-weight: 500; width: 100%; text-align: left;">{{ info.scientific_name }}</span>
+                    {% endif %}
+                  </div>
+                  
+                  {% if info.risk_assessment and (info.risk_assessment.threat_level or info.risk_assessment.risk_category or info.risk_assessment.human_risks) %}
+                  <div style="margin-top: 20px; padding: 24px; background: {% if info.risk_assessment.threat_level == '인체 고위험(공격성·독성)' %}#FEE2E2{% elif info.risk_assessment.threat_level == '인체 중위험(독성·피부염·질병 매개)' %}#FEF3C7{% else %}#F3F4F6{% endif %}; border-radius: 16px; border: 2px solid {% if info.risk_assessment.threat_level == '인체 고위험(공격성·독성)' %}#FCA5A5{% elif info.risk_assessment.threat_level == '인체 중위험(독성·피부염·질병 매개)' %}#FCD34D{% else %}#D1D5DB{% endif %}; border-left: 6px solid {% if info.risk_assessment.threat_level == '인체 고위험(공격성·독성)' %}#DC2626{% elif info.risk_assessment.threat_level == '인체 중위험(독성·피부얼·질병 매개)' %}#F59E0B{% else %}#6B7280{% endif %};">
+                    <div style="font-weight: 700; color: #1F2937; font-size: 17px; margin-bottom: 16px; text-align: left; letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px;">
+                      <span style="font-size: 24px;">⚠️</span>
+                      <span>위험도 평가</span>
+                    </div>
+                    {% if info.risk_assessment.threat_level %}
+                    <div style="margin-bottom: 16px; display: flex; justify-content: flex-start; width: 100%;">
+                      <span style="background: {% if info.risk_assessment.threat_level == '인체 고위험(공격성·독성)' %}#DC2626{% elif info.risk_assessment.threat_level == '인체 중위험(독성·피부염·질병 매개)' %}#F59E0B{% else %}#6B7280{% endif %}; color: white; padding: 10px 20px; border-radius: 12px; font-size: 15px; font-weight: 700; letter-spacing: -0.2px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); width: 100%; text-align: center;">{{ info.risk_assessment.threat_level }}</span>
+                    </div>
+                    {% endif %}
+                    {% if info.risk_assessment.risk_category %}
+                    <div style="font-size: 15px; color: #374151; margin-bottom: 12px; text-align: left; letter-spacing: -0.2px; line-height: 1.6; padding: 12px; background: white; border-radius: 8px;">
+                      <strong style="font-weight: 700;">분류:</strong> {{ info.risk_assessment.risk_category }}
+                    </div>
+                    {% endif %}
+                    {% if info.risk_assessment.human_risks %}
+                    <div style="font-size: 15px; color: #374151; text-align: left; letter-spacing: -0.2px; line-height: 1.8;">
+                      {% if info.risk_assessment.human_risks.venom_toxicity %}
+                      <div style="margin-bottom: 12px; padding: 12px; background: white; border-radius: 8px;">
+                        <strong style="font-weight: 700;">독성:</strong> {{ info.risk_assessment.human_risks.venom_toxicity }}
+                      </div>
+                      {% endif %}
+                      {% if info.risk_assessment.human_risks.symptoms %}
+                      <div style="margin-bottom: 12px; padding: 12px; background: white; border-radius: 8px;">
+                        <strong style="font-weight: 700; display: block; margin-bottom: 8px;">증상:</strong>
+                        <ul style="margin: 0; padding-left: 20px; line-height: 1.9;">
+                          {% for symptom in info.risk_assessment.human_risks.symptoms %}
+                          <li style="margin-bottom: 6px;">{{ symptom }}</li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                      {% endif %}
+                      {% if info.risk_assessment.human_risks.behavior %}
+                      <div style="padding: 12px; background: white; border-radius: 8px;">
+                        <strong style="font-weight: 700;">행동:</strong> {{ info.risk_assessment.human_risks.behavior }}
+                      </div>
+                      {% endif %}
+                    </div>
+                    {% endif %}
+                  </div>
+                  {% endif %}
+                  
+                  {% if info.first_aid and (info.first_aid.immediate_actions or info.first_aid.emergency_signs or info.first_aid.when_to_seek_help) %}
+                  <div style="margin-top: 20px; padding: 24px; background: #FEF3C7; border-radius: 16px; border: 2px solid #FDE68A; border-left: 6px solid #F59E0B; text-align: left;">
+                    <div style="font-weight: 700; color: #1F2937; font-size: 17px; margin-bottom: 16px; text-align: left; letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px;">
+                      <span style="font-size: 24px;">🚑</span>
+                      <span>응급 처치</span>
+                    </div>
+                    {% if info.first_aid.immediate_actions %}
+                    <div style="margin-bottom: 16px; text-align: left; padding: 16px; background: white; border-radius: 12px;">
+                      <div style="font-weight: 700; font-size: 15px; color: #92400E; margin-bottom: 12px; letter-spacing: -0.2px; text-align: left;">즉시 조치:</div>
+                      <ul style="margin: 0; padding-left: 20px; font-size: 15px; color: #374151; line-height: 1.9; letter-spacing: -0.2px; text-align: left;">
+                        {% for action in info.first_aid.immediate_actions %}
+                        <li style="margin-bottom: 8px; text-align: left;">{{ action }}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                    {% endif %}
+                    {% if info.first_aid.emergency_signs %}
+                    <div style="margin-bottom: 16px; text-align: left; padding: 16px; background: white; border-radius: 12px;">
+                      <div style="font-weight: 700; font-size: 15px; color: #DC2626; margin-bottom: 12px; letter-spacing: -0.2px; text-align: left;">응급 증상:</div>
+                      <ul style="margin: 0; padding-left: 20px; font-size: 15px; color: #374151; line-height: 1.9; letter-spacing: -0.2px; text-align: left;">
+                        {% for sign in info.first_aid.emergency_signs %}
+                        <li style="margin-bottom: 8px; text-align: left;">{{ sign }}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                    {% endif %}
+                    {% if info.first_aid.when_to_seek_help %}
+                    <div style="font-size: 15px; color: #DC2626; font-weight: 700; letter-spacing: -0.2px; line-height: 1.8; text-align: left; padding: 16px; background: white; border-radius: 12px;">{{ info.first_aid.when_to_seek_help }}</div>
+                    {% endif %}
+                  </div>
+                  {% endif %}
+                  
+                  {% if info.prevention_measures and info.prevention_measures|length > 0 %}
+                  <div style="margin-top: 20px; padding: 24px; background: #F0F9FF; border-radius: 16px; border: 2px solid #BFDBFE; border-left: 6px solid #3B82F6; text-align: left;">
+                    <div style="font-weight: 700; color: #1F2937; font-size: 17px; margin-bottom: 16px; text-align: left; letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px;">
+                      <span style="font-size: 24px;">🛡️</span>
+                      <span>예방 조치</span>
+                    </div>
+                    <ul style="margin: 0; padding-left: 20px; font-size: 15px; color: #374151; line-height: 1.9; letter-spacing: -0.2px; text-align: left;">
+                      {% for measure in info.prevention_measures %}
+                      <li style="margin-bottom: 8px; text-align: left;">{{ measure }}</li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          {% elif detection.risk_assessment %}
+            <div style="margin-top: 12px;">
+              {% for risk in detection.risk_assessment %}
+                {% if risk %}
+                <div class="detection-item">
+                  <strong>{{ risk.species_name if risk.species_name else '미상' }}</strong><br>
+                  <div style="margin-top: 8px;">
+                    {% set threat_level = risk.threat_level if risk.threat_level else '' %}
+                    {% if threat_level %}
+                      {% if '인체 고위험' in threat_level or '공격성·독성' in threat_level %}
+                        <span style="background: #dc3545; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">매우 위험</span>
+                      {% elif '인체 중위험' in threat_level or '독성·피부염' in threat_level or '질병 매개' in threat_level %}
+                        <span style="background: #fd7e14; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">위험</span>
+                      {% elif '반려동물 위험' in threat_level %}
+                        <span style="background: #ffc107; color: #333; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">보통</span>
+                      {% elif '일반·불쾌' in threat_level or '불쾌 곤충' in threat_level %}
+                        <span style="background: #28a745; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">안전</span>
+                      {% elif threat_level == '미분류' %}
+                        <span style="background: #1E40AF; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">미분류</span>
+                      {% else %}
+                        <span style="background: #6c757d; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">미분류</span>
+                      {% endif %}
+                    {% else %}
+                      <span style="background: #1E40AF; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">미분류</span>
+                    {% endif %}
+                    <span style="margin-left: 8px; color: #666; font-size: 12px;">{{ risk.description if risk.description else '설명 없음' }}</span>
+                  </div>
+                </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% elif detection.classifications %}
+            <div style="margin-top: 12px;">
+              {% for cls_result in detection.classifications %}
+                {% if cls_result %}
+                <div class="detection-item">
+                  {% if cls_result.hierarchical_result %}
+                    {% if cls_result.hierarchical_result.order %}
+                      <div style="margin-top: 8px; font-size: 12px;">
+                        <span style="color: #666;">목:</span>
+                        <span style="color: #3182F6; margin-left: 4px; font-weight: 600;">{{ cls_result.hierarchical_result.order }}</span>
+                      </div>
+                    {% endif %}
+                    {% if cls_result.hierarchical_result.family %}
+                      <div style="margin-top: 4px; font-size: 12px; padding-left: 10px;">
+                        <span style="color: #666;">과:</span>
+                        <span style="color: #3182F6; margin-left: 4px; font-weight: 600;">{{ cls_result.hierarchical_result.family }}</span>
+                      </div>
+                    {% endif %}
+                    {% if cls_result.hierarchical_result.species %}
+                      <div style="margin-top: 4px; font-size: 12px; padding-left: 20px;">
+                        <span style="color: #666;">종:</span>
+                        <span style="color: #3182F6; margin-left: 4px; font-weight: 600;">{{ cls_result.hierarchical_result.species }}</span>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% if detection and not detection.classifications and detection.count > 0 %}
+          <button type="button" class="btn btn-primary" onclick="proceedToClassification()" id="classifyBtn">
+            <span>✓</span>
+            <span>분류하기</span>
+          </button>
+          <p style="font-size: 11px; color: #666; margin-top: 8px; text-align: center;">빨간색 박스를 클릭하여 선택 (Ctrl/Cmd+클릭으로 여러 개 선택 가능)</p>
+          {% endif %}
+
+          {% if detection.detailed_info %}
+          <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('reset_session') }}'">
+            <span>🔄</span>
+            <span>새 이미지 업로드</span>
+          </button>
+          {% endif %}
+        </div>
+      {% else %}
+        <div style="text-align: center; margin-bottom: 24px;">
+          <h2 style="font-size: 20px; font-weight: 700; color: #1F2937; margin-bottom: 8px;">곤충 식별하기</h2>
+          <p style="font-size: 14px; color: #6B7280;">곤충 사진을 촬영하거나 업로드해주세요</p>
+        </div>
+        
+        <!-- 이미지 미리보기 영역 -->
+        <div id="previewContainer" style="display: none; margin-bottom: 20px;">
+          <img id="previewImage" style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" alt="Preview" />
+        </div>
+        
+        <!-- 카메라 촬영 및 갤러리 버튼 -->
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+          <button type="button" class="upload-btn camera-btn" onclick="openCamera()">
+            <div class="upload-btn-icon">📷</div>
+            <div class="upload-btn-text">
+              <div style="font-weight: 600; font-size: 16px; margin-bottom: 4px;">카메라로 촬영하기</div>
+              <div style="font-size: 12px; opacity: 0.7;">실시간으로 곤충 사진 촬영</div>
+            </div>
+          </button>
+          
+          <button type="button" class="upload-btn gallery-btn" onclick="openGallery()">
+            <div class="upload-btn-icon">🖼️</div>
+            <div class="upload-btn-text">
+              <div style="font-weight: 600; font-size: 16px; margin-bottom: 4px;">갤러리에서 불러오기</div>
+              <div style="font-size: 12px; opacity: 0.7;">저장된 사진에서 선택</div>
+            </div>
+          </button>
+        </div>
+        
+        <form method="post" enctype="multipart/form-data" id="uploadForm">
+          <input type="file"
+                 id="imageInput"
+                 name="photo"
+                 accept="image/*" />
+        </form>
+      {% endif %}
+    </div>
+  </div>
+
+
+  <!-- 로딩 스피너 오버레이 -->
+  <div id="loadingSpinner" class="loading-spinner-overlay">
+    <div class="loading-spinner-content">
+      <div class="spinner"></div>
+      <div class="loading-text" id="loadingText">분류 중...</div>
+      <div class="loading-subtext" id="loadingSubtext">AI가 곤충을 분석하고 있습니다</div>
+    </div>
+  </div>
+
+  <!-- 하단 네비게이션 -->
+  <div class="bottom-nav">
+    <a href="{{ url_for('board_page') }}" class="nav-item">
+      <div class="nav-icon">📋</div>
+      <div>게시판</div>
+    </a>
+    <a href="{{ url_for('index') }}" class="nav-item active">
+      <div class="nav-icon">📷</div>
+      <div>촬영</div>
+    </a>
+    <a href="{{ url_for('map_page') }}" class="nav-item">
+      <div class="nav-icon">🗺️</div>
+      <div>지도</div>
+    </a>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const previewImage = document.getElementById('previewImage');
+    const previewContainer = document.getElementById('previewContainer');
+    const uploadForm = document.getElementById('uploadForm');
+    
+    // 중복 클릭 방지 플래그
+    let isUploading = false;
+
+    if (imageInput) {
+      imageInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          // 파일 크기 검증
+          if (file.size > 16 * 1024 * 1024) {
+            alert('파일 크기는 16MB를 초과할 수 없습니다.');
+            imageInput.value = ''; // 입력 초기화
+            isUploading = false;
+            return;
+          }
+
+          // 파일 타입 검증
+          if (!file.type.startsWith('image/')) {
+            alert('이미지 파일만 업로드 가능합니다.');
+            imageInput.value = '';
+            isUploading = false;
+            return;
+          }
+
+          // 미리보기 표시
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            if (previewImage) {
+              previewImage.src = e.target.result;
+            }
+            if (previewContainer) {
+              previewContainer.style.display = 'block';
+            }
+          };
+          reader.readAsDataURL(file);
+
+          // 폼 제출
+          if (uploadForm) {
+            // 중복 제출 방지를 위한 request_id 추가
+            const requestId = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'request_id';
+            hiddenInput.value = requestId;
+            uploadForm.appendChild(hiddenInput);
+            
+            uploadForm.submit();
+          }
+        }
+        isUploading = false;
+      });
+    }
+
+    // Interactive Bounding Box Management
+    {% if detection and not detection.classifications %}
+    let boundingBoxes = [];
+    let selectedBboxes = []; // 여러 개 선택을 위한 배열로 변경
+    let isDragging = false;
+    let isResizing = false;
+    let resizeHandle = null;
+    let dragOffset = { x: 0, y: 0 };
+    let originalBboxes = {{ detection.detections | tojson }};
+
+    const imageContainer = document.getElementById('imageContainer');
+    const originalImage = document.getElementById('originalImage');
+    const bboxContainer = document.getElementById('bboxContainer');
+
+    originalImage.addEventListener('load', function() {
+      initializeBoundingBoxes();
+    });
+
+    if (originalImage.complete) {
+      initializeBoundingBoxes();
+    }
+    
+    updateClassifyButton();
+
+    function initializeBoundingBoxes() {
+      const img = originalImage;
+      const imgRect = img.getBoundingClientRect();
+      const scaleX = imgRect.width / img.naturalWidth;
+      const scaleY = imgRect.height / img.naturalHeight;
+
+      bboxContainer.innerHTML = '';
+      boundingBoxes = [];
+
+      // 모든 바운딩 박스 표시
+      originalBboxes.forEach((det, index) => {
+        const bbox = det.bbox;
+        const x1 = bbox[0] * scaleX;
+        const y1 = bbox[1] * scaleY;
+        const x2 = bbox[2] * scaleX;
+        const y2 = bbox[3] * scaleY;
+
+        createBoundingBox(x1, y1, x2, y2, index, det.confidence);
+      });
+      
+      // 첫 번째 박스 자동 선택
+      if (boundingBoxes.length > 0) {
+        selectBbox(boundingBoxes[0].element, false);
+      }
+    }
+
+    function createBoundingBox(x1, y1, x2, y2, index, confidence) {
+      const bbox = document.createElement('div');
+      bbox.className = 'bbox';
+      bbox.dataset.index = index;
+      
+      const left = Math.min(x1, x2);
+      const top = Math.min(y1, y2);
+      const width = Math.abs(x2 - x1);
+      const height = Math.abs(y2 - y1);
+
+      bbox.style.left = left + 'px';
+      bbox.style.top = top + 'px';
+      bbox.style.width = width + 'px';
+      bbox.style.height = height + 'px';
+
+      // 라벨 추가
+      const label = document.createElement('div');
+      label.className = 'bbox-label';
+      label.textContent = `#${index + 1}`;
+      bbox.appendChild(label);
+
+      ['nw', 'ne', 'sw', 'se'].forEach(pos => {
+        const handle = document.createElement('div');
+        handle.className = `resize-handle ${pos}`;
+        bbox.appendChild(handle);
+      });
+
+      // 마우스 이벤트
+      bbox.addEventListener('mousedown', function(e) {
+        if (e.target.classList.contains('resize-handle')) {
+          return;
+        }
+        // Ctrl/Cmd 키를 누르고 있으면 다중 선택, 아니면 단일 선택
+        const isMultiSelect = e.ctrlKey || e.metaKey;
+        selectBbox(bbox, isMultiSelect);
+        currentDraggingBbox = bbox; // 현재 드래그 중인 박스 저장
+        isDragging = true;
+        const rect = bbox.getBoundingClientRect();
+        dragOffset.x = e.clientX - rect.left;
+        dragOffset.y = e.clientY - rect.top;
+        e.preventDefault();
+      });
+
+      // 터치 이벤트 추가
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchStartBboxLeft = 0;
+      let touchStartBboxTop = 0;
+      let touchStartBboxWidth = 0;
+      let touchStartBboxHeight = 0;
+      let touchResizeHandle = null;
+
+      bbox.addEventListener('touchstart', function(e) {
+        if (e.target.classList.contains('resize-handle')) {
+          touchResizeHandle = e.target.className.split(' ')[1];
+          selectBbox(bbox, false);
+          isResizing = true;
+          const rect = bbox.getBoundingClientRect();
+          const containerRect = imageContainer.getBoundingClientRect();
+          touchStartX = e.touches[0].clientX - containerRect.left;
+          touchStartY = e.touches[0].clientY - containerRect.top;
+          touchStartBboxLeft = parseFloat(bbox.style.left);
+          touchStartBboxTop = parseFloat(bbox.style.top);
+          touchStartBboxWidth = parseFloat(bbox.style.width);
+          touchStartBboxHeight = parseFloat(bbox.style.height);
+          e.preventDefault();
+          e.stopPropagation();
+        } else {
+          selectBbox(bbox, false);
+          currentDraggingBbox = bbox;
+          isDragging = true;
+          const rect = bbox.getBoundingClientRect();
+          const containerRect = imageContainer.getBoundingClientRect();
+          touchStartX = e.touches[0].clientX - containerRect.left;
+          touchStartY = e.touches[0].clientY - containerRect.top;
+          touchStartBboxLeft = parseFloat(bbox.style.left);
+          touchStartBboxTop = parseFloat(bbox.style.top);
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, { passive: false });
+
+      bbox.addEventListener('touchmove', function(e) {
+        if (!isDragging && !isResizing) return;
+        
+        const containerRect = imageContainer.getBoundingClientRect();
+        const touchX = e.touches[0].clientX - containerRect.left;
+        const touchY = e.touches[0].clientY - containerRect.top;
+        const deltaX = touchX - touchStartX;
+        const deltaY = touchY - touchStartY;
+
+        if (isResizing && touchResizeHandle) {
+          const img = originalImage;
+          const imgRect = img.getBoundingClientRect();
+          let newLeft = touchStartBboxLeft;
+          let newTop = touchStartBboxTop;
+          let newWidth = touchStartBboxWidth;
+          let newHeight = touchStartBboxHeight;
+
+          if (touchResizeHandle.includes('w')) {
+            const diff = deltaX;
+            newLeft = Math.max(0, touchStartBboxLeft + diff);
+            newWidth = Math.max(20, touchStartBboxWidth - diff);
+          }
+          if (touchResizeHandle.includes('e')) {
+            newWidth = Math.max(20, touchStartBboxWidth + deltaX);
+          }
+          if (touchResizeHandle.includes('n')) {
+            const diff = deltaY;
+            newTop = Math.max(0, touchStartBboxTop + diff);
+            newHeight = Math.max(20, touchStartBboxHeight - diff);
+          }
+          if (touchResizeHandle.includes('s')) {
+            newHeight = Math.max(20, touchStartBboxHeight + deltaY);
+          }
+
+          if (newLeft + newWidth > imgRect.width) {
+            newWidth = imgRect.width - newLeft;
+          }
+          if (newTop + newHeight > imgRect.height) {
+            newHeight = imgRect.height - newTop;
+          }
+
+          bbox.style.left = newLeft + 'px';
+          bbox.style.top = newTop + 'px';
+          bbox.style.width = newWidth + 'px';
+          bbox.style.height = newHeight + 'px';
+        } else if (isDragging) {
+          const img = originalImage;
+          const imgRect = img.getBoundingClientRect();
+          const maxX = imgRect.width - parseFloat(bbox.style.width);
+          const maxY = imgRect.height - parseFloat(bbox.style.height);
+          
+          const newLeft = Math.max(0, Math.min(touchStartBboxLeft + deltaX, maxX));
+          const newTop = Math.max(0, Math.min(touchStartBboxTop + deltaY, maxY));
+          
+          bbox.style.left = newLeft + 'px';
+          bbox.style.top = newTop + 'px';
+        }
+        
+        e.preventDefault();
+        e.stopPropagation();
+      }, { passive: false });
+
+      bbox.addEventListener('touchend', function(e) {
+        isDragging = false;
+        isResizing = false;
+        touchResizeHandle = null;
+        currentDraggingBbox = null;
+        e.preventDefault();
+        e.stopPropagation();
+      }, { passive: false });
+
+      bbox.querySelectorAll('.resize-handle').forEach(handle => {
+        handle.addEventListener('mousedown', function(e) {
+          const isMultiSelect = e.ctrlKey || e.metaKey;
+          selectBbox(bbox, isMultiSelect);
+          isResizing = true;
+          resizeHandle = handle.className.split(' ')[1];
+          e.stopPropagation();
+          e.preventDefault();
+        });
+        
+        // 터치 이벤트는 bbox 레벨에서 처리하므로 여기서는 추가하지 않음
+      });
+
+      bboxContainer.appendChild(bbox);
+      boundingBoxes.push({
+        element: bbox,
+        index: index,
+        original: originalBboxes[index]
+      });
+    }
+
+    function selectBbox(bbox, multiSelect = false) {
+      if (multiSelect) {
+        // 다중 선택 모드: 이미 선택된 경우 제거, 아니면 추가
+        if (bbox.classList.contains('selected')) {
+          bbox.classList.remove('selected');
+          selectedBboxes = selectedBboxes.filter(b => b !== bbox);
+        } else {
+          bbox.classList.add('selected');
+          selectedBboxes.push(bbox);
+        }
+      } else {
+        // 단일 선택 모드: 기존 선택 모두 해제하고 현재 것만 선택
+        document.querySelectorAll('.bbox').forEach(b => b.classList.remove('selected'));
+        bbox.classList.add('selected');
+        selectedBboxes = [bbox];
+      }
+      updateClassifyButton();
+    }
+    
+    function updateClassifyButton() {
+      const classifyBtn = document.getElementById('classifyBtn');
+      if (classifyBtn) {
+        if (selectedBboxes.length > 0) {
+          if (selectedBboxes.length === 1) {
+            classifyBtn.innerHTML = `<span>✓</span><span>분류하기</span>`;
+          } else {
+            classifyBtn.innerHTML = `<span>✓</span><span>${selectedBboxes.length}개 분류하기</span>`;
+          }
+        } else {
+          classifyBtn.innerHTML = '<span>✓</span><span>곤충을 선택해주세요</span>';
+        }
+      }
+    }
+
+    let currentDraggingBbox = null; // 현재 드래그 중인 바운딩 박스
+
+    document.addEventListener('mousemove', function(e) {
+      if (selectedBboxes.length === 0) return;
+
+      const img = originalImage;
+      const imgRect = img.getBoundingClientRect();
+      const containerRect = imageContainer.getBoundingClientRect();
+      const scaleX = imgRect.width / img.naturalWidth;
+      const scaleY = imgRect.height / img.naturalHeight;
+
+      // 드래그할 바운딩 박스 결정 (여러 개 선택된 경우 마지막으로 클릭한 것)
+      const targetBbox = currentDraggingBbox || selectedBboxes[selectedBboxes.length - 1];
+
+      if (isDragging && !isResizing && targetBbox) {
+        const x = e.clientX - containerRect.left - dragOffset.x;
+        const y = e.clientY - containerRect.top - dragOffset.y;
+        
+        const maxX = imgRect.width - parseFloat(targetBbox.style.width);
+        const maxY = imgRect.height - parseFloat(targetBbox.style.height);
+        
+        targetBbox.style.left = Math.max(0, Math.min(x, maxX)) + 'px';
+        targetBbox.style.top = Math.max(0, Math.min(y, maxY)) + 'px';
+      } else if (isResizing && resizeHandle && targetBbox) {
+        const rect = targetBbox.getBoundingClientRect();
+        const containerLeft = containerRect.left;
+        const containerTop = containerRect.top;
+        
+        let newLeft = parseFloat(targetBbox.style.left);
+        let newTop = parseFloat(targetBbox.style.top);
+        let newWidth = parseFloat(targetBbox.style.width);
+        let newHeight = parseFloat(targetBbox.style.height);
+
+        const mouseX = e.clientX - containerLeft;
+        const mouseY = e.clientY - containerTop;
+
+        if (resizeHandle.includes('w')) {
+          const diff = mouseX - newLeft;
+          newLeft = Math.max(0, mouseX);
+          newWidth = Math.max(20, parseFloat(targetBbox.style.width) - diff);
+        }
+        if (resizeHandle.includes('e')) {
+          newWidth = Math.max(20, mouseX - newLeft);
+        }
+        if (resizeHandle.includes('n')) {
+          const diff = mouseY - newTop;
+          newTop = Math.max(0, mouseY);
+          newHeight = Math.max(20, parseFloat(targetBbox.style.height) - diff);
+        }
+        if (resizeHandle.includes('s')) {
+          newHeight = Math.max(20, mouseY - newTop);
+        }
+
+        if (newLeft + newWidth > imgRect.width) {
+          newWidth = imgRect.width - newLeft;
+        }
+        if (newTop + newHeight > imgRect.height) {
+          newHeight = imgRect.height - newTop;
+        }
+
+        targetBbox.style.left = newLeft + 'px';
+        targetBbox.style.top = newTop + 'px';
+        targetBbox.style.width = newWidth + 'px';
+        targetBbox.style.height = newHeight + 'px';
+      }
+    });
+
+    document.addEventListener('mouseup', function() {
+      isDragging = false;
+      isResizing = false;
+      resizeHandle = null;
+      currentDraggingBbox = null;
+    });
+
+    function getBoundingBoxes() {
+      const img = originalImage;
+      const imgRect = img.getBoundingClientRect();
+      const scaleX = img.naturalWidth / imgRect.width;
+      const scaleY = img.naturalHeight / imgRect.height;
+
+      // 모든 바운딩 박스 반환
+      return boundingBoxes.map(bboxData => {
+        const bbox = bboxData.element;
+        const left = parseFloat(bbox.style.left);
+        const top = parseFloat(bbox.style.top);
+        const width = parseFloat(bbox.style.width);
+        const height = parseFloat(bbox.style.height);
+
+        return {
+          bbox: [
+            left * scaleX,
+            top * scaleY,
+            (left + width) * scaleX,
+            (top + height) * scaleY
+          ],
+          confidence: bboxData.original.confidence,
+          class: bboxData.original.class
+        };
+      });
+    }
+
+    function saveBoundingBoxes() {
+      const updatedBoxes = getBoundingBoxes();
+      
+      fetch('/update_bboxes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          bboxes: updatedBoxes
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert('바운딩 박스가 저장되었습니다.');
+          originalBboxes = updatedBoxes;
+        } else {
+          alert('저장 중 오류가 발생했습니다.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('저장 중 오류가 발생했습니다.');
+      });
+    }
+
+    function resetBoundingBoxes() {
+      if (confirm('바운딩 박스를 원래대로 되돌리시겠습니까?')) {
+        bboxContainer.innerHTML = '';
+        boundingBoxes = [];
+        initializeBoundingBoxes();
+      }
+    }
+
+    function proceedToClassification() {
+      const allBoxes = getBoundingBoxes();
+      
+      if (allBoxes.length === 0) {
+        alert('분류할 곤충이 없습니다.');
+        return;
+      }
+      
+      if (selectedBboxes.length === 0) {
+        alert('분류할 곤충을 선택해주세요.');
+        return;
+      }
+      
+      // 선택된 박스들의 인덱스 추출
+      const indicesToClassify = selectedBboxes.map(bbox => {
+        return boundingBoxes.findIndex(b => b.element === bbox);
+      }).filter(idx => idx !== -1);
+      
+      // 모든 곤충을 순차적으로 분류
+      let currentIndex = 0;
+      const classifyBtn = document.getElementById('classifyBtn');
+      const originalBtnText = classifyBtn ? classifyBtn.innerHTML : '';
+      
+      // 로딩 스피너 표시
+      const loadingSpinner = document.getElementById('loadingSpinner');
+      const loadingText = document.getElementById('loadingText');
+      const loadingSubtext = document.getElementById('loadingSubtext');
+      
+      if (loadingSpinner) {
+        loadingSpinner.classList.add('active');
+      }
+      
+      const classifyNext = () => {
+        if (currentIndex >= indicesToClassify.length) {
+          // 모든 분류 완료
+          if (loadingSpinner) {
+            loadingText.textContent = '분류 완료!';
+            loadingSubtext.textContent = '결과를 불러오는 중입니다...';
+          }
+          if (classifyBtn) {
+            classifyBtn.innerHTML = '<span>✓</span><span>분류 완료!</span>';
+            classifyBtn.disabled = true;
+            classifyBtn.style.textAlign = 'center';
+            classifyBtn.style.justifyContent = 'center';
+          }
+          // 서버가 모든 세션을 저장할 시간을 확보하기 위해 딜레이 추가
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
+          return;
+        }
+        
+        const targetIndex = indicesToClassify[currentIndex];
+        const progress = `(${currentIndex + 1}/${indicesToClassify.length})`;
+        console.log(`분류 중... ${progress}`);
+        
+        // 각 곤충에 대해 분류 모델을 2번 실행
+        let classificationAttempt = 0;
+        const maxAttempts = 2;
+        
+        const classifyWithRetry = () => {
+          classificationAttempt++;
+          const attemptText = maxAttempts > 1 ? ` (시도 ${classificationAttempt}/${maxAttempts})` : '';
+          
+          // 진행 상황 표시
+          if (loadingText) {
+            loadingText.textContent = `분류 중... ${progress}${attemptText}`;
+          }
+          if (loadingSubtext) {
+            loadingSubtext.textContent = 'AI가 곤충의 특징을 분석하고 있습니다';
+          }
+          if (classifyBtn) {
+            classifyBtn.innerHTML = `<span>⏳</span><span>분류 중... ${progress}${attemptText}</span>`;
+            classifyBtn.disabled = true;
+            classifyBtn.style.textAlign = 'center';
+            classifyBtn.style.justifyContent = 'center';
+          }
+          
+          fetch('/classify', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              bboxes: allBoxes,
+              selected_index: targetIndex
+            })
+          })
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              return response.text().then(text => {
+                throw new Error(`HTTP ${response.status}: ${text}`);
+              });
+            }
+          })
+          .then(data => {
+            if (data.success) {
+              console.log(`분류 완료 (시도 ${classificationAttempt}/${maxAttempts})`);
+              
+              // 2번 실행이 완료되지 않았으면 다시 실행
+              if (classificationAttempt < maxAttempts) {
+                setTimeout(classifyWithRetry, 200);
+              } else {
+                // 2번 모두 완료되면 다음 곤충으로
+                currentIndex++;
+                // 서버가 세션을 저장할 시간을 확보하기 위해 딜레이 증가
+                setTimeout(classifyNext, 300);
+              }
+            } else {
+              throw new Error(data.error || '분류 실패');
+            }
+          })
+          .catch(error => {
+            console.error(`분류 오류 (시도 ${classificationAttempt}):`, error);
+            
+            // 재시도 가능하면 재시도
+            if (classificationAttempt < maxAttempts) {
+              setTimeout(classifyWithRetry, 200);
+            } else {
+              // 최대 시도 횟수에 도달했으면 다음 곤충으로
+              alert(`분류 중 오류가 발생했습니다: ${error.message}`);
+              currentIndex++;
+              if (currentIndex < indicesToClassify.length) {
+                setTimeout(classifyNext, 300);
+              } else {
+                // 모든 분류 시도 완료 (일부 실패 포함)
+                if (classifyBtn) {
+                  classifyBtn.innerHTML = originalBtnText;
+                  classifyBtn.disabled = false;
+                }
+                setTimeout(() => {
+                  window.location.reload();
+                }, 500);
+              }
+            }
+          });
+        };
+        
+        classifyWithRetry();
+      };
+      
+      classifyNext();
+    }
+    {% endif %}
+    
+    function selectCandidateTab(insectIndex, speciesName, element) {
+      const tabs = document.querySelectorAll('.candidate-tab[data-insect-index="' + insectIndex + '"]');
+      tabs.forEach(tab => {
+        tab.style.background = 'white';
+        tab.style.color = '#333';
+        tab.style.borderColor = '#dee2e6';
+      });
+      element.style.background = '#3182F6';
+      element.style.color = 'white';
+      element.style.borderColor = '#3182F6';
+      
+      fetch('/select_candidate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          insect_index: insectIndex,
+          species_name: speciesName
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          setTimeout(() => window.location.reload(), 200);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+    // UI 함수들
+    function closeBanner() {
+      document.getElementById('infoBanner').classList.add('hidden');
+      localStorage.setItem('infoBannerClosed', 'true');
+    }
+
+
+    function openCamera() {
+      if (imageInput && !isUploading) {
+        isUploading = true;
+        // 카메라로 촬영하기 위해 capture 속성 설정
+        imageInput.setAttribute('capture', 'environment');
+        imageInput.removeAttribute('multiple');
+        imageInput.click();
+        // 짧은 딜레이 후 플래그 리셋
+        setTimeout(() => {
+          isUploading = false;
+        }, 100);
+      }
+    }
+
+    function openGallery() {
+      if (imageInput && !isUploading) {
+        isUploading = true;
+        // 갤러리에서 선택하기 위해 capture 속성 제거
+        imageInput.removeAttribute('capture');
+        imageInput.removeAttribute('multiple');
+        imageInput.click();
+        // 짧은 딜레이 후 플래그 리셋
+        setTimeout(() => {
+          isUploading = false;
+        }, 100);
+      }
+    }
+
+    function openMyPage() {
+      alert('마이페이지는 추후 구현 예정입니다.');
+    }
+
+    // 정보 배너 닫힘 상태 확인
+    if (localStorage.getItem('infoBannerClosed') === 'true') {
+      document.getElementById('infoBanner').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,807 @@
+{
+  "왕사슴벌레": {
+    "scientific_name": "Dorcus hopei",
+    "korean_name": "왕사슴벌레",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강",
+      "order": "딱정벌레목",
+      "family": "사슴벌레과",
+      "genus": "Dorcus"
+    },
+    "physical_characteristics": {
+      "size": "몸길이 약 30-80mm",
+      "appearance": "큰 턱이 위협적으로 보이며, 몸은 검은색 또는 갈색을 띤다."
+    },
+    "distribution": {
+      "native_range": "동아시아",
+      "current_distribution": "한국, 일본, 중국"
+    },
+    "habitat": {
+      "preferred_environment": "산림 지역, 참나무 숲",
+      "breeding_sites": "썩은 나무"
+    },
+    "ecology": {
+      "diet": {
+        "adults": "나무 수액, 과일",
+        "larvae": "썩은 나무"
+      },
+      "lifecycle": "완전변태",
+      "activity_period": "여름철"
+    },
+    "risk_assessment": {
+      "threat_level": "일반·불쾌 곤충",
+      "risk_category": "무해하고 안전한 종",
+      "human_risks": {
+        "toxicity": "독이 없음",
+        "behavior": "물려도 경미한 상처 수준으로, 애완용으로 인기가 있음",
+        "symptoms": []
+      }
+    },
+    "prevention_measures": [
+      "안전한 곤충으로 특별한 예방 조치 불필요"
+    ]
+  },
+  "장수하늘소": {
+    "scientific_name": "Callipogon relictus",
+    "korean_name": "장수하늘소",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강",
+      "order": "딱정벌레목",
+      "family": "하늘소과",
+      "genus": "Callipogon"
+    },
+    "physical_characteristics": {
+      "size": "몸길이 약 50-110mm",
+      "appearance": "국내 최대 딱정벌레로 위압적이며, 몸은 검은색 또는 갈색을 띤다."
+    },
+    "distribution": {
+      "native_range": "동아시아",
+      "current_distribution": "한국, 러시아 극동 지역"
+    },
+    "habitat": {
+      "preferred_environment": "산림 지역, 활엽수림",
+      "breeding_sites": "썩은 나무"
+    },
+    "ecology": {
+      "diet": {
+        "adults": "나무 수액",
+        "larvae": "썩은 나무"
+      },
+      "lifecycle": "완전변태"
+    },
+    "risk_assessment": {
+      "threat_level": "보호종(천연기념물)",
+      "risk_category": "무해하고 안전한 종",
+      "protection_status": "천연기념물 제218호, 멸종위기 야생동물 1급",
+      "human_risks": {
+        "toxicity": "독이 없고 공격성이 낮음",
+        "behavior": "천연기념물이므로 절대 포획 금지",
+        "symptoms": []
+      }
+    },
+    "prevention_measures": [
+      "천연기념물 또는 멸종위기종",
+      "포획 및 채집 절대 금지",
+      "발견 시 국립수목원 또는 환경부에 신고"
+    ]
+  },
+  "왕사마귀": {
+    "scientific_name": "Tenodera angustipennis",
+    "korean_name": "왕사마귀",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강",
+      "order": "사마귀목",
+      "family": "사마귀과",
+      "genus": "Tenodera"
+    },
+    "physical_characteristics": {
+      "size": "몸길이 약 70-90mm",
+      "appearance": "위협 자세가 공격적으로 보이며, 몸은 녹색 또는 갈색을 띤다."
+    },
+    "distribution": {
+      "native_range": "동아시아",
+      "current_distribution": "한국, 일본, 중국"
+    },
+    "habitat": {
+      "preferred_environment": "초원, 농경지, 산림 지역"
+    },
+    "ecology": {
+      "diet": {
+        "adults": "다른 곤충(파리, 나비, 메뚜기 등)",
+        "larvae": "다른 곤충"
+      },
+      "lifecycle": "불완전변태"
+    },
+    "risk_assessment": {
+      "threat_level": "일반·불쾌 곤충",
+      "risk_category": "무해하고 안전한 종",
+      "human_risks": {
+        "toxicity": "독이 없고 사람에게는 무해함",
+        "behavior": "포식성 곤충으로 해충을 잡아먹는 익충",
+        "symptoms": []
+      }
+    },
+    "beneficial_effects": [
+      "해충을 잡아먹는 익충",
+      "생태계 균형 유지에 기여"
+    ]
+  },
+  "화상벌레": {
+    "scientific_name": "Paederus fuscipes",
+    "korean_name": "화상벌레",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강",
+      "order": "딱정벌레목",
+      "family": "반날개과",
+      "genus": "Paederus"
+    },
+    "physical_characteristics": {
+      "size": "몸길이 약 7-10mm",
+      "appearance": "작고 무해해 보이지만 파데린 독소를 보유"
+    },
+    "distribution": {
+      "native_range": "아시아",
+      "current_distribution": "한국, 일본, 중국"
+    },
+    "habitat": {
+      "preferred_environment": "초원, 농경지, 습지"
+    },
+    "ecology": {
+      "diet": {
+        "adults": "진딧물, 응애 등 작은 곤충"
+      }
+    },
+    "risk_assessment": {
+      "threat_level": "인체 중위험(독성·피부염)",
+      "risk_category": "공격적이지 않지만 인체에 위험한 종",
+      "human_risks": {
+        "toxic_substance": "파데린(pederin) 독소",
+        "symptoms": [
+          "손으로 누르면 화상 같은 통증과 물집이 생김",
+          "피부 접촉 시 심한 피부염 발생"
+        ]
+      }
+    },
+    "prevention_measures": [
+      "손으로 만지지 말 것",
+      "발견 시 부드럽게 털어내기"
+    ]
+  },
+  "독나방": {
+    "scientific_name": "Euproctis spp.",
+    "korean_name": "독나방",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강",
+      "order": "나비목",
+      "family": "독나방과",
+      "genus": "Euproctis"
+    },
+    "physical_characteristics": {
+      "appearance": "유충은 미세한 독모를 가지고 있음"
+    },
+    "distribution": {
+      "native_range": "아시아",
+      "current_distribution": "한국, 일본, 중국"
+    },
+    "habitat": {
+      "preferred_environment": "산림 지역, 공원"
+    },
+    "ecology": {
+      "diet": {
+        "larvae": "나뭇잎"
+      }
+    },
+    "risk_assessment": {
+      "threat_level": "인체 중위험(독성·피부염)",
+      "risk_category": "공격적이지 않지만 인체에 위험한 종",
+      "human_risks": {
+        "toxic_substance": "유충의 미세한 독모와 성충의 날개 가루",
+        "symptoms": [
+          "독나방피부염 발생",
+          "가려움증과 발진"
+        ]
+      }
+    },
+    "prevention_measures": [
+      "맨손 접촉 피하기"
+    ]
+  },
+  "쐐기나방": {
+    "scientific_name": "Limacodidae spp.",
+    "korean_name": "쐐기나방",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강",
+      "order": "나비목",
+      "family": "쐐기나방과",
+      "genus": "Limacodidae"
+    },
+    "physical_characteristics": {
+      "appearance": "화려한 가시털이 미세한 독침 역할"
+    },
+    "distribution": {
+      "native_range": "아시아",
+      "current_distribution": "한국, 일본, 중국"
+    },
+    "habitat": {
+      "preferred_environment": "산림 지역, 과수원"
+    },
+    "ecology": {
+      "diet": {
+        "larvae": "나뭇잎"
+      }
+    },
+    "risk_assessment": {
+      "threat_level": "인체 중위험(독성·피부염)",
+      "risk_category": "공격적이지 않지만 인체에 위험한 종",
+      "human_risks": {
+        "toxic_substance": "화려한 가시털의 독침",
+        "symptoms": [
+          "접촉 시 강한 통증과 염증",
+          "심한 부종 유발"
+        ]
+      }
+    },
+    "prevention_measures": [
+      "절대 손으로 만지지 말 것"
+    ]
+  },
+  "장수풍뎅이": {
+    "scientific_name": "Allomyrina dichotoma",
+    "korean_name": "장수풍뎅이",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강",
+      "order": "딱정벌레목",
+      "family": "풍뎅이과",
+      "genus": "Allomyrina"
+    },
+    "physical_characteristics": {
+      "size": "몸길이 약 40-80mm",
+      "appearance": "큰 뿔과 위압적인 외형을 가지고 있으며, 몸은 검은색 또는 갈색을 띤다."
+    },
+    "distribution": {
+      "native_range": "동아시아",
+      "current_distribution": "한국, 일본, 중국, 대만"
+    },
+    "habitat": {
+      "preferred_environment": "산림 지역, 참나무 숲",
+      "breeding_sites": "썩은 나무, 부엽토"
+    },
+    "ecology": {
+      "diet": {
+        "adults": "나무 수액, 과일",
+        "larvae": "썩은 나무, 부엽토"
+      },
+      "lifecycle": "완전변태",
+      "activity_period": "여름철 (6-8월)"
+    },
+    "risk_assessment": {
+      "threat_level": "일반·불쾌 곤충",
+      "risk_category": "무해하고 안전한 종",
+      "human_risks": {
+        "toxicity": "독이 없고 매우 온순함",
+        "behavior": "공격성이 없으며 애완곤충으로 대량 사육될 정도로 안전함",
+        "symptoms": []
+      }
+    },
+    "prevention_measures": [
+      "안전한 곤충으로 특별한 예방 조치 불필요",
+      "관찰 후 자연으로 돌려보내기 권장"
+    ],
+    "beneficial_effects": [
+      "생태 교육 자료로 활용",
+      "애완곤충으로 인기",
+      "부엽토 분해에 기여"
+    ]
+  },
+  "장수말벌": {
+    "scientific_name": "Vespa mandarinia",
+    "korean_name": "장수말벌",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강", 
+      "order": "벌목",
+      "family": "말벌과",
+      "genus": "Vespa"
+    },
+    "physical_characteristics": {
+      "size": "몸길이 약 27-45mm",
+      "appearance": "몸은 주로 검은색이고 머리는 주황색을 띤다. 복부에는 주황색과 검은색의 띠 무늬가 있다. 다리는 갈색이며, 날개는 갈색을 띤다."
+    },
+    "distribution": {
+      "native_range": "동아시아",
+      "current_distribution": "한국, 일본, 중국, 러시아 극동 지역"
+    },
+    "habitat": {
+      "preferred_environment": "산림 지역, 도시 및 교외 지역",
+      "nesting_sites": "나무 구멍, 땅속, 건물 처마 밑"
+    },
+    "ecology": {
+      "social_structure": "사회성 곤충으로 여왕벌, 일벌, 수벌로 구성된 계급 구조",
+      "diet": {
+        "adults": "과일, 꿀, 수액",
+        "larvae": "다른 곤충(꿀벌, 파리, 나비 등)"
+      },
+      "lifecycle": "완전변태",
+      "activity_period": "봄부터 가을까지"
+    },
+    "risk_assessment": {
+      "threat_level": "인체 고위험(공격성·독성)",
+      "risk_category": "공격적이고 인체에 위험한 종",
+      "human_risks": {
+        "venom_toxicity": "강력한 독을 주입하는 독침 보유",
+        "symptoms": [
+          "쏘인 부위에 심한 통증, 부기, 발적",
+          "심한 경우 알레르기 반응(아나필락시스)",
+          "호흡 곤란, 혈압 저하, 의식 상실 가능"
+        ],
+        "behavior": "둥지 근처에서 매우 공격적이며 집단으로 공격할 수 있음"
+      },
+      "pet_risks": "반려동물에게도 위험",
+      "agricultural_impact": "꿀벌에게 위협이 되어 양봉 산업에 피해"
+    },
+    "prevention_measures": [
+      "둥지를 발견하면 접근하지 말고 전문가에게 제거 의뢰",
+      "쏘였을 경우 즉시 의료 기관 방문",
+      "알레르기 반응 시 응급 처치 필요"
+    ],
+    "first_aid": {
+      "immediate_actions": [
+        "독침 제거 (핀셋 사용, 손으로 짜지 말 것)",
+        "찬물이나 얼음으로 냉찜질",
+        "항히스타민제 복용"
+      ],
+      "emergency_signs": [
+        "호흡 곤란",
+        "전신 두드러기", 
+        "의식 저하",
+        "혈압 저하"
+      ],
+      "when_to_seek_help": "알레르기 반응 증상이 나타나면 즉시 응급실 방문"
+    }
+  },
+  "등검은말벌": {
+    "scientific_name": "Vespa velutina",
+    "korean_name": "등검은말벌",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강",
+      "order": "벌목", 
+      "family": "말벌과",
+      "genus": "Vespa"
+    },
+    "physical_characteristics": {
+      "size": "몸길이 약 17-24mm",
+      "appearance": "몸은 주로 검은색이고 복부 끝에 주황색 띠가 있다. 다리는 노란색이며, 얼굴은 주황색을 띤다."
+    },
+    "distribution": {
+      "native_range": "동남아시아",
+      "current_distribution": "유럽(프랑스, 스페인, 포르투갈, 이탈리아, 독일, 영국 등), 한국"
+    },
+    "habitat": {
+      "preferred_environment": "숲과 삼림 지역, 도시 및 교외 지역, 농업 및 재배 지역",
+      "nesting_sites": "나무 꼭대기, 건물 처마 밑, 때로는 땅속"
+    },
+    "ecology": {
+      "social_structure": "사회성 곤충으로 여왕벌, 일벌, 수벌로 구성된 계급 구조",
+      "diet": {
+        "adults": "과일, 꿀, 수액",
+        "larvae": "다른 곤충(특히 꿀벌, 파리, 나비 등)"
+      },
+      "lifecycle": "완전변태"
+    },
+    "risk_assessment": {
+      "threat_level": "인체 고위험(공격성·독성)",
+      "risk_category": "공격적이고 인체에 위험한 종",
+      "human_risks": {
+        "venom_toxicity": "강력한 독을 주입하는 독침 보유",
+        "symptoms": [
+          "쏘인 부위에 심한 통증, 부기, 발적",
+          "심한 경우 알레르기 반응(아나필락시스)",
+          "호흡 곤란, 혈압 저하, 의식 상실 가능"
+        ],
+        "behavior": "둥지 근처에서 매우 공격적이며 집단으로 공격할 수 있음"
+      },
+      "agricultural_impact": "꿀벌에게 큰 위협이 되며 양봉 산업에 심각한 피해"
+    },
+    "prevention_measures": [
+      "둥지를 발견하면 접근하지 말고 전문가에게 제거 의뢰",
+      "쏘였을 경우 즉시 의료 기관 방문",
+      "알레르기 반응 시 응급 처치 필요"
+    ]
+  },
+  "청딱지개미반날개": {
+    "scientific_name": "Paederus fuscipes",
+    "korean_name": "청딱지개미반날개",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강",
+      "order": "딱정벌레목",
+      "family": "반날개과",
+      "genus": "Paederus"
+    },
+    "physical_characteristics": {
+      "size": "몸길이 약 7-10mm",
+      "appearance": "머리와 복부는 검은색, 가슴은 주황색, 딱지날개는 청록색을 띤다."
+    },
+    "distribution": {
+      "native_range": "아시아, 아프리카, 유럽, 오세아니아",
+      "current_distribution": "널리 분포"
+    },
+    "habitat": {
+      "preferred_environment": "초원과 목초지, 농업 및 재배 지역, 습지와 늪지, 도시 및 교외 지역",
+      "activity_pattern": "주로 야행성이며, 낮에는 식물 잎이나 땅속에 숨어 있다가 밤에 활동"
+    },
+    "ecology": {
+      "diet": {
+        "adults": "진딧물, 응애, 작은 곤충 등을 먹는 육식성",
+        "larvae": "진딧물, 응애, 작은 곤충 등을 먹는 육식성"
+      },
+      "behavior": "불빛에 잘 유인되어 밤에 조명 근처에서 자주 발견"
+    },
+    "risk_assessment": {
+      "threat_level": "인체 중위험(독성·피부염·질병 매개)",
+      "risk_category": "공격적이지 않지만 인체에 위험한 종",
+      "human_risks": {
+        "toxic_substance": "페데린(pederin)이라는 독성 물질을 체액에 포함",
+        "contact_dermatitis": {
+          "mechanism": "물거나 쏘지 않지만, 체액이 피부에 접촉하거나 짓눌렸을 때 독성 물질 방출",
+          "onset_time": "12-36시간 이내",
+          "symptoms": [
+            "발적, 물집, 수포, 통증",
+            "선상 피부염(linear dermatitis) 또는 Paederus 피부염",
+            "피부에 붉은 선이나 띠 모양의 발진",
+            "심한 가려움증과 통증",
+            "치유 후 색소 침착 가능"
+          ]
+        }
+      }
+    },
+    "prevention_measures": [
+      "발견 시 손으로 만지거나 짓누르지 말 것",
+      "부드럽게 털어내거나 불어서 제거",
+      "밤에 조명을 줄이고 방충망 설치하여 실내 유입 방지"
+    ],
+    "first_aid": {
+      "immediate_actions": [
+        "체액이 묻은 부위를 즉시 비누와 물로 씻어내기",
+        "스테로이드 크림 사용",
+        "항히스타민제 복용"
+      ],
+      "when_to_seek_help": "심한 경우 의료 기관 방문"
+    }
+  },
+  "흰줄숲모기": {
+    "scientific_name": "Aedes albopictus",
+    "korean_name": "흰줄숲모기",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강",
+      "order": "파리목",
+      "family": "모기과",
+      "genus": "Aedes"
+    },
+    "physical_characteristics": {
+      "size": "소형",
+      "appearance": "몸 전체가 검은색이며 몸 전체에 하얀 반점이 있다. 눈 사이의 세로 흰색 선이 가슴 뒤쪽으로 뻗어 있는 것이 특징"
+    },
+    "distribution": {
+      "native_range": "동남아시아의 열대 및 아열대 지역",
+      "current_distribution": "유럽, 아메리카, 카리브해, 아프리카 및 중동으로 확산"
+    },
+    "habitat": {
+      "preferred_environment": "초목을 가진 수역, 초목 농촌 지역, 도시 및 교외 지역, 농업 및 재배 지역",
+      "breeding_sites": "고인 물, 병뚜껑만큼 작은 물 용기에도 알을 낳을 수 있음"
+    },
+    "ecology": {
+      "activity_pattern": "주로 낮 동안, 특히 새벽과 황혼에 활동",
+      "diet": {
+        "females": "알 발달에 필요한 혈액을 얻기 위해 인간과 동물을 문다",
+        "adults": "꿀, 꿀 이슬, 식물 수액"
+      },
+      "lifecycle": "유충은 수생 생물로 고인 물에서 발견"
+    },
+    "risk_assessment": {
+      "threat_level": "인체 중위험(독성·피부염·질병 매개)",
+      "risk_category": "공격적이지 않지만 인체에 치명적인 질병을 매개하는 종",
+      "human_risks": {
+        "disease_transmission": [
+          "뎅기열",
+          "치쿤구니야열", 
+          "지카 바이러스",
+          "황열"
+        ],
+        "bite_symptoms": [
+          "피부가 물린 곳에 발적과 가려움증",
+          "심각한 알레르기 반응으로 붓기, 통증, 발적",
+          "낮은 열, 두드러기, 림프절의 붓기"
+        ],
+        "secondary_infection": "물린 상처를 긁으면 상처 감염 가능"
+      },
+      "global_impact": "매년 약 7억 명이 모기에 물리며, 약 70만 명이 사망. 세계에서 가장 위험한 곤충 중 하나"
+    },
+    "prevention_measures": [
+      "고인 물을 제거하여 모기 번식지 없애기",
+      "방충망 설치",
+      "모기 기피제 사용",
+      "야외 활동 시 긴 옷을 입어 피부 노출 최소화"
+    ]
+  },
+  "Epicauta chinensis": {
+    "scientific_name": "Epicauta chinensis",
+    "korean_name": "중국가뢰",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강",
+      "order": "딱정벌레목",
+      "family": "가뢰과",
+      "genus": "Epicauta"
+    },
+    "physical_characteristics": {
+      "appearance": "몸은 검은색, 빨간색, 흰색을 띤다"
+    },
+    "habitat": {
+      "preferred_environment": "초원 및 초지, 농업지 및 경작지, 도시 및 교외 지역",
+      "larvae_habitat": "부패 및 썩은 물질, 다른 유기체 내부 또는 위(기생 및 공생 관계)"
+    },
+    "ecology": {
+      "diet": {
+        "adults": "잎, 꽃, 꽃가루, 꿀, 콩과식물",
+        "larvae": "메뚜기 알, 꿀벌 유충, 다른 곤충 유충 (triungulin으로 알려져 있으며, 종종 꿀벌에 부착되어 처음 발달)"
+      }
+    },
+    "risk_assessment": {
+      "threat_level": "인체 중위험(독성·피부염·질병 매개)",
+      "risk_category": "공격적이지 않지만 인체에 위험한 종",
+      "human_risks": {
+        "toxic_substance": "칸타리딘(cantharidin)이라는 매우 독성이 있는 물질",
+        "release_mechanism": "두려워지면 다리에서 소량의 칸타리딘이 분비",
+        "contact_effects": {
+          "skin_contact": [
+            "피부 침투, 섭취 또는 접촉을 통해 인간에게 해로움",
+            "접촉 후 피부는 붉어지고 부어 오며 아프고 타는 느낌",
+            "48시간 이내에 물집 나타남",
+            "대부분의 사람들의 증상은 일주일 이내에 사라짐"
+          ],
+          "ingestion": "심각한 위장 장애",
+          "long_term_exposure": "장기 손상 발생 가능"
+        }
+      }
+    },
+    "prevention_measures": [
+      "만지지 않는 것이 위험을 최소화하는 방법"
+    ]
+  },
+  "남가뢰": {
+    "scientific_name": "Meloe proscarabaeus",
+    "korean_name": "남가뢰",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강",
+      "order": "딱정벌레목",
+      "family": "가뢰과",
+      "genus": "Meloe"
+    },
+    "physical_characteristics": {
+      "appearance": "몸은 검은색에 약간 파란색을 띤다"
+    },
+    "habitat": {
+      "preferred_environment": "초원과 목초지, 농업 및 재배된 지역",
+      "larvae_habitat": "썩음과 부패한 물질, 다른 유기체 내외(기생 및 공생 관계)"
+    },
+    "ecology": {
+      "diet": {
+        "adults": "낮은 초본 식물의 잎, 꽃, 줄기, 잡초로 여겨지는 식물 물질, 가끔 꽃가루",
+        "larvae": "독거 꿀벌의 알과 유충, 벌의 꿀 공급물, 숙주 벌 유충"
+      },
+      "behavior": "벌에게 기생하며, triungulin 유충은 주로 꿀벌 둥지를 찾아 둥지에 진입하기 위해 사냥하는 벌들에 붙어 움직임"
+    },
+    "risk_assessment": {
+      "threat_level": "인체 중위험(독성·피부염·질병 매개)",
+      "risk_category": "공격적이지 않지만 인체에 위험한 종",
+      "human_risks": {
+        "toxic_substance": "칸타리딘(cantharidin)이라는 매우 독성이 있는 물질",
+        "release_mechanism": "두려워지면 다리에서 소량의 칸타리딘이 분비",
+        "effects": {
+          "skin_contact": [
+            "피부 물질을 일으킬 수 있음",
+            "접촉 후 피부는 붉어지고 부어 오며 아프고 타는 느낌",
+            "48시간 이내에 물집 나타남",
+            "대부분의 사람들의 증상은 일주일 이내에 사라짐"
+          ],
+          "ingestion": "심각한 증상이 나타나며, 소화 및 비뇨기관을 손상시킬 수 있음",
+          "long_term_exposure": "장기 손상 위험",
+          "allergic_reactions": "특히 성충이 접촉을 통해 칸타리딘과 같은 독소를 방출시킬 때 인간에게 알레르기 반응을 일으킬 수 있음"
+        }
+      }
+    },
+    "beneficial_effects": [
+      "화관 근처에서 종종 발견되며, 솜털 같은 털은 꽃가루로 쉽게 덮여 있어 식물의 수분을 도울 수 있음"
+    ],
+    "prevention_measures": [
+      "직접 접촉 피하기"
+    ]
+  },
+  "세쌍풀색파리": {
+    "scientific_name": "Lucilia sericata",
+    "korean_name": "세쌍풀색파리",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강",
+      "order": "파리목",
+      "family": "Calliphoridae",
+      "genus": "Lucilia"
+    },
+    "physical_characteristics": {
+      "size": "성충의 크기는 9-14mm",
+      "appearance": "녹청색의 광택이 난다"
+    },
+    "distribution": {
+      "native_range": "전 세계에서 발견",
+      "current_distribution": "미국과 캐나다 남부에 널리 분포된 북반구 분포"
+    },
+    "habitat": {
+      "preferred_environment": "과일, 고기, 쓰레기 더미, 대변, 죽은 동물, 농장 등"
+    },
+    "ecology": {
+      "diet": {
+        "adults": "꽃의 꿀, 당액, 식물 수액, 과일 주스, 감로",
+        "larvae": "죽은 조직, 부패한 동물 사체, 배설물, 유기 폐기물, 부패한 식물 재료"
+      },
+      "breeding": "알은 일반적으로 부패한 물질, 예를 들어 시체나 배설물에 낳음"
+    },
+    "risk_assessment": {
+      "threat_level": "반려동물 위험",
+      "risk_category": "반려동물에 위험한 종",
+      "pet_risks": {
+        "parasitic_behavior": "인간 및 양과 같은 척추동물의 상처와 괴사 조직을 기생",
+        "maggot_effects": [
+          "애벌레(구더기)는 죽은 조직을 먹음",
+          "상처를 깨끗하게 하는 데 도움이 될 수 있음",
+          "적절히 관리되지 않으면 심각한 감염을 일으킬 수 있음"
+        ],
+        "pathogen_transmission": "인간에게 상처 감염을 일으키는 병원균을 전파할 수 있음",
+        "risk_factors": "위생이 좋지 않거나 노출된 살이 있는 경우 위험이 증가",
+        "symptoms": [
+          "조직 손상과 불편감",
+          "심각한 경우 광범위한 손상",
+          "2차 감염",
+          "드물게는 사망에 이를 수 있음"
+        ]
+      }
+    },
+    "beneficial_effects": [
+      "애벌레 단계에서 유기 물질을 분해",
+      "죽은 동물, 식물 잔해, 배설물, 음식물 쓰레기, 쓰레기를 먹음",
+      "소화 효소를 분비하여 조직을 빠르게 분해",
+      "생태계에 영양분을 반환",
+      "애벌레는 죽은 조직을 먹어 인간의 상처를 치유하고 감염을 예방하는 데 도움",
+      "법의학 곤충학에서 사망 시간과 관련된 단서 제공"
+    ],
+    "prevention_measures": [
+      "반려동물의 상처 관리에 각별한 주의",
+      "위생 관리 철저히 하기",
+      "상처 부위 청결 유지"
+    ]
+  },
+  "바퀴": {
+    "scientific_name": "Blattella germanica",
+    "korean_name": "바퀴",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강",
+      "order": "바퀴목",
+      "family": "Ectobiidae",
+      "genus": "Blattella"
+    },
+    "physical_characteristics": {
+      "size": "성충의 크기는 1.3-1.6cm (집에 사는 바퀴벌레 중에 가장 작은 종)"
+    },
+    "distribution": {
+      "dependency": "인간이나 인간 활동에서 떨어진 곳에서는 생존할 수 없음",
+      "current_distribution": "인간과 관련하여 전 세계에서 발견"
+    },
+    "habitat": {
+      "preferred_environment": "도시 및 교외 지역, 농업 및 재배된 지역, 썩어가는 물질",
+      "indoor_habitat": "집 안의 따뜻하고 습한 곳, 주로 주방이나 욕실의 틈새 같은 보호되고 따뜻한 곳"
+    },
+    "ecology": {
+      "diet": "잡식성 식단",
+      "activity_pattern": "주로 밤에 활동하며, 음식을 훔쳐 먹은 후 곳곳에 배설하고 알을 낳음",
+      "reproduction": "알은 오오데카(oothecae)라는 알 케이스 내에 들어 있음"
+    },
+    "risk_assessment": {
+      "threat_level": "일반·불쾌 곤충",
+      "risk_category": "혐오·불편 유발 종",
+      "human_risks": {
+        "toxicity": "독성이 없으며 일반적으로 인간의 건강에 위협이 되지 않음",
+        "classification": "병원성과 불쾌 해충으로 분류",
+        "pathogen_transmission": [
+          "인간 거주지를 자주 점유하는 성향으로 병원체를 퍼뜨리는 능력이 두드러짐",
+          "주로 E. coli와 살모넬라 같은 박테리아를 식품 표면을 오염시켜 전파",
+          "감염은 설사, 발열, 위경련 같은 증상을 초래",
+          "심한 경우 탈수나 패혈증으로 이어질 수 있음",
+          "면역력이 약한 고위험군은 더 심각한 합병증을 경험할 수 있음"
+        ],
+        "nuisance_pest": [
+          "심각한 성가신 해충으로 가정, 식품 처리 시설, 식당에서 사람들을 괴롭힘",
+          "따뜻한 환경에서 잘 자라며 음식, 도구, 조리 표면을 오염시킴",
+          "배설물이나 신체 부위로 병원체를 퍼뜨림",
+          "빠른 번식력으로 인해 감염이 확산되기 쉬워 통제가 어려움"
+        ],
+        "other_effects": [
+          "알레르기를 유발할 수도 있음",
+          "동물 또는 반려동물을 물 수 있음"
+        ]
+      }
+    },
+    "invasion_routes": {
+      "active_invasion": "기후가 차가워 시작하는 가을과 겨울에 야외 식량이 감소하면, 원래 이웃집 쓰레기 수집 스테이션, 하수도 또는 안뜰에서 활동하고 있던 바퀴벌레는 더 따뜻한 생활 장소를 찾기 시작. 고기, 전분, 설탕, 지방에 쉽게 매료되어 다양한 틈새에서 집으로 들어감",
+      "passive_invasion": "바퀴벌레는 오래된 가전 제품, 가구, 또는 짐에 숨겨져 있을 수 있음"
+    },
+    "prevention_measures": [
+      "청결한 환경 유지",
+      "음식물 밀폐 보관",
+      "습도 조절",
+      "틈새 차단",
+      "정기적인 청소"
+    ]
+  },
+  "산바퀴": {
+    "scientific_name": "Blattella nipponica",
+    "korean_name": "산바퀴",
+    "taxonomy": {
+      "phylum": "절지동물문",
+      "class": "곤충강",
+      "order": "바퀴목",
+      "family": "Ectobiidae",
+      "genus": "Blattella"
+    },
+    "physical_characteristics": {
+      "development": "여러 애벌레 단계를 거쳐 서서히 발육",
+      "adaptation": "많은 친족들과 구별되는 특징으로 쿨러 기후에 대한 형태적 적응을 나타냄"
+    },
+    "distribution": {
+      "adaptation": "식성 다양성으로 인간이 변형한 환경에서 번성"
+    },
+    "habitat": {
+      "preferred_environment": "도시 및 교외 지역, 농업 및 재배된 지역, 썩어가는 물질"
+    },
+    "ecology": {
+      "activity_pattern": "야행성이며, 간헐적인 야행 성향과 빠른 번식력을 가짐",
+      "reproduction": "알은 일반적으로 식품원 근처의 보호된 갈개나 틈에 삽입",
+      "development": "약충은 작고 완전히 발달하지 않은 날개가 없음",
+      "adult_behavior": "성충은 애벌레와 동일한 서식지에 있을 수 있지만 빛을 좋아하며, 식품과 물원에 가깝게 머물기를 선호"
+    },
+    "risk_assessment": {
+      "threat_level": "일반·불쾌 곤충",
+      "risk_category": "혐오·불편 유발 종",
+      "human_risks": {
+        "classification": "구조 해충으로 분류",
+        "structural_damage": [
+          "성충과 어린이는 갉고 배설함으로써 가정 구조물에 손상을 입힘",
+          "식품을 오염시키며 상업용 건물에 부정적 영향을 미칠 수 있음",
+          "존재는 위생 상태가 나쁘다는 것을 나타냄",
+          "특히 비즈니스 분야에서 평판 훼손으로 이어질 수 있음",
+          "간헐적인 야행 성향과 빠른 번식력은 통제하기 어렵게 만들어 지속적인 감염을 유발"
+        ]
+      }
+    },
+    "special_adaptations": [
+      "공기의 흐름을 감지하는 감각기관인 살포(cerci)를 가지고 있어 민첩하게 포식자를 피할 수 있음"
+    ],
+    "prevention_measures": [
+      "청결한 환경 유지",
+      "음식물 밀폐 보관",
+      "습도 조절",
+      "틈새 차단",
+      "정기적인 청소"
+    ]
+  }
+}

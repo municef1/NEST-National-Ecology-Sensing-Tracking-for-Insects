@@ -1,0 +1,2330 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>NEST 곤충생태지도 - 생태지도 보기</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #3182F6;
+      --primary-hover: #2563EB;
+      --primary-light: #E8F0FE;
+      --primary-lighter: #DBEAFE;
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F5F7FA;
+      --bg-tertiary: #FAFBFC;
+      --text-primary: #1F2937;
+      --text-secondary: #6B7280;
+      --text-tertiary: #9CA3AF;
+      --border-color: #E5E7EB;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+      --shadow-primary: 0 4px 12px rgba(49, 130, 246, 0.2);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+      background: #FFFFFF;
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-bottom: 100px; /* 하단 네비게이션 공간 */
+    }
+
+    /* 상단 헤더 - 위치 선택 */
+    .top-header {
+      background: linear-gradient(135deg, #3182F6 0%, #4285F4 100%);
+      padding: 12px 16px;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .app-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .app-title-text {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .header {
+      background: var(--bg-primary);
+      padding: 20px 16px;
+      margin-bottom: 16px;
+    }
+
+    .header .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .info-icon:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .header .subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+      letter-spacing: -0.2px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 16px 100px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: var(--bg-primary);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md), var(--shadow-primary);
+      border-color: var(--primary-color);
+    }
+
+    .stat-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .stat-card .label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      font-weight: 500;
+      letter-spacing: -0.1px;
+    }
+
+    .stat-card .value {
+      font-size: 24px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+
+    .map-container {
+      background: var(--bg-primary);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md), 0 0 0 1px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      margin-bottom: 32px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid var(--border-color);
+    }
+
+    .map-container:hover {
+      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(49, 130, 246, 0.1);
+      transform: translateY(-2px);
+    }
+
+    #map {
+      width: 100%;
+      height: 400px;
+      position: relative;
+    }
+
+    /* 현재 위치 버튼 */
+    .current-location-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: white;
+      border: 2px solid var(--primary-color);
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 24px;
+    }
+
+    .current-location-btn:hover {
+      background: var(--primary-color);
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(49, 130, 246, 0.3);
+    }
+
+    .current-location-btn:active {
+      transform: scale(0.95);
+    }
+
+    .current-location-btn.loading {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    /* 현재 위치 마커 스타일 (사람 아이콘) */
+    .current-location-marker {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary-color);
+      border: 3px solid white;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(49, 130, 246, 0.4), 0 0 0 2px rgba(49, 130, 246, 0.2);
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .info-panel {
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-md), 0 0 0 1px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid var(--border-color);
+      margin-bottom: 20px;
+    }
+
+    .info-panel:hover {
+      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(49, 130, 246, 0.1);
+    }
+
+    .info-panel h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
+    }
+
+    .image-list {
+      max-height: 600px;
+      overflow-y: auto;
+      padding-right: 8px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .image-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .image-list::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+      border-radius: 3px;
+    }
+
+    .image-list::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 3px;
+    }
+
+    .image-list::-webkit-scrollbar-thumb:hover {
+      background: var(--text-tertiary);
+    }
+
+    .image-item {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+
+    .image-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-color);
+    }
+
+    .image-item.active {
+      border: 2px solid var(--primary-color);
+      box-shadow: var(--shadow-primary);
+    }
+
+    .image-item-header {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      background: var(--bg-secondary);
+    }
+
+    .image-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .image-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .image-item-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+      padding: 12px;
+      color: white;
+    }
+
+    .image-item-content {
+      padding: 16px;
+    }
+
+    .weather-info {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      padding: 6px 10px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      font-size: 12px;
+    }
+
+    .weather-icon {
+      font-size: 16px;
+    }
+
+    .weather-temp {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .weather-desc {
+      color: var(--text-secondary);
+      font-size: 11px;
+    }
+
+    /* 필터 체크박스 호버 효과 */
+    .filter-checkbox:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .filter-checkbox input[type="checkbox"]:checked + span {
+      font-weight: 600;
+    }
+
+    /* circleMarker 그림자 효과 */
+    .risk-marker path {
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    /* 필터 패널 스타일 개선 */
+    .filter-panel {
+      position: sticky;
+      top: 80px;
+      z-index: 10;
+    }
+
+    @media (max-width: 768px) {
+      .filter-panel {
+        position: relative;
+        top: 0;
+      }
+    }
+
+    .image-info {
+      flex: 1;
+    }
+
+    .image-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .image-info .filename {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      letter-spacing: -0.2px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .image-info .location {
+      font-size: 12px;
+      color: var(--text-secondary);
+      letter-spacing: -0.1px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .image-info .location-icon {
+      font-size: 14px;
+    }
+
+    .image-species {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 4px;
+    }
+
+    .no-location {
+      text-align: center;
+      padding: 64px 32px;
+      color: var(--text-tertiary);
+    }
+
+    .no-location-icon {
+      font-size: 64px;
+      margin-bottom: 24px;
+      opacity: 0.6;
+    }
+
+    .no-location h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      letter-spacing: -0.3px;
+    }
+
+    .no-location p {
+      font-size: 15px;
+      color: var(--text-tertiary);
+      letter-spacing: -0.2px;
+    }
+
+    /* Leaflet 마커 스타일 커스터마이징 - 토스 스타일 */
+    .custom-marker {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+      border: 3px solid white;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 15px;
+      box-shadow: 0 4px 12px rgba(49, 130, 246, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .custom-marker:hover {
+      transform: scale(1.15);
+      box-shadow: 0 6px 20px rgba(49, 130, 246, 0.5), 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    /* 정보 팝업 스타일 - 토스 스타일 */
+    .leaflet-popup-content-wrapper {
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .leaflet-popup-content {
+      margin: 0;
+    }
+
+    .popup-content {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .popup-content h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 12px 0;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
+    }
+
+    .popup-content img {
+      width: 220px;
+      height: auto;
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .popup-content p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin: 6px 0;
+      letter-spacing: -0.1px;
+    }
+
+    .popup-content a {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
+      letter-spacing: -0.1px;
+    }
+
+    .popup-content a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(49, 130, 246, 0.4);
+    }
+
+    /* 위험도 기준 모달 */
+    .risk-criteria-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .risk-criteria-modal.show {
+      display: flex;
+    }
+
+    /* 위치 권한 요청 모달 */
+    .location-permission-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 10001;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .location-permission-modal.show {
+      display: flex;
+    }
+
+    /* 위치 오류 모달 */
+    .location-error-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 10002;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .location-error-modal.show {
+      display: flex;
+    }
+
+    .location-error-content {
+      background: white;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      animation: slideInUp 0.3s ease-out;
+    }
+
+    .location-error-header {
+      padding: 24px 24px 16px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .location-error-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 8px 0;
+    }
+
+    .location-error-icon {
+      font-size: 48px;
+      margin-bottom: 8px;
+    }
+
+    .location-error-body {
+      padding: 24px;
+      text-align: left;
+    }
+
+    .location-error-body p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0 0 16px 0;
+    }
+
+    .location-error-body ul {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin: 0 0 24px 0;
+      padding-left: 20px;
+    }
+
+    .location-error-body li {
+      margin-bottom: 8px;
+    }
+
+    .location-error-button {
+      width: 100%;
+      padding: 14px 24px;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
+    }
+
+    .location-error-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(49, 130, 246, 0.4);
+    }
+
+    .location-permission-content {
+      background: white;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      animation: slideInUp 0.3s ease-out;
+    }
+
+    .location-permission-header {
+      padding: 24px 24px 16px;
+      text-align: center;
+    }
+
+    .location-permission-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 8px 0;
+    }
+
+    .location-permission-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .location-permission-body {
+      padding: 0 24px 24px;
+      text-align: center;
+    }
+
+    .location-permission-body p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0 0 24px 0;
+    }
+
+    .location-permission-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .location-permission-btn {
+      flex: 1;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .location-permission-btn.primary {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(49, 130, 246, 0.3);
+    }
+
+    .location-permission-btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(49, 130, 246, 0.4);
+    }
+
+    .location-permission-btn.secondary {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .location-permission-btn.secondary:hover {
+      background: var(--bg-tertiary);
+    }
+
+    .location-option-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--bg-primary);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .location-option-btn:hover {
+      border-color: var(--primary-color);
+      background: var(--primary-lighter);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .location-option-btn:active {
+      transform: translateY(0);
+    }
+
+    .location-option-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--bg-primary);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .location-option-btn:hover {
+      border-color: var(--primary-color);
+      background: var(--primary-lighter);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .location-option-btn:active {
+      transform: translateY(0);
+    }
+
+    .risk-criteria-content {
+      background: white;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      animation: slideInUp 0.3s ease-out;
+    }
+
+    @keyframes slideInUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .risk-criteria-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: white;
+      border-radius: 20px 20px 0 0;
+      z-index: 1;
+    }
+
+    .risk-criteria-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .risk-criteria-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 4px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .risk-criteria-close:hover {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .risk-criteria-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .risk-criteria-item {
+      margin-bottom: 24px;
+      padding: 20px;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      border-left: 4px solid;
+    }
+
+    .risk-criteria-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .risk-criteria-item.high-risk {
+      border-left-color: #dc3545;
+      background: #fff5f5;
+    }
+
+    .risk-criteria-item.medium-risk {
+      border-left-color: #fd7e14;
+      background: #fff8f0;
+    }
+
+    .risk-criteria-item.pet-risk {
+      border-left-color: #ffc107;
+      background: #fffef5;
+    }
+
+    .risk-criteria-item.general {
+      border-left-color: #6c757d;
+      background: #f8f9fa;
+    }
+
+    .risk-criteria-item.protected {
+      border-left-color: #28a745;
+      background: #f0f9f4;
+    }
+
+    .risk-criteria-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .risk-criteria-title .risk-icon {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .risk-criteria-item.high-risk .risk-icon {
+      background: #dc3545;
+    }
+
+    .risk-criteria-item.medium-risk .risk-icon {
+      background: #fd7e14;
+    }
+
+    .risk-criteria-item.pet-risk .risk-icon {
+      background: #ffc107;
+    }
+
+    .risk-criteria-item.general .risk-icon {
+      background: #6c757d;
+    }
+
+    .risk-criteria-item.protected .risk-icon {
+      background: #28a745;
+    }
+
+    .risk-criteria-description {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .risk-criteria-example {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      font-style: italic;
+      padding-left: 16px;
+      border-left: 2px solid var(--border-color);
+    }
+
+    /* 하단 네비게이션 */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid #E5E7EB;
+      padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+      z-index: 9999;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px 24px;
+      color: #6B7280;
+      font-size: 11px;
+      transition: color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .nav-item.active {
+      color: #3182F6;
+    }
+
+    .nav-icon {
+      font-size: 24px;
+      background: white;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .nav-item:hover .nav-icon,
+    .nav-item.active .nav-icon {
+      background: white;
+    }
+
+    /* 반응형 디자인 */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 16px 24px;
+      }
+
+      .header {
+        padding: 16px;
+      }
+
+      .header h1 {
+        font-size: 18px;
+      }
+
+      .header .subtitle {
+        font-size: 12px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .stat-card {
+        padding: 12px;
+      }
+
+      .stat-card .label {
+        font-size: 12px;
+      }
+
+      .stat-card .value {
+        font-size: 20px;
+      }
+
+      .risk-stats {
+        grid-template-columns: repeat(6, 1fr) !important;
+        gap: 4px !important;
+      }
+
+      .risk-stat-card {
+        padding: 8px !important;
+      }
+
+      .risk-stat-card .label {
+        font-size: 10px !important;
+        margin-bottom: 2px !important;
+      }
+
+      .risk-stat-card .value {
+        font-size: 16px !important;
+      }
+
+      .info-panel {
+        padding: 16px;
+      }
+
+      .info-panel h2 {
+        font-size: 14px;
+      }
+
+      #map {
+        height: 350px;
+      }
+
+      .image-list {
+        grid-template-columns: 1fr;
+      }
+
+      .image-item-header {
+        height: 200px;
+      }
+
+      .image-item {
+        margin-bottom: 0;
+      }
+
+      .filter-panel {
+        padding: 16px !important;
+        margin-top: 16px !important;
+        margin-bottom: 16px !important;
+      }
+
+      .filter-panel > div:first-child {
+        font-size: 14px !important;
+        margin-bottom: 12px !important;
+      }
+
+      .filter-checkbox {
+        padding: 8px 12px !important;
+        font-size: 12px !important;
+      }
+
+      .filter-checkbox span {
+        font-size: 11px !important;
+      }
+    }
+
+    /* 필터 옵션 스타일 */
+    .filter-option:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .filter-option input:checked + div + div {
+      font-weight: 700;
+    }
+
+    .filter-option:has(input:checked) {
+      border-color: var(--primary-color) !important;
+      box-shadow: 0 0 0 1px var(--primary-color);
+    }
+
+    /* 데스크톱 대응 */
+    @media (min-width: 768px) {
+      body {
+        max-width: 768px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 상단 헤더 -->
+  <div class="top-header">
+    <div class="app-title">
+      <span class="app-title-text">NEST</span>
+    </div>
+  </div>
+
+  <div class="header">
+    <div class="container">
+      <h1>
+        NEST 곤충생태지도
+        <span class="info-icon" onclick="showRiskCriteria()" title="위험도 기준 보기">?</span>
+      </h1>
+      <p class="subtitle">업로드된 곤충 사진의 위치 정보를 지도에 표시합니다</p>
+    </div>
+  </div>
+
+  <!-- 위치 옵션 선택 모달 -->
+  <div id="locationOptionsModal" class="location-permission-modal" onclick="closeLocationOptionsModal()">
+    <div class="location-permission-content" onclick="event.stopPropagation()">
+      <div class="location-permission-header">
+        <div class="location-permission-icon">📍</div>
+        <h2>내 위치 설정</h2>
+      </div>
+      <div class="location-permission-body">
+        <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 20px;">
+          위치를 설정하는 방법을 선택해주세요.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <button class="location-option-btn" onclick="requestLocationPermission()">
+            <div style="font-size: 24px; margin-bottom: 8px;">📡</div>
+            <div style="font-weight: 600; margin-bottom: 4px;">정확한 위치 사용</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">GPS를 사용하여 정확한 위치를 가져옵니다</div>
+          </button>
+          <button class="location-option-btn" onclick="getLocationByIP()">
+            <div style="font-size: 24px; margin-bottom: 8px;">🌐</div>
+            <div style="font-weight: 600; margin-bottom: 4px;">IP 기반 위치 (권한 불필요)</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">인터넷 연결 위치를 기반으로 대략적인 위치를 가져옵니다</div>
+          </button>
+          <button class="location-option-btn" onclick="enableMapClickLocation()">
+            <div style="font-size: 24px; margin-bottom: 8px;">👆</div>
+            <div style="font-weight: 600; margin-bottom: 4px;">지도에서 직접 선택</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">지도를 클릭하여 원하는 위치를 선택합니다</div>
+          </button>
+        </div>
+        <div style="margin-top: 20px;">
+          <button class="location-permission-btn secondary" onclick="closeLocationOptionsModal()" style="width: 100%;">취소</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 위치 권한 요청 모달 -->
+  <div id="locationPermissionModal" class="location-permission-modal" onclick="closeLocationPermissionModal()">
+    <div class="location-permission-content" onclick="event.stopPropagation()">
+      <div class="location-permission-header">
+        <div class="location-permission-icon">📍</div>
+        <h2>위치 정보 사용</h2>
+      </div>
+      <div class="location-permission-body">
+        <p>
+          현재 위치를 지도에 표시하기 위해<br>
+          위치 정보 접근 권한이 필요합니다.
+        </p>
+        <p style="font-size: 13px; color: var(--text-tertiary); margin-top: 8px;">
+          위치 정보는 지도에 표시하는 용도로만 사용되며<br>
+          저장되지 않습니다.
+        </p>
+        <div class="location-permission-buttons">
+          <button class="location-permission-btn secondary" onclick="closeLocationPermissionModal()">취소</button>
+          <button class="location-permission-btn primary" onclick="requestLocationPermission()">허용</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 위치 오류 모달 -->
+  <div id="locationErrorModal" class="location-error-modal" onclick="closeLocationErrorModal()">
+    <div class="location-error-content" onclick="event.stopPropagation()">
+      <div class="location-error-header">
+        <div class="location-error-icon">⚠️</div>
+        <h2 id="locationErrorTitle">위치 정보 오류</h2>
+      </div>
+      <div class="location-error-body">
+        <p id="locationErrorMessage">위치를 가져올 수 없습니다.</p>
+        <ul id="locationErrorInstructions" style="display: none;">
+        </ul>
+        <button class="location-error-button" onclick="closeLocationErrorModal()">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 위험도 기준 모달 -->
+  <div id="riskCriteriaModal" class="risk-criteria-modal" onclick="closeRiskCriteriaOnBackdrop(event)">
+    <div class="risk-criteria-content" onclick="event.stopPropagation()">
+      <div class="risk-criteria-header">
+        <h2>위험도 기준</h2>
+        <button class="risk-criteria-close" onclick="closeRiskCriteria()">×</button>
+      </div>
+      <div class="risk-criteria-body">
+        <div class="risk-criteria-item high-risk">
+          <div class="risk-criteria-title">
+            <span class="risk-icon"></span>
+            <span>인체 고위험(공격성·독성)</span>
+          </div>
+          <div class="risk-criteria-description">
+            사람을 적극적으로 공격하거나, 여러 번 쏘이거나 물리면 생명에 위협이 될 수 있는 종입니다.
+          </div>
+          <div class="risk-criteria-example">
+            예시: 말벌류, 일부 독개미류 등
+          </div>
+        </div>
+
+        <div class="risk-criteria-item medium-risk">
+          <div class="risk-criteria-title">
+            <span class="risk-icon"></span>
+            <span>인체 중위험(독성·피부염·질병 매개)</span>
+          </div>
+          <div class="risk-criteria-description">
+            스스로 공격성은 크지 않지만, 독성 물질이나 병원체를 통해 피부염, 알레르기, 감염병 등을 일으킬 수 있는 종입니다.
+          </div>
+          <div class="risk-criteria-example">
+            예시: 화상벌레(청딱지개미반날개), 일부 독나방 유충, 질병 매개 모기 등
+          </div>
+        </div>
+
+        <div class="risk-criteria-item pet-risk">
+          <div class="risk-criteria-title">
+            <span class="risk-icon"></span>
+            <span>반려동물 위험</span>
+          </div>
+          <div class="risk-criteria-description">
+            사람보다도 강아지·고양이 등 반려동물에게 더 큰 건강 피해를 줄 수 있는 종입니다.
+          </div>
+          <div class="risk-criteria-example">
+            예시: 심장사상충을 옮기는 모기, 벼룩, 일부 진드기 등
+          </div>
+        </div>
+
+        <div class="risk-criteria-item general">
+          <div class="risk-criteria-title">
+            <span class="risk-icon"></span>
+            <span>일반·불쾌 곤충</span>
+          </div>
+          <div class="risk-criteria-description">
+            직접적인 독성이나 질병 위험은 크지 않지만, 위생 문제나 혐오감, 대량 발생으로 생활 불편을 줄 수 있는 종입니다.
+          </div>
+          <div class="risk-criteria-example">
+            예시: 바퀴벌레, 집파리, 나방파리, 꼽등이 등
+          </div>
+        </div>
+
+        <div class="risk-criteria-item protected">
+          <div class="risk-criteria-title">
+            <span class="risk-icon"></span>
+            <span>보호가 필요한 종</span>
+          </div>
+          <div class="risk-criteria-description">
+            천연기념물, 멸종위기종, 법정보호종 등으로 지정되어 사람에게 해를 주지 않고, 오히려 생태계 보전에 중요한 종입니다.
+          </div>
+          <div class="risk-criteria-example" style="font-weight: 600; color: var(--text-primary);">
+            포획·훼손이 법적으로 제한될 수 있습니다.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    {% if locations %}
+      <!-- 지도 (맨 위) -->
+      <div class="map-container" style="margin-bottom: 20px; position: relative;">
+        <div id="map"></div>
+        <button class="current-location-btn" onclick="showLocationOptions()" title="내 위치 설정">
+          📍
+        </button>
+      </div>
+
+      <!-- 필터 패널 -->
+      <div class="info-panel" style="margin-top: 20px; margin-bottom: 20px; padding: 20px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+          <h2 style="margin: 0; font-size: 16px; font-weight: 600;">🔍 위험도 필터</h2>
+          <button onclick="toggleFilterModal()" style="background: var(--primary-color); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">
+            필터 선택
+          </button>
+        </div>
+        <div id="selectedFilters" style="display: flex; flex-wrap: wrap; gap: 8px; min-height: 32px;">
+          <span style="font-size: 13px; color: var(--text-secondary);">모든 위험도 표시 중</span>
+        </div>
+      </div>
+
+      <!-- 필터 모달 -->
+      <div id="filterModal" class="location-permission-modal" onclick="closeFilterModal()">
+        <div class="location-permission-content" onclick="event.stopPropagation()" style="max-width: 500px;">
+          <div class="location-permission-header">
+            <h2>위험도 필터 선택</h2>
+          </div>
+          <div class="location-permission-body" style="text-align: left;">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;">
+              <label class="filter-option" style="display: flex; flex-direction: column; align-items: center; padding: 16px; background: #FEE2E2; border: 2px solid transparent; border-radius: 12px; cursor: pointer; transition: all 0.2s ease;">
+                <input type="checkbox" value="critical" checked style="display: none;">
+                <div style="font-size: 24px; margin-bottom: 8px;">🔴</div>
+                <div style="font-size: 12px; font-weight: 600; text-align: center; color: #991B1B;">인체 고위험</div>
+              </label>
+              <label class="filter-option" style="display: flex; flex-direction: column; align-items: center; padding: 16px; background: #FFEDD5; border: 2px solid transparent; border-radius: 12px; cursor: pointer; transition: all 0.2s ease;">
+                <input type="checkbox" value="danger" checked style="display: none;">
+                <div style="font-size: 24px; margin-bottom: 8px;">🟠</div>
+                <div style="font-size: 12px; font-weight: 600; text-align: center; color: #9A3412;">인체 중위험</div>
+              </label>
+              <label class="filter-option" style="display: flex; flex-direction: column; align-items: center; padding: 16px; background: #FEF3C7; border: 2px solid transparent; border-radius: 12px; cursor: pointer; transition: all 0.2s ease;">
+                <input type="checkbox" value="caution" checked style="display: none;">
+                <div style="font-size: 24px; margin-bottom: 8px;">🟡</div>
+                <div style="font-size: 12px; font-weight: 600; text-align: center; color: #854D0E;">반려동물 위험</div>
+              </label>
+              <label class="filter-option" style="display: flex; flex-direction: column; align-items: center; padding: 16px; background: #D1FAE5; border: 2px solid transparent; border-radius: 12px; cursor: pointer; transition: all 0.2s ease;">
+                <input type="checkbox" value="safe" checked style="display: none;">
+                <div style="font-size: 24px; margin-bottom: 8px;">🟢</div>
+                <div style="font-size: 12px; font-weight: 600; text-align: center; color: #065F46;">일반·불쾌</div>
+              </label>
+              <label class="filter-option" style="display: flex; flex-direction: column; align-items: center; padding: 16px; background: #F3F4F6; border: 2px solid transparent; border-radius: 12px; cursor: pointer; transition: all 0.2s ease;">
+                <input type="checkbox" value="unknown" checked style="display: none;">
+                <div style="font-size: 24px; margin-bottom: 8px;">⚪</div>
+                <div style="font-size: 12px; font-weight: 600; text-align: center; color: #4B5563;">보호 필요</div>
+              </label>
+              <label class="filter-option" style="display: flex; flex-direction: column; align-items: center; padding: 16px; background: #DBEAFE; border: 2px solid transparent; border-radius: 12px; cursor: pointer; transition: all 0.2s ease;">
+                <input type="checkbox" value="unclassified" checked style="display: none;">
+                <div style="font-size: 24px; margin-bottom: 8px;">🔵</div>
+                <div style="font-size: 12px; font-weight: 600; text-align: center; color: #1E3A8A;">미분류</div>
+              </label>
+            </div>
+            <div style="display: flex; gap: 12px;">
+              <button onclick="closeFilterModal()" class="location-permission-btn secondary" style="flex: 1;">취소</button>
+              <button onclick="applyFilters()" class="location-permission-btn primary" style="flex: 1;">확인</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 위험도 통계 카드 (3*2 그리드) -->
+      <div class="stats risk-stats" style="margin-top: 20px; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); gap: 12px;">
+      <div class="stat-card risk-stat-card" style="background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%); border-left: 3px solid #F44336; padding: 16px;">
+        <div class="label" style="color: #991B1B; font-size: 12px; margin-bottom: 8px; line-height: 1.3; font-weight: 600;">🔴 인체 고위험</div>
+        <div class="value" style="background: linear-gradient(135deg, #F44336 0%, #DC2626 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 24px;">{{ risk_stats.critical }}</div>
+      </div>
+      <div class="stat-card risk-stat-card" style="background: linear-gradient(135deg, #FFEDD5 0%, #FED7AA 100%); border-left: 3px solid #FF9800; padding: 16px;">
+        <div class="label" style="color: #9A3412; font-size: 12px; margin-bottom: 8px; line-height: 1.3; font-weight: 600;">🟠 인체 중위험</div>
+        <div class="value" style="background: linear-gradient(135deg, #FF9800 0%, #F97316 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 24px;">{{ risk_stats.danger }}</div>
+      </div>
+      <div class="stat-card risk-stat-card" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border-left: 3px solid #FFC107; padding: 16px;">
+        <div class="label" style="color: #854D0E; font-size: 12px; margin-bottom: 8px; line-height: 1.3; font-weight: 600;">🟡 반려동물 위험</div>
+        <div class="value" style="background: linear-gradient(135deg, #FFC107 0%, #F59E0B 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 24px;">{{ risk_stats.caution }}</div>
+      </div>
+      <div class="stat-card risk-stat-card" style="background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%); border-left: 3px solid #4CAF50; padding: 16px;">
+        <div class="label" style="color: #065F46; font-size: 12px; margin-bottom: 8px; line-height: 1.3; font-weight: 600;">🟢 일반·불쾌</div>
+        <div class="value" style="background: linear-gradient(135deg, #4CAF50 0%, #22C55E 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 24px;">{{ risk_stats.safe }}</div>
+      </div>
+      <div class="stat-card risk-stat-card" style="background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%); border-left: 3px solid #9E9E9E; padding: 16px;">
+        <div class="label" style="color: #4B5563; font-size: 12px; margin-bottom: 8px; line-height: 1.3; font-weight: 600;">⚪ 보호 필요</div>
+        <div class="value" style="background: linear-gradient(135deg, #9E9E9E 0%, #6B7280 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 24px;">{{ risk_stats.unknown }}</div>
+      </div>
+      <div class="stat-card risk-stat-card" style="background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%); border-left: 3px solid #1E40AF; padding: 16px;">
+        <div class="label" style="color: #1E3A8A; font-size: 12px; margin-bottom: 8px; line-height: 1.3; font-weight: 600;">🔵 미분류</div>
+        <div class="value" style="background: linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 24px;">{{ risk_stats.unclassified }}</div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if locations %}
+      <div class="info-panel">
+        <h2>위치 정보가 있는 이미지 ({{ locations|length }}개)</h2>
+        <div class="image-list">
+          {% for loc in locations %}
+            {% set threat_level = loc.classification.threat_level if loc.classification and loc.classification.threat_level else '' %}
+            {% if threat_level %}
+              {% if '인체 고위험' in threat_level or '공격성·독성' in threat_level %}
+                {% set filter_level = 'critical' %}
+              {% elif '인체 중위험' in threat_level or '독성·피부염' in threat_level or '질병 매개' in threat_level %}
+                {% set filter_level = 'danger' %}
+              {% elif '반려동물 위험' in threat_level %}
+                {% set filter_level = 'caution' %}
+              {% elif '일반·불쾌' in threat_level or '불쾌 곤충' in threat_level or '일반·불쾌 곤충' in threat_level %}
+                {% set filter_level = 'safe' %}
+              {% elif '보호' in threat_level or '천연기념물' in threat_level %}
+                {% set filter_level = 'unknown' %}
+              {% else %}
+                {% set filter_level = 'unclassified' %}
+              {% endif %}
+            {% elif loc.risk_assessment and loc.risk_assessment.threat_level %}
+              {% set threat_level_from_assessment = loc.risk_assessment.threat_level %}
+              {% if '인체 고위험' in threat_level_from_assessment or '공격성·독성' in threat_level_from_assessment %}
+                {% set filter_level = 'critical' %}
+              {% elif '인체 중위험' in threat_level_from_assessment or '독성·피부염' in threat_level_from_assessment or '질병 매개' in threat_level_from_assessment %}
+                {% set filter_level = 'danger' %}
+              {% elif '반려동물 위험' in threat_level_from_assessment %}
+                {% set filter_level = 'caution' %}
+              {% elif '일반·불쾌' in threat_level_from_assessment or '불쾌 곤충' in threat_level_from_assessment or '일반·불쾌 곤충' in threat_level_from_assessment %}
+                {% set filter_level = 'safe' %}
+              {% elif '보호' in threat_level_from_assessment or '천연기념물' in threat_level_from_assessment %}
+                {% set filter_level = 'unknown' %}
+              {% elif threat_level_from_assessment == '미분류' %}
+                {% set filter_level = 'unclassified' %}
+              {% else %}
+                {% set filter_level = 'unclassified' %}
+              {% endif %}
+            {% else %}
+              {# threat_level이 없으면 미분류 #}
+              {% set filter_level = 'unclassified' %}
+            {% endif %}
+            <div class="image-item" id="image-item-{{ loop.index0 }}" onclick="showMarker({{ loop.index0 }})" data-risk-level="{{ filter_level }}">
+              <div class="image-item-header">
+                <img src="{{ url_for('uploaded_file', filename=loc.filename) }}" alt="{{ loc.filename }}" />
+                {% if threat_level or (loc.risk_assessment and loc.risk_assessment.threat_level) %}
+                <div class="image-item-overlay">
+                  {% set display_threat_level = threat_level if threat_level else (loc.risk_assessment.threat_level if loc.risk_assessment and loc.risk_assessment.threat_level else '') %}
+                  {% if display_threat_level %}
+                    {% if '인체 고위험' in display_threat_level or '공격성·독성' in display_threat_level %}
+                      <span style="background: #dc3545; color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">🔴 인체 고위험</span>
+                    {% elif '인체 중위험' in display_threat_level or '독성·피부염' in display_threat_level or '질병 매개' in display_threat_level %}
+                      <span style="background: #fd7e14; color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">🟠 인체 중위험</span>
+                    {% elif '반려동물 위험' in display_threat_level %}
+                      <span style="background: #ffc107; color: #333; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">🟡 반려동물 위험</span>
+                    {% elif '일반·불쾌' in display_threat_level or '불쾌 곤충' in display_threat_level or '일반·불쾌 곤충' in display_threat_level %}
+                      <span style="background: #28a745; color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">🟢 일반·불쾌</span>
+                    {% elif '보호' in display_threat_level or '천연기념물' in display_threat_level %}
+                      <span style="background: #6c757d; color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">⚪ 보호 필요</span>
+                    {% elif display_threat_level == '미분류' %}
+                      <span style="background: #1E40AF; color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">🔵 미분류</span>
+                    {% else %}
+                      <span style="background: #1E40AF; color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">🔵 미분류</span>
+                    {% endif %}
+                  {% endif %}
+                </div>
+                {% endif %}
+              </div>
+              <div class="image-item-content">
+                <div class="image-info">
+                  {% if loc.classification and loc.classification.korean_name %}
+                  <div class="image-species">{{ loc.classification.korean_name }}</div>
+                  {% elif loc.classification and loc.classification.species %}
+                  <div class="image-species">{{ loc.classification.species }}</div>
+                  {% else %}
+                  <div class="image-species" style="color: var(--text-secondary);">미분류</div>
+                  {% endif %}
+                  <div class="filename">
+                    <span style="font-size: 12px; color: var(--text-secondary); margin-right: 4px;">📅</span>
+                    <span>{{ loc.datetime_taken if loc.datetime_taken else '일시 정보 없음' }}</span>
+                  </div>
+                  <div class="location">
+                    <span class="location-icon">📍</span>
+                    <span>{{ "%.4f"|format(loc.lat) }}, {{ "%.4f"|format(loc.lon) }}</span>
+                  </div>
+                  {% if loc.weather %}
+                  <div class="weather-info">
+                    <span class="weather-icon">{{ loc.weather.icon }}</span>
+                    <span class="weather-temp">{{ loc.weather.temperature }}°C</span>
+                    <span class="weather-desc">{{ loc.weather.weather_description }}</span>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <div class="info-panel">
+        <div class="no-location">
+          <div class="no-location-icon">📍</div>
+          <h2>위치 정보가 있는 이미지가 없습니다</h2>
+          <p>GPS 정보가 포함된 이미지를 업로드하면 지도에 표시됩니다.</p>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  {% if locations %}
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    
+    <script>
+      // 위험도 이름 매핑 함수
+      function getRiskLevelName(riskLevel) {
+        const riskNames = {
+          'CRITICAL': '인체 고위험',
+          'critical': '인체 고위험',
+          'HIGH': '인체 중위험',
+          'danger': '인체 중위험',
+          'MEDIUM': '반려동물 위험',
+          'caution': '반려동물 위험',
+          'LOW': '일반·불쾌',
+          'safe': '일반·불쾌',
+          'unknown': '보호 필요',
+          'unclassified': '미분류'
+        };
+        return riskNames[riskLevel] || '보호 필요';
+      }
+
+      // 위험도별 마커 설정
+      const RISK_CONFIG = {
+        'critical': {
+          color: '#F44336', // 빨간색
+          colorEnd: '#DC2626', // 빨간색
+          size: 28, // 크기 축소 (48 -> 28)
+          fontSize: '16px',
+          shadow: 'rgba(220, 38, 38, 0.5)',
+          className: 'risk-marker-critical'
+        },
+        'danger': {
+          color: '#FF9800', // 주황색
+          colorEnd: '#F97316', // 주황색
+          size: 24, // 크기 축소 (40 -> 24)
+          fontSize: '15px',
+          shadow: 'rgba(249, 115, 22, 0.4)',
+          className: 'risk-marker-danger'
+        },
+        'caution': {
+          color: '#FFC107', // 노란색
+          colorEnd: '#F59E0B', // 노란색
+          size: 22, // 크기 축소 (36 -> 22)
+          fontSize: '14px',
+          shadow: 'rgba(245, 158, 11, 0.4)',
+          className: 'risk-marker-caution'
+        },
+        'safe': {
+          color: '#4CAF50', // 초록색
+          colorEnd: '#22C55E', // 초록색
+          size: 20, // 크기 축소 (32 -> 20)
+          fontSize: '14px',
+          shadow: 'rgba(34, 197, 94, 0.4)',
+          className: 'risk-marker-safe'
+        },
+        'unknown': {
+          color: '#9E9E9E', // 회색
+          colorEnd: '#6B7280', // 회색
+          size: 20, // 크기 축소 (32 -> 20)
+          fontSize: '14px',
+          shadow: 'rgba(107, 114, 128, 0.4)',
+          className: 'risk-marker-unknown'
+        },
+        'unclassified': {
+          color: '#1E40AF', // 남색
+          colorEnd: '#1E3A8A', // 남색
+          size: 20, // 크기 축소 (32 -> 20)
+          fontSize: '14px',
+          shadow: 'rgba(30, 58, 138, 0.4)',
+          className: 'risk-marker-unclassified'
+        }
+      };
+
+      // 위치 데이터를 JavaScript로 전달
+      const locations = [
+        {% for loc in locations %}
+        {
+          filename: "{{ loc.filename }}",
+          lat: {{ loc.lat }},
+          lon: {{ loc.lon }},
+          imageUrl: "{{ url_for('uploaded_file', filename=loc.filename) }}",
+          mapsUrl: "{{ loc.maps_url }}",
+          riskAssessment: {{ loc.risk_assessment | tojson if loc.risk_assessment else 'null' }},
+          classification: {{ loc.classification | tojson if loc.classification else 'null' }}
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+      ];
+
+      let map;
+      let markers = [];
+      let allMarkers = [];
+      let currentLocationMarker = null;
+
+      // 지도 초기화
+      function initMap() {
+        if (locations.length === 0) {
+          return;
+        }
+
+        // 첫 번째 위치를 중심으로 지도 생성
+        const firstLocation = locations[0];
+        map = L.map('map').setView([firstLocation.lat, firstLocation.lon], 10);
+
+        // OpenStreetMap 타일 레이어 추가
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          maxZoom: 19
+        }).addTo(map);
+
+        // 지도에 격자 표시 (Canvas 레이어로 지도에 직접 통합)
+        function addGrid() {
+          const GridLayer = L.GridLayer.extend({
+            createTile: function(coords) {
+              const tile = document.createElement('canvas');
+              const ctx = tile.getContext('2d');
+              const size = this.getTileSize();
+              
+              tile.width = size.x;
+              tile.height = size.y;
+              
+              // 타일의 경계 좌표 계산
+              const nwPoint = coords.scaleBy(size);
+              const sePoint = nwPoint.add(size);
+              const nw = map.unproject(nwPoint, coords.z);
+              const se = map.unproject(sePoint, coords.z);
+              
+              // 줌 레벨에 따라 격자 간격 조정
+              const zoom = coords.z;
+              let gridSize = 0.1;
+              if (zoom >= 15) {
+                gridSize = 0.01;
+              } else if (zoom >= 12) {
+                gridSize = 0.05;
+              } else if (zoom >= 9) {
+                gridSize = 0.1;
+              } else {
+                gridSize = 0.5;
+              }
+              
+              // 흰색 격자선 그리기
+              ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+              ctx.lineWidth = 0.5;
+              
+              // 경도선 그리기
+              const startLon = Math.floor(nw.lng / gridSize) * gridSize;
+              const endLon = Math.ceil(se.lng / gridSize) * gridSize;
+              
+              for (let lon = startLon; lon <= endLon; lon += gridSize) {
+                const point = map.project([nw.lat, lon], coords.z);
+                const relativeX = point.x - nwPoint.x;
+                
+                if (relativeX >= 0 && relativeX <= size.x) {
+                  ctx.beginPath();
+                  ctx.moveTo(relativeX, 0);
+                  ctx.lineTo(relativeX, size.y);
+                  ctx.stroke();
+                }
+              }
+              
+              // 위도선 그리기
+              const startLat = Math.floor(se.lat / gridSize) * gridSize;
+              const endLat = Math.ceil(nw.lat / gridSize) * gridSize;
+              
+              for (let lat = startLat; lat <= endLat; lat += gridSize) {
+                const point = map.project([lat, nw.lng], coords.z);
+                const relativeY = point.y - nwPoint.y;
+                
+                if (relativeY >= 0 && relativeY <= size.y) {
+                  ctx.beginPath();
+                  ctx.moveTo(0, relativeY);
+                  ctx.lineTo(size.x, relativeY);
+                  ctx.stroke();
+                }
+              }
+              
+              return tile;
+            }
+          });
+          
+          const gridLayer = new GridLayer({
+            pane: 'overlayPane',
+            opacity: 1.0,
+            zIndex: 200
+          });
+          
+          gridLayer.addTo(map);
+        }
+        
+        addGrid();
+
+        // 모든 위치에 마커 추가
+        // circleMarker는 지리좌표에 정확히 고정되어 있어 지도 이동 시에도 위치가 어긋나지 않음
+        locations.forEach((loc, index) => {
+          const marker = createRiskMarker(loc, index);
+          marker.addTo(map);
+          
+          allMarkers.push({
+            marker: marker,
+            index: index,
+            location: loc
+          });
+        });
+
+        // 초기에는 모든 마커 표시
+        markers = [...allMarkers];
+
+        // 모든 마커가 보이도록 지도 범위 조정
+        if (locations.length > 1) {
+          const bounds = L.latLngBounds(locations.map(loc => [loc.lat, loc.lon]));
+          map.fitBounds(bounds, { padding: [60, 60] });
+        }
+      }
+
+      // 이미지 아이템 하이라이트
+      function highlightImageItem(index) {
+        // 모든 아이템에서 active 클래스 제거
+        document.querySelectorAll('.image-item').forEach(item => {
+          item.classList.remove('active');
+        });
+        
+        // 선택한 아이템에 active 클래스 추가
+        const item = document.getElementById(`image-item-${index}`);
+        if (item) {
+          item.classList.add('active');
+          // 스크롤하여 보이도록
+          item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+
+      // 위험도별 마커 생성 함수
+      function createRiskMarker(loc, index) {
+        let riskLevel = 'unclassified'; // 기본값을 미분류로 설정
+        
+        // threat_level 우선 사용
+        if (loc.classification && loc.classification.threat_level) {
+          const threatLevel = loc.classification.threat_level;
+          if (threatLevel.includes('인체 고위험') || threatLevel.includes('공격성·독성')) {
+            riskLevel = 'critical';
+          } else if (threatLevel.includes('인체 중위험') || threatLevel.includes('독성·피부염') || threatLevel.includes('질병 매개')) {
+            riskLevel = 'danger';
+          } else if (threatLevel.includes('반려동물 위험')) {
+            riskLevel = 'caution';
+          } else if (threatLevel.includes('일반·불쾌') || threatLevel.includes('불쾌 곤충') || threatLevel.includes('일반·불쾌 곤충')) {
+            riskLevel = 'safe';
+          } else if (threatLevel.includes('보호') || threatLevel.includes('천연기념물')) {
+            riskLevel = 'unknown';
+          } else {
+            // threat_level이 있지만 매칭되지 않는 경우도 미분류
+            riskLevel = 'unclassified';
+          }
+        } else if (loc.riskAssessment && loc.riskAssessment.threat_level) {
+          // risk_assessment의 threat_level 사용
+          const threatLevel = loc.riskAssessment.threat_level;
+          if (threatLevel.includes('인체 고위험') || threatLevel.includes('공격성·독성')) {
+            riskLevel = 'critical';
+          } else if (threatLevel.includes('인체 중위험') || threatLevel.includes('독성·피부염') || threatLevel.includes('질병 매개')) {
+            riskLevel = 'danger';
+          } else if (threatLevel.includes('반려동물 위험')) {
+            riskLevel = 'caution';
+          } else if (threatLevel.includes('일반·불쾌') || threatLevel.includes('불쾌 곤충') || threatLevel.includes('일반·불쾌 곤충')) {
+            riskLevel = 'safe';
+          } else if (threatLevel.includes('보호') || threatLevel.includes('천연기념물')) {
+            riskLevel = 'unknown';
+          } else if (threatLevel === '미분류') {
+            riskLevel = 'unclassified';
+          } else {
+            riskLevel = 'unclassified';
+          }
+        } else {
+          // threat_level이 없으면 미분류
+          riskLevel = 'unclassified';
+        }
+        
+        // 위험도가 이미 판단되지 않은 경우에만 classification 확인
+        // threat_level이 있으면 이미 위험도가 판단되었으므로 이 조건을 무시
+        if (riskLevel === 'unclassified' && 
+            (!loc.classification || 
+             (!loc.classification.species && !loc.classification.korean_name && !loc.classification.threat_level))) {
+          riskLevel = 'unclassified';
+        }
+        
+        const riskConfig = RISK_CONFIG[riskLevel] || RISK_CONFIG['unknown'];
+        
+        // L.circleMarker 사용 - 지리좌표에 정확히 고정되어 지도 이동 시에도 위치가 어긋나지 않음
+        // divIcon 대신 circleMarker를 사용하면 anchor/CSS 오프셋 문제가 없어 안정적
+        const radius = riskConfig.size / 2; // circleMarker의 radius는 반지름이므로 size의 절반
+        
+        // 마커 생성 (지리좌표에 정확히 고정)
+        const marker = L.circleMarker([loc.lat, loc.lon], {
+          radius: radius,
+          fillColor: riskConfig.color,
+          fillOpacity: 1,
+          color: 'white',
+          weight: 2,
+          className: riskConfig.className || 'risk-marker',
+          pane: 'markerPane'
+        });
+
+        // 팝업 내용 생성
+        const riskInfo = loc.riskAssessment || {};
+        // threat_level 사용
+        const displayThreatLevel = riskInfo.threat_level || (riskLevel === 'unclassified' ? '미분류' : getRiskLevelName(riskLevel));
+        const riskBadge = `
+          <div style="margin-bottom: 12px; padding: 8px 12px; background: ${riskInfo.risk_level_color || RISK_CONFIG[riskLevel].color || '#1E40AF'}; color: white; border-radius: 8px; font-weight: 600; font-size: 13px; text-align: center;">
+            ${displayThreatLevel}
+          </div>
+        `;
+
+        const speciesInfo = loc.classification ? `
+          <p style="margin: 8px 0; font-size: 13px; color: #6B7280;">
+            <strong>종:</strong> ${loc.classification.korean_name || loc.classification.species || '미분류'}
+          </p>
+        ` : '<p style="margin: 8px 0; font-size: 13px; color: #6B7280;"><strong>종:</strong> 미분류</p>';
+
+        const description = riskInfo.description ? `
+          <p style="margin: 8px 0; font-size: 12px; color: #374151; background: #F9FAFB; padding: 8px; border-radius: 6px;">
+            ${riskInfo.description}
+          </p>
+        ` : '';
+
+        const popupContent = `
+          <div class="popup-content" style="max-width: 280px;">
+            ${riskBadge}
+            <h3 style="font-size: 14px; margin-bottom: 8px;">${loc.filename}</h3>
+            <img src="${loc.imageUrl}" alt="${loc.filename}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;" />
+            ${speciesInfo}
+            <p style="margin: 4px 0; font-size: 11px; color: #6B7280;">위도: ${loc.lat.toFixed(6)}</p>
+            <p style="margin: 4px 0; font-size: 11px; color: #6B7280;">경도: ${loc.lon.toFixed(6)}</p>
+            ${description}
+            <a href="${loc.mapsUrl}" target="_blank" style="display: inline-block; margin-top: 8px; padding: 8px 16px; background: #3182F6; color: white; text-decoration: none; border-radius: 8px; font-size: 12px; font-weight: 600;">Google Maps에서 보기 →</a>
+          </div>
+        `;
+
+        // 팝업 바인딩
+        marker.bindPopup(popupContent, {
+          maxWidth: 280,
+          className: 'custom-popup',
+          maxHeight: 500
+        });
+
+        // 마커 클릭 이벤트
+        marker.on('click', function() {
+          highlightImageItem(index);
+        });
+
+        return marker;
+      }
+
+      // 마커 표시 함수
+      function showMarker(index) {
+        // allMarkers에서 찾기
+        const markerData = allMarkers.find(m => m.index === index);
+        if (markerData) {
+          // 지도 중심을 해당 마커로 이동
+          map.setView([markerData.marker.getLatLng().lat, markerData.marker.getLatLng().lng], 15, {
+            animate: true,
+            duration: 0.5
+          });
+          
+          // 팝업 열기
+          markerData.marker.openPopup();
+          
+          // 이미지 아이템 하이라이트
+          highlightImageItem(index);
+        }
+      }
+
+      // 위치 옵션 모달 표시
+      function showLocationOptions() {
+        const modal = document.getElementById('locationOptionsModal');
+        if (modal) {
+          modal.classList.add('show');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      // 위치 옵션 모달 닫기
+      function closeLocationOptionsModal() {
+        const modal = document.getElementById('locationOptionsModal');
+        if (modal) {
+          modal.classList.remove('show');
+          document.body.style.overflow = 'auto';
+        }
+      }
+
+      // 위치 마커 설정 (공통 함수)
+      function setLocationMarker(lat, lng, accuracy = null) {
+        // 기존 현재 위치 마커 제거
+        if (currentLocationMarker) {
+          map.removeLayer(currentLocationMarker);
+        }
+
+        // 현재 위치 마커 생성 (사람 아이콘)
+        const currentLocationIcon = L.divIcon({
+          className: 'current-location-marker',
+          html: '<div class="current-location-marker">👤</div>',
+          iconSize: [32, 32],
+          iconAnchor: [16, 16]
+        });
+
+        currentLocationMarker = L.marker([lat, lng], {
+          icon: currentLocationIcon,
+          zIndexOffset: 2000
+        }).addTo(map);
+
+        // 현재 위치 정보 팝업
+        let accuracyText = '';
+        if (accuracy !== null) {
+          accuracyText = `<p style="margin: 4px 0; font-size: 11px; color: #9CA3AF;">정확도: 약 ${Math.round(accuracy)}m</p>`;
+        } else {
+          accuracyText = '<p style="margin: 4px 0; font-size: 11px; color: #9CA3AF;">대략적인 위치입니다</p>';
+        }
+
+        const popupContent = `
+          <div style="text-align: center; padding: 8px;">
+            <h3 style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600;">📍 현재 위치</h3>
+            <p style="margin: 4px 0; font-size: 12px; color: #6B7280;">위도: ${lat.toFixed(6)}</p>
+            <p style="margin: 4px 0; font-size: 12px; color: #6B7280;">경도: ${lng.toFixed(6)}</p>
+            ${accuracyText}
+          </div>
+        `;
+
+        currentLocationMarker.bindPopup(popupContent).openPopup();
+
+        // 지도를 현재 위치로 이동
+        map.setView([lat, lng], 15, {
+          animate: true,
+          duration: 0.5
+        });
+
+        // 모달 닫기
+        closeLocationOptionsModal();
+      }
+
+      // IP 기반 위치 추정
+      async function getLocationByIP() {
+        const btn = document.querySelector('.current-location-btn');
+        
+        // 버튼 로딩 상태
+        btn.classList.add('loading');
+        btn.textContent = '⏳';
+
+        try {
+          // 무료 IP 위치 API 사용 (ip-api.com)
+          const response = await fetch('http://ip-api.com/json/?fields=status,message,lat,lon,city,country');
+          const data = await response.json();
+
+          if (data.status === 'success') {
+            setLocationMarker(data.lat, data.lon);
+          } else {
+            throw new Error(data.message || '위치를 가져올 수 없습니다.');
+          }
+        } catch (error) {
+          console.error('IP 위치 추정 오류:', error);
+          // 대체 API 시도 (ipapi.co)
+          try {
+            const response2 = await fetch('https://ipapi.co/json/');
+            const data2 = await response2.json();
+            
+            if (data2.latitude && data2.longitude) {
+              setLocationMarker(data2.latitude, data2.longitude);
+            } else {
+              throw new Error('위치를 가져올 수 없습니다.');
+            }
+          } catch (error2) {
+            showLocationErrorModal(
+              '위치 정보 오류',
+              'IP 기반 위치를 가져올 수 없습니다.',
+              ['인터넷 연결을 확인해주세요.', '다른 방법을 시도해주세요.'],
+              true
+            );
+          }
+        } finally {
+          // 버튼 상태 복원
+          btn.classList.remove('loading');
+          btn.textContent = '📍';
+        }
+      }
+
+      // 지도 클릭으로 위치 선택
+      let mapClickLocationEnabled = false;
+      function enableMapClickLocation() {
+        closeLocationOptionsModal();
+        
+        if (!map) {
+          alert('지도가 초기화되지 않았습니다.');
+          return;
+        }
+
+        mapClickLocationEnabled = true;
+        
+        // 지도 클릭 이벤트 추가
+        map.once('click', function(e) {
+          const lat = e.latlng.lat;
+          const lng = e.latlng.lng;
+          setLocationMarker(lat, lng);
+          mapClickLocationEnabled = false;
+        });
+
+        // 안내 메시지
+        alert('지도를 클릭하여 위치를 선택해주세요.');
+      }
+
+      // 위치 권한 요청 모달 표시 (GPS 사용)
+      function getCurrentLocation() {
+        if (!navigator.geolocation) {
+          alert('이 브라우저는 위치 서비스를 지원하지 않습니다.');
+          return;
+        }
+
+        // 모달 표시
+        const modal = document.getElementById('locationPermissionModal');
+        if (modal) {
+          modal.classList.add('show');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      // 위치 권한 요청 모달 닫기
+      function closeLocationPermissionModal() {
+        const modal = document.getElementById('locationPermissionModal');
+        if (modal) {
+          modal.classList.remove('show');
+          document.body.style.overflow = 'auto';
+        }
+      }
+
+      // 위치 오류 모달 표시
+      function showLocationErrorModal(title, message, instructions, showInstructions) {
+        const modal = document.getElementById('locationErrorModal');
+        const titleEl = document.getElementById('locationErrorTitle');
+        const messageEl = document.getElementById('locationErrorMessage');
+        const instructionsEl = document.getElementById('locationErrorInstructions');
+
+        if (modal && titleEl && messageEl && instructionsEl) {
+          titleEl.textContent = title;
+          messageEl.textContent = message;
+
+          if (showInstructions && instructions && instructions.length > 0) {
+            instructionsEl.style.display = 'block';
+            instructionsEl.innerHTML = '';
+            instructions.forEach(instruction => {
+              const li = document.createElement('li');
+              li.textContent = instruction;
+              instructionsEl.appendChild(li);
+            });
+          } else {
+            instructionsEl.style.display = 'none';
+          }
+
+          modal.classList.add('show');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      // 위치 오류 모달 닫기
+      function closeLocationErrorModal() {
+        const modal = document.getElementById('locationErrorModal');
+        if (modal) {
+          modal.classList.remove('show');
+          document.body.style.overflow = 'auto';
+        }
+      }
+
+      // 실제 위치 권한 요청 및 위치 가져오기
+      function requestLocationPermission() {
+        const btn = document.querySelector('.current-location-btn');
+        
+        // 모달 닫기
+        closeLocationPermissionModal();
+        closeLocationOptionsModal();
+
+        // 버튼 로딩 상태
+        btn.classList.add('loading');
+        btn.textContent = '⏳';
+
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            const accuracy = position.coords.accuracy;
+
+            setLocationMarker(lat, lng, accuracy);
+
+            // 버튼 상태 복원
+            btn.classList.remove('loading');
+            btn.textContent = '📍';
+          },
+          function(error) {
+            // 버튼 상태 복원
+            btn.classList.remove('loading');
+            btn.textContent = '📍';
+
+            let errorMessage = '위치를 가져올 수 없습니다.';
+            let errorTitle = '위치 정보 오류';
+            let errorInstructions = [];
+            let showInstructions = false;
+
+            switch(error.code) {
+              case error.PERMISSION_DENIED:
+                errorTitle = '위치 권한 필요';
+                errorMessage = '위치 권한이 거부되었습니다.';
+                errorInstructions = [
+                  '브라우저 설정에서 위치 권한을 허용해주세요.',
+                  '설정 방법:',
+                  '1. 브라우저 주소창 왼쪽의 자물쇠 아이콘 클릭',
+                  '2. "위치" 권한을 "허용"으로 변경'
+                ];
+                showInstructions = true;
+                break;
+              case error.POSITION_UNAVAILABLE:
+                errorMessage = '위치 정보를 사용할 수 없습니다.';
+                errorInstructions = ['GPS 신호를 확인해주세요.'];
+                showInstructions = true;
+                break;
+              case error.TIMEOUT:
+                errorMessage = '위치 요청 시간이 초과되었습니다.';
+                errorInstructions = ['다시 시도해주세요.'];
+                showInstructions = true;
+                break;
+            }
+
+            // 오류 모달 표시
+            showLocationErrorModal(errorTitle, errorMessage, errorInstructions, showInstructions);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+          }
+        );
+      }
+
+      // 필터 모달 토글
+      function toggleFilterModal() {
+        const modal = document.getElementById('filterModal');
+        if (modal) {
+          modal.classList.add('show');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeFilterModal() {
+        const modal = document.getElementById('filterModal');
+        if (modal) {
+          modal.classList.remove('show');
+          document.body.style.overflow = 'auto';
+        }
+      }
+
+      // 필터 적용
+      function applyFilters() {
+        const checkboxes = document.querySelectorAll('.filter-option input[type="checkbox"]');
+        const selectedFilters = Array.from(checkboxes)
+          .filter(cb => cb.checked)
+          .map(cb => cb.value);
+
+        // 선택된 필터 표시 업데이트
+        const selectedFiltersDiv = document.getElementById('selectedFilters');
+        if (selectedFilters.length === 6) {
+          selectedFiltersDiv.innerHTML = '<span style="font-size: 13px; color: var(--text-secondary);">모든 위험도 표시 중</span>';
+        } else if (selectedFilters.length === 0) {
+          selectedFiltersDiv.innerHTML = '<span style="font-size: 13px; color: var(--text-secondary);">필터 없음</span>';
+        } else {
+          const filterNames = {
+            'critical': '🔴 인체 고위험',
+            'danger': '🟠 인체 중위험',
+            'caution': '🟡 반려동물 위험',
+            'safe': '🟢 일반·불쾌',
+            'unknown': '⚪ 보호 필요',
+            'unclassified': '🔵 미분류'
+          };
+          selectedFiltersDiv.innerHTML = selectedFilters
+            .map(f => `<span style="background: var(--primary-light); color: var(--primary-color); padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600;">${filterNames[f]}</span>`)
+            .join('');
+        }
+
+        // 마커 필터링
+        allMarkers.forEach(markerData => {
+          const loc = markerData.location;
+          let riskLevel = 'unclassified';
+
+          if (loc.classification && loc.classification.threat_level) {
+            const threatLevel = loc.classification.threat_level;
+            if (threatLevel.includes('인체 고위험') || threatLevel.includes('공격성·독성')) {
+              riskLevel = 'critical';
+            } else if (threatLevel.includes('인체 중위험') || threatLevel.includes('독성·피부염') || threatLevel.includes('질병 매개')) {
+              riskLevel = 'danger';
+            } else if (threatLevel.includes('반려동물 위험')) {
+              riskLevel = 'caution';
+            } else if (threatLevel.includes('일반·불쾌') || threatLevel.includes('불쾌 곤충')) {
+              riskLevel = 'safe';
+            } else if (threatLevel.includes('보호') || threatLevel.includes('천연기념물')) {
+              riskLevel = 'unknown';
+            }
+          } else if (loc.riskAssessment && loc.riskAssessment.threat_level) {
+            const threatLevel = loc.riskAssessment.threat_level;
+            if (threatLevel.includes('인체 고위험') || threatLevel.includes('공격성·독성')) {
+              riskLevel = 'critical';
+            } else if (threatLevel.includes('인체 중위험') || threatLevel.includes('독성·피부염') || threatLevel.includes('질병 매개')) {
+              riskLevel = 'danger';
+            } else if (threatLevel.includes('반려동물 위험')) {
+              riskLevel = 'caution';
+            } else if (threatLevel.includes('일반·불쾌') || threatLevel.includes('불쾌 곤충')) {
+              riskLevel = 'safe';
+            } else if (threatLevel.includes('보호') || threatLevel.includes('천연기념물')) {
+              riskLevel = 'unknown';
+            } else if (threatLevel === '미분류') {
+              riskLevel = 'unclassified';
+            }
+          }
+
+          // 필터에 포함되면 표시, 아니면 숨김
+          if (selectedFilters.includes(riskLevel)) {
+            if (!map.hasLayer(markerData.marker)) {
+              markerData.marker.addTo(map);
+            }
+          } else {
+            if (map.hasLayer(markerData.marker)) {
+              map.removeLayer(markerData.marker);
+            }
+          }
+        });
+
+        // 이미지 리스트 필터링
+        document.querySelectorAll('.image-item').forEach(item => {
+          const riskLevel = item.getAttribute('data-risk-level');
+          if (selectedFilters.includes(riskLevel)) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        closeFilterModal();
+      }
+
+      // 페이지 로드 시 지도 초기화
+      window.addEventListener('DOMContentLoaded', function() {
+        initMap();
+      });
+    </script>
+  {% endif %}
+
+  <!-- 하단 네비게이션 -->
+  <div class="bottom-nav">
+    <a href="{{ url_for('board_page') }}" class="nav-item">
+      <div class="nav-icon">📋</div>
+      <div>게시판</div>
+    </a>
+    <a href="{{ url_for('index') }}" class="nav-item">
+      <div class="nav-icon">📷</div>
+      <div>촬영</div>
+    </a>
+    <a href="{{ url_for('map_page') }}" class="nav-item active">
+      <div class="nav-icon">🗺️</div>
+      <div>지도</div>
+    </a>
+  </div>
+
+  <script>
+    function openMyPage() {
+      alert('마이페이지는 추후 구현 예정입니다.');
+    }
+
+    function showRiskCriteria() {
+      const modal = document.getElementById('riskCriteriaModal');
+      if (modal) {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeRiskCriteria() {
+      const modal = document.getElementById('riskCriteriaModal');
+      if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = 'auto';
+      }
+    }
+
+    function closeRiskCriteriaOnBackdrop(event) {
+      if (event.target.id === 'riskCriteriaModal') {
+        closeRiskCriteria();
+      }
+    }
+
+    // ESC 키로 모달 닫기
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeRiskCriteria();
+        closeLocationPermissionModal();
+        closeLocationErrorModal();
+      }
+    });
+  </script>
+</body>
+</html>
